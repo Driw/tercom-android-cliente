@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<declare-styleable name="CustomEditText">
+    <attr name="Entity" format="string" />
+    <attr name="Attribute" format="string" />
+    <attr name="AttrType" format="string">
+        <enum name="String" value="0" />
+        <enum name="Integer" value="1" />
+        <enum name="Float" value="2" />
+        <enum name="Short" value="3" />
+    </attr>
+</declare-styleable>
+</resources>

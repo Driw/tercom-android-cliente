@@ -1,0 +1,41 @@
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/include_toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:background="@color/accent"
+    android:elevation="@dimen/toolbar_elevation"
+    android:gravity="center"
+    android:minHeight="@dimen/toolbar_height"
+    android:title="Home"
+    app:titleMarginBottom="@dimen/toolbar_titleMarginBottom"
+    app:titleMarginStart="@dimen/toolbar_titleMarginStart"
+    app:titleMarginTop="@dimen/toolbar_titleMarginTop"
+    app:titleTextColor="@color/colorPrimary">
+
+    <android.support.v7.widget.ActionMenuView
+        android:id="@+id/amvMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp" />
+
+    <TextView
+        android:id="@+id/textTitle"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginRight="20dp"
+        android:gravity="center"
+        android:paddingRight="50dp"
+        android:scaleX="0.7"
+        android:scaleY="0.7"
+        android:src="@drawable/ic_tercom_logo"
+        android:text="@string/tercom"
+        android:textColor="@color/colorPrimary"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        tools:textAllCaps="false" />
+
+</android.support.v7.widget.Toolbar>
+
+
+
