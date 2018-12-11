@@ -18,6 +18,7 @@ public enum EnumREST {
     SERVICE("service"),
     SITE("site"),
     PRODUCTTYPE("productType"),
+    SERVICEPRICE("servicePrice"),
 
 
 
@@ -38,6 +39,7 @@ public enum EnumREST {
     SEARCH("search"),
     SET("set"),
     SETPHONE("setPhones"),
+    GETSERVICE("getService"),
 
     //FILTERS
     FAMILY("family"),

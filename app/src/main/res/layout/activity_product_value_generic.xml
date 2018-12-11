@@ -6,9 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".Boundary.Activity.ProductValueDetails">
 
-    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <android.support.v7.widget.Toolbar
         android:id="@+id/include_toolbar"
         android:layout_width="match_parent"
         android:layout_height="56dp"
@@ -96,6 +94,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Quantidade"
+            android:inputType="number"
             android:textAlignment="center" />
     </android.support.design.widget.TextInputLayout>
 
@@ -115,6 +114,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Valor"
+            android:inputType="number"
             android:textAlignment="center" />
     </android.support.design.widget.TextInputLayout>
 

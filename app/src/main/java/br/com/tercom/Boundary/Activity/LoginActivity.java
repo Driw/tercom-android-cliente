@@ -33,7 +33,7 @@ public class LoginActivity extends AbstractAppCompatActivity {
         USER_STATIC = new User();
         USER_STATIC.setEmail(txtEmail.getText().toString());
         USER_STATIC.setSenha(txtPass.getText().toString());
-        createIntentAbs(ProductListActivity.class);
+        createIntentAbs(MenuActivity.class);
 
     }
 

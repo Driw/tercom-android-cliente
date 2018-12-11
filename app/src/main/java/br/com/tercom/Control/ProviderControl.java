@@ -11,6 +11,7 @@ import br.com.tercom.Entity.Provider;
 import br.com.tercom.Entity.ProviderContact;
 import br.com.tercom.Entity.ProviderContactList;
 import br.com.tercom.Entity.ProviderList;
+import br.com.tercom.Entity.Providers;
 import br.com.tercom.Enum.EnumMethod;
 import br.com.tercom.Enum.EnumREST;
 import br.com.tercom.Util.CustomPair;
@@ -35,7 +36,7 @@ public class ProviderControl extends GenericControl {
 
     public ApiResponse getProviderList(int page) {
         CustomPair<String> jsonResult =  callJson(EnumMethod.GET,activity,getLink(getBase(EnumREST.SITE, EnumREST.PROVIDER, EnumREST.LIST), String.valueOf(page)));
-        ApiResponse<ProviderList> providerApiResponse = new ApiResponse<>(ProviderList.class);
+        ApiResponse<Providers> providerApiResponse = new ApiResponse<>(Providers.class);
         if(jsonResult.first){
             providerApiResponse = populateApiResponse(providerApiResponse,jsonResult.second);
         }

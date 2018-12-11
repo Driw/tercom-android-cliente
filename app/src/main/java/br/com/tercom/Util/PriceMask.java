@@ -63,7 +63,7 @@ public class PriceMask implements TextWatcher {
                 number = "0" + DECIMAL_SEPARATOR + "00";
                 break;
             case 1 :
-                number = "0" + DECIMAL_SEPARATOR + "0" + number;
+                number = "0" + DECIMAL_SEPARATOR+ "0" + number;
                 break;
             case 2 :
                 number = "0" + DECIMAL_SEPARATOR + number;
@@ -88,6 +88,14 @@ public class PriceMask implements TextWatcher {
     @Override
     public void afterTextChanged(Editable s) {
     }
+
+
+
+    public static double unmaskPrice(String value) {
+        float valueF =  Float.parseFloat(value.replace("R$", "").replace(".","").replace(",","."));
+        return Double.parseDouble(String.format(Locale.US,"%.2f",valueF));
+    }
+
 
 
 }

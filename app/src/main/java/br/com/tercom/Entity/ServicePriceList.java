@@ -4,16 +4,15 @@ import java.util.ArrayList;
 
 import br.com.tercom.Annotation.BindObject;
 
-public class PriceList extends GenericEntity {
-
+public class ServicePriceList extends GenericEntity {
     @BindObject(type = BindObject.TYPE.LIST)
-    private ArrayList<Price> list;
+    private ArrayList<ServicePrice> list;
 
-    public ArrayList<Price> getList() {
+    public ArrayList<ServicePrice> getList() {
         return list;
     }
 
-    public void setList(ArrayList<Price> list) {
+    public void setList(ArrayList<ServicePrice> list) {
         this.list = list;
     }
 }

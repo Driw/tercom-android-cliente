@@ -2,10 +2,14 @@ package br.com.tercom.Boundary.BoundaryUtil;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -18,11 +22,19 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import br.com.tercom.Application.AppTercom;
 import br.com.tercom.Boundary.Activity.LoginActivity;
+import br.com.tercom.Boundary.Activity.ManufacturerActivity;
+import br.com.tercom.Boundary.Activity.MenuActivity;
+import br.com.tercom.Boundary.Activity.ProductAddActivity;
+import br.com.tercom.Boundary.Activity.ProductListActivity;
+import br.com.tercom.Boundary.Activity.ProviderListActivity;
+import br.com.tercom.Boundary.Activity.ServiceAddActivity;
+import br.com.tercom.Boundary.Activity.ServiceListActivity;
 import br.com.tercom.Enum.EnumFont;
 import br.com.tercom.R;
 import br.com.tercom.Util.CustomTypeFace;
 
 import static br.com.tercom.Application.AppTercom.USER_STATIC;
+import static br.com.tercom.Util.CustomTypeFace.overrideFonts;
 import static br.com.tercom.Util.CustomTypeFace.setFontSingleTxt;
 
 /**
@@ -106,7 +118,7 @@ public abstract class AbstractAppCompatActivity extends AppCompatActivity {
                         //TODO
                         switch (position) {
                             case 1:
-//                                createIntentAbs(LoginActivity.class);
+                                createIntentAbs(MenuActivity.class);
                                 break;
                             case 2:
                                 createIntentAbs(ProductListActivity.class);

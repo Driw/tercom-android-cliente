@@ -42,7 +42,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.txtProductName.setText(products.get(position).getName());
-        holder.txtPrice.setText(String.format(Locale.US,"%d preços adicionados neste produto", products.get(position).getPrices().size()));
         holder.txtDescription.setText(products.get(position).getDescription());
     }
 
@@ -54,14 +53,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView txtProductName;
-        public TextView txtPrice;
         public TextView txtDescription;
 
 
         public ViewHolder(View itemView) {
             super(itemView);
             txtProductName = itemView.findViewById(R.id.txtProductName);
-            txtPrice = itemView.findViewById(R.id.txtPrice);
             txtDescription = itemView.findViewById(R.id.txtDescription);
             itemView.setOnClickListener(this);
 

@@ -47,11 +47,11 @@ public class Util {
         }
     }
     public static void toast(Activity activity, String msg){
-        if(!isNetworkAvailable(activity)) {
-            Toast.makeText(activity, "Você não está conectado à internet.", Toast.LENGTH_SHORT).show();
-        }else{
-            Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
-        }
+            if(!isNetworkAvailable(activity)) {
+                Toast.makeText(activity, "Você não está conectado à internet.", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
+            }
     }
 
     public static void print(String msg){
@@ -66,7 +66,7 @@ public class Util {
         Log.i("ENTROU",String.valueOf(value));
     }
 
-    public static void OpenDialDialog(String[] dialArray, final Activity activity){
+    public static void OpenCallDialog(String[] dialArray, final Activity activity){
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(activity);
         builderSingle.setTitle("Contatos online no momento:");
         builderSingle.setCancelable(false);
@@ -137,7 +137,7 @@ public class Util {
 
 
 
-    public static String toUpperCaseFirst(String value){
+     public static String toUpperCaseFirst(String value){
         return String.format(Locale.US,"%s%s",value.substring(0,1).toUpperCase(),value.substring(1));
     }
 

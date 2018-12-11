@@ -53,9 +53,9 @@ public class ProductValueAdapter extends RecyclerView.Adapter<ProductValueAdapte
             super(itemView);
             productName = itemView.findViewById(R.id.productName);
             productPackage = itemView.findViewById(R.id.productPackage);
-            productPrice = itemView.findViewById(R.id.productPrice);
+            productPrice = itemView.findViewById(R.id.servicePrice);
             productManufacturer = itemView.findViewById(R.id.productManufacturer);
-            productProvider = itemView.findViewById(R.id.productProvider);
+            productProvider = itemView.findViewById(R.id.ServiceProvider);
             itemView.setOnClickListener(this);
         }
         @Override
