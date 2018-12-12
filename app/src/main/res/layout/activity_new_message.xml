@@ -26,6 +26,38 @@
         app:layout_constraintTop_toBottomOf="@+id/include_toolbar"
         app:layout_constraintVertical_bias="0.0">
 
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardView8"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:cardCornerRadius="@dimen/materialize_typography_body2"
+            app:cardElevation="@dimen/materialize_typography_body2"
+            app:layout_constraintBottom_toTopOf="@+id/btnSendMessage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
+
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:hint="Digite sua mensagem"
+                android:inputType="textLongMessage"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@+id/btnSendMessage"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+
+        </android.support.v7.widget.CardView>
+
         <EditText
             android:id="@+id/txtSubjectField"
             android:layout_width="0dp"
@@ -34,6 +66,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
+            back
             android:hint="Assunto do contato"
             android:inputType="text|textShortMessage"
             android:singleLine="true"
@@ -58,30 +91,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/txtMessageBody"
-            android:layout_width="match_parent"
-            android:layout_height="348dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:hint="Digite sua mensagem"
-            android:inputType="textLongMessage"
-            android:singleLine="true"
-            android:textAlignment="gravity"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toTopOf="@+id/btnSendMessage"
-            app:layout_constraintEnd_toEndOf="@+id/txtSubjectField"
-            app:layout_constraintHorizontal_bias="0.922"
-            app:layout_constraintStart_toStartOf="@+id/txtSubjectField"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
-
         <android.support.constraint.ConstraintLayout
             android:id="@+id/constraintLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/txtMessageBody"
+            app:layout_constraintBottom_toTopOf="@+id/cardView8"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -108,14 +122,14 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
+            android:background="@drawable/shape_button_green"
             android:text="Enviar"
             android:textColor="@color/colorPrimary"
-            android:background="@drawable/shape_button_green"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.376"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtMessageBody" />
+            app:layout_constraintTop_toBottomOf="@+id/cardView8" />
 
     </android.support.constraint.ConstraintLayout>
 
