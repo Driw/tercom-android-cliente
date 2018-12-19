@@ -355,20 +355,6 @@ public abstract class GenericControl {
         return String.format(Locale.US,"%s=%s",key,result);
     }
 
-    protected String getMultiplesParameters(String... param){
-        StringBuilder sb = new StringBuilder();
-        for(int i = 0; i< param.length; i++){
-
-            sb.append(param[i]);
-
-            if(i == (param.length-1))
-                sb.append("/");
-        }
-
-        return sb.toString();
-    }
-
-
 
     protected String getMultiplesParameters(String... param){
         StringBuilder sb = new StringBuilder();

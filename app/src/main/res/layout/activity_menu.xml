@@ -105,7 +105,7 @@
         app:layout_constraintBottom_toTopOf="@+id/cardManufacturer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cardProduct"
-        app:layout_constraintTop_toBottomOf="@+id/cardView10" >
+        app:layout_constraintTop_toBottomOf="@+id/cvContato" >
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -184,7 +184,7 @@
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
-        android:id="@+id/cardView10"
+        android:id="@+id/cvContato"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
@@ -196,7 +196,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView14">
 
         <TextView
-            android:id="@+id/txtMenuMessage"
+            android:id="@+id/txtContato"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -218,7 +218,7 @@
         app:layout_constraintBottom_toTopOf="@+id/cardProvider"
         app:layout_constraintEnd_toStartOf="@+id/cardService"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView10" >
+        app:layout_constraintTop_toBottomOf="@+id/cvContato" >
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"

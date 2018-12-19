@@ -12,13 +12,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+        app:layout_constraintBottom_toTopOf="@+id/rvMessageLog"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/rvMessageLog"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
@@ -37,10 +37,10 @@
         android:layout_marginBottom="8dp"
         app:cardCornerRadius="@dimen/materialize_typography_body1"
         app:cardElevation="@dimen/materialize_typography_body2"
-        app:layout_constraintBottom_toTopOf="@+id/btnSendMessage"
+        app:layout_constraintBottom_toTopOf="@+id/btnRespond"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView">
+        app:layout_constraintTop_toBottomOf="@+id/rvMessageLog">
 
         <EditText
             android:id="@+id/txtNewMessage"
@@ -51,17 +51,17 @@
             android:hint="Digite sua mensagem"
             android:inputType="textLongMessage"
             android:textSize="14sp"
-            app:layout_constraintBottom_toTopOf="@+id/btnSendMessage"
+            app:layout_constraintBottom_toTopOf="@+id/btnRespond"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+            app:layout_constraintTop_toBottomOf="@+id/rvMessageLog" />
 
     </android.support.v7.widget.CardView>
 
 
     <Button
-        android:id="@+id/btnSendMessage"
+        android:id="@+id/btnRespond"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

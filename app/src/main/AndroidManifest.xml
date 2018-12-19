@@ -28,6 +28,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Boundary.Activity.MessageList" />
+        <activity android:name=".Boundary.Activity.NewMessage" />
+        <activity android:name=".Boundary.Activity.MessageLog"></activity>
     </application>
 
 </manifest>

@@ -28,7 +28,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/btnMyMessage"
+            android:id="@+id/btnNewMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -56,7 +56,7 @@
         app:layout_constraintTop_toBottomOf="@+id/include_toolbar">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_messageList"
+            android:id="@+id/rvMessageList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="8dp"

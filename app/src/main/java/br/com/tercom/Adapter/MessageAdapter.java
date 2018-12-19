@@ -19,7 +19,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     private LayoutInflater layoutInflater;
     private ArrayList<Message> messages;
     private Context context;
-    //TESTE 3
 
     private RecyclerViewOnClickListenerHack mRecyclerViewOnClickListenerHack;
 

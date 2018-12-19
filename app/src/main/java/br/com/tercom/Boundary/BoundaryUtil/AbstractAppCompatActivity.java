@@ -22,13 +22,6 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import br.com.tercom.Application.AppTercom;
 import br.com.tercom.Boundary.Activity.LoginActivity;
-import br.com.tercom.Boundary.Activity.ManufacturerActivity;
-import br.com.tercom.Boundary.Activity.MenuActivity;
-import br.com.tercom.Boundary.Activity.ProductAddActivity;
-import br.com.tercom.Boundary.Activity.ProductListActivity;
-import br.com.tercom.Boundary.Activity.ProviderListActivity;
-import br.com.tercom.Boundary.Activity.ServiceAddActivity;
-import br.com.tercom.Boundary.Activity.ServiceListActivity;
 import br.com.tercom.Enum.EnumFont;
 import br.com.tercom.R;
 import br.com.tercom.Util.CustomTypeFace;
@@ -118,19 +111,19 @@ public abstract class AbstractAppCompatActivity extends AppCompatActivity {
                         //TODO
                         switch (position) {
                             case 1:
-                                createIntentAbs(MenuActivity.class);
+                                createIntentAbs(LoginActivity.class);
                                 break;
                             case 2:
-                                createIntentAbs(ProductListActivity.class);
+                                createIntentAbs(LoginActivity.class);
                                 break;
                             case 3:
-                                createIntentAbs(ServiceListActivity.class);
+                                createIntentAbs(LoginActivity.class);
                                 break;
                             case 4:
-                                createIntentAbs(ProviderListActivity.class);
+                                createIntentAbs(LoginActivity.class);
                                 break;
                             case 5:
-                                createIntentAbs(ManufacturerActivity.class);
+                                createIntentAbs(LoginActivity.class);
                                 break;
                             default:
                                 createIntentAbs(LoginActivity.class);
