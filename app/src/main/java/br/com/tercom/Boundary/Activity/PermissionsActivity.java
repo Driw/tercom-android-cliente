@@ -39,9 +39,9 @@ public class PermissionsActivity extends AbstractAppCompatActivity {
     }
 
     private void populate() {
-        txtName.setText(USER_STATIC.getTercomEmployee().getName());
-        txtLevel.setText(String.valueOf(USER_STATIC.getTercomEmployee().getTercomProfile().getAssignmentLevel()));
-        txtProfileType.setText(USER_STATIC.getTercomEmployee().getTercomProfile().getName());
+        txtName.setText(USER_STATIC.getCustomerEmployee().getName());
+        txtLevel.setText(String.valueOf(USER_STATIC.getCustomerEmployee().getCustomerProfile().getAssignmentLevel()));
+        txtProfileType.setText(USER_STATIC.getCustomerEmployee().getCustomerProfile().getName());
         ArrayList<Permission> permissions = new ArrayList<>();
         for(int i = 0; i< 10; i++){
             Permission permission = new Permission();

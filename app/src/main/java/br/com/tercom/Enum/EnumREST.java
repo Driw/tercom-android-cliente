@@ -19,6 +19,7 @@ public enum EnumREST {
     SITE("site"),
     PRODUCTTYPE("productType"),
     SERVICEPRICE("servicePrice"),
+    PERMISSION("permission"),
     LOGINCUSTOMER("loginCustomer"),
 
 

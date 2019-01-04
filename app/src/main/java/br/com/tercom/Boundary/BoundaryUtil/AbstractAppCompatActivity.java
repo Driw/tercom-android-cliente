@@ -24,10 +24,8 @@ import br.com.tercom.Application.AppTercom;
 import br.com.tercom.Boundary.Activity.LoginActivity;
 import br.com.tercom.Boundary.Activity.ManufacturerActivity;
 import br.com.tercom.Boundary.Activity.MenuActivity;
-import br.com.tercom.Boundary.Activity.ProductAddActivity;
 import br.com.tercom.Boundary.Activity.ProductListActivity;
 import br.com.tercom.Boundary.Activity.ProviderListActivity;
-import br.com.tercom.Boundary.Activity.ServiceAddActivity;
 import br.com.tercom.Boundary.Activity.ServiceListActivity;
 import br.com.tercom.Enum.EnumFont;
 import br.com.tercom.R;
@@ -82,7 +80,7 @@ public abstract class AbstractAppCompatActivity extends AppCompatActivity {
         mToolbar.setTitleMarginBottom(10);
         setSupportActionBar(mToolbar);
         TextView textTitle = mToolbar.findViewById(R.id.textTitle);
-//        textTitle.setTypeface(setFontSingleTxt(AppTercom.getContext(), EnumFont.FONT_RNS));
+        textTitle.setTypeface(setFontSingleTxt(AppTercom.getContext(), EnumFont.FONT_RNS));
         CreateNavigationDrawer(mToolbar, index);
     }
 
@@ -94,7 +92,7 @@ public abstract class AbstractAppCompatActivity extends AppCompatActivity {
                 .withProfileImagesVisible(true)
                 .withCompactStyle(true)
                 .withDividerBelowHeader(true)
-                .addProfiles(new ProfileDrawerItem().withEmail(USER_STATIC.getTercomEmployee().getEmail()).withName(USER_STATIC.getTercomEmployee().getName()))
+                .addProfiles(new ProfileDrawerItem().withEmail(USER_STATIC.getCustomerEmployee().getEmail()).withName(USER_STATIC.getCustomerEmployee().getName()))
                 .withTextColor(Color.BLACK)
                 .build();
 

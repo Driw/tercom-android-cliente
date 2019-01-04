@@ -27,7 +27,7 @@ public class LoginTercomControl extends GenericControl {
         map.put("userAgent", "android-" + AppTercom.appVersion);
 
         try{
-            String link = getBase(EnumREST.SITE, EnumREST.LOGINTERCOM, EnumREST.LOGIN);
+            String link = getBase(EnumREST.SITE, EnumREST.LOGINCUSTOMER, EnumREST.LOGIN);
             Pair<String, String> completePost = new Pair<>(link, getPostValues(map));
             CustomPair<String> jsonResult =  callJson(EnumMethod.POST,activity,completePost);
             ApiResponse<LoginTercom> providerApiResponse = new ApiResponse<>(LoginTercom.class);
@@ -48,7 +48,7 @@ public class LoginTercomControl extends GenericControl {
         map.put("idTercomEmployee", String.valueOf(idTercomEmployee));
         map.put("token", token);
         try{
-            String link = getBase(EnumREST.SITE, EnumREST.LOGINTERCOM, EnumREST.VERIFY);
+            String link = getBase(EnumREST.SITE, EnumREST.LOGINCUSTOMER, EnumREST.VERIFY);
             Pair<String, String> completePost = new Pair<>(link, getPostValues(map));
             CustomPair<String> jsonResult =  callJson(EnumMethod.POST,activity,completePost);
             ApiResponse<LoginTercom> providerApiResponse = new ApiResponse<>(LoginTercom.class);
@@ -69,7 +69,7 @@ public class LoginTercomControl extends GenericControl {
         map.put("idTercomEmployee", String.valueOf(idTercomEmployee));
         map.put("token", token);
         try{
-            String link = getBase(EnumREST.SITE, EnumREST.LOGINTERCOM, EnumREST.LOGOUT);
+            String link = getBase(EnumREST.SITE, EnumREST.LOGINCUSTOMER, EnumREST.LOGOUT);
             Pair<String, String> completePost = new Pair<>(link, getPostValues(map));
             CustomPair<String> jsonResult =  callJson(EnumMethod.POST,activity,completePost);
             ApiResponse<LoginTercom> providerApiResponse = new ApiResponse<>(LoginTercom.class);

@@ -35,7 +35,7 @@ public class NewMessage extends AbstractAppCompatActivity {
 
     @OnClick(R.id.btnNewMessage)
      void sendNewMessage() {
-        messageItem.setIdUser(USER_STATIC.getToken());
+        messageItem.setIdUser(USER_STATIC.getCustomerEmployeeId());
         messageItem.setMessage(txtNewMessage.toString());
         currentMessage.add(messageItem);
 

@@ -46,43 +46,43 @@ public class MessageAdapterLog extends RecyclerView.Adapter<MessageAdapterLog.Vi
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-       /*View v = layoutInflater.inflate(R.layout.item_message_user,parent,false);
+       View v = layoutInflater.inflate(R.layout.item_message_user,parent,false);
        ViewHolder vh = new ViewHolder(v);
-       return vh;*/
+       return vh;
 
-        for (MessageItem m: messageItem) {
-            switch (viewType){
-                case 0:
-                    View v = layoutInflater.inflate(R.layout.item_message_user, parent, false);
-                    return new ViewHolder(v);
-                    break;
-
-                case 1:
-                    View v2 = layoutInflater.inflate(R.layout.item_message_notuser, parent, false);
-                    return new ViewHolder(v2);
-                    break;
-
-            }
-        }
+//        for (MessageItem m: messageItem) {
+//            switch (viewType){
+//                case 0:
+//                    View v = layoutInflater.inflate(R.layout.item_message_user, parent, false);
+//                    return new ViewHolder(v);
+//                    break;
+//
+//                case 1:
+//                    View v2 = layoutInflater.inflate(R.layout.item_message_notuser, parent, false);
+//                    return new ViewHolder(v2);
+//                    break;
+//
+//            }
+//        }
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        /*for(MessageItem m: messageItem){
+        for(MessageItem m: messageItem){
             holder.messageUser.setText(messageItem.get(position).getMessage());
-        }*/
-
-        switch (holder.getItemViewType()){
-            case 0:
-                ViewHolder vh0 = (ViewHolder)holder;
-                holder.messageUser.setText(messageItem.get(position).getMessage());
-
-            case 1:
-                ViewHolder1 vh1 = (ViewHolder1)holder;
-                holder.messageNotUser.setText(messageItem.get(position).getMessage());
-                holder.responseUserName.setText(messageItem.get(position).getIdUser());
         }
+
+//        switch (holder.getItemViewType()){
+//            case 0:
+//                ViewHolder vh0 = (ViewHolder)holder;
+//                holder.messageUser.setText(messageItem.get(position).getMessage());
+//
+//            case 1:
+//                ViewHolder1 vh1 = (ViewHolder1)holder;
+//                holder.messageNotUser.setText(messageItem.get(position).getMessage());
+//                holder.responseUserName.setText(messageItem.get(position).getIdUser());
+//        }
 
     }
 

@@ -38,7 +38,7 @@ public class MessageLog extends AbstractAppCompatActivity {
 
     @OnClick(R.id.btnRespond) void addNewMessage(){
         newMessageItem.setMessage(txtNewMessage.getText().toString());
-        newMessageItem.setIdUser(USER_STATIC.getToken());
+        newMessageItem.setIdUser(USER_STATIC.getCustomerEmployeeId());
         messageList.add(newMessageItem);
         message.setMensagens(messageList);
     }

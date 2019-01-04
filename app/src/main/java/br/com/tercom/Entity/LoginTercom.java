@@ -5,7 +5,7 @@ import br.com.tercom.Annotation.BindObject;
 public class LoginTercom extends GenericEntity {
 
     @BindObject
-    private TercomEmployee tercomEmployee;
+    private CustomerEmployee customerEmployee;
 
     private int id;
     private String token;
@@ -17,16 +17,16 @@ public class LoginTercom extends GenericEntity {
     @BindObject
     private Expiration expiration;
 
-    public TercomEmployee getTercomEmployee(){
-        return this.tercomEmployee;
+    public CustomerEmployee getTercomEmployee(){
+        return this.customerEmployee;
     }
 
-    public void setTercomEmployee(TercomEmployee tercomEmployee) {
-        this.tercomEmployee = tercomEmployee;
+    public void setTercomEmployee(CustomerEmployee tercomEmployee) {
+        this.customerEmployee = tercomEmployee;
     }
 
     public int getTercomEmployeeId(){
-        return this.tercomEmployee.getId();
+        return this.customerEmployee.getId();
     }
 
     public int getId() {
