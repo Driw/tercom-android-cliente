@@ -72,7 +72,10 @@
         <activity android:name=".Boundary.Activity.MenuActivity" />
         <activity android:name=".Boundary.Activity.ServicePriceDetailsActivity" />
         <activity android:name=".Boundary.Activity.ServicePriceListAcitivity" />
-        <activity android:name=".Boundary.Activity.PermissionsActivity"></activity>
+        <activity android:name=".Boundary.Activity.PermissionsActivity" />
+        <activity android:name=".Boundary.Activity.MessageList" />
+        <activity android:name=".Boundary.Activity.NewMessage" />
+        <activity android:name=".Boundary.Activity.MessageLog" />
     </application>
 
 </manifest>

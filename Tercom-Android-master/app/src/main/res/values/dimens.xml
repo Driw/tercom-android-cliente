@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="toolbar_titleMarginBottom">16dp</dimen>
+    <dimen name="toolbar_titleMarginStart">16dp</dimen>
+    <dimen name="toolbar_titleMarginTop">16dp</dimen>
+    <dimen name="toolbar_height">56dp</dimen>
+    <dimen name="toolbar_elevation">4dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+</resources>

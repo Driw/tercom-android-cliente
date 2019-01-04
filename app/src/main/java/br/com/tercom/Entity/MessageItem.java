@@ -5,13 +5,13 @@ import java.util.ArrayList;
 public class MessageItem {
 
     private String message;
-    private String idUser;
+    private int idUser;
 
-    public String getIdUser() {
+    public int getIdUser() {
         return idUser;
     }
 
-    public void setIdUser(String idUser) {
+    public void setIdUser(int idUser) {
         this.idUser = idUser;
     }
 

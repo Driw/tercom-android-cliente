@@ -34,41 +34,56 @@ public class MessageAdapterLog extends RecyclerView.Adapter<MessageAdapterLog.Vi
         this.context = c;
     }
 
-   @Override
+    @Override
+    public int getItemViewType(int position) {
+        if (messageItem.get(position).getIdUser() == USER_STATIC.getId()) {
+            return 0;
+        } else {
+            return 1;
+        }
+    }
+
+    @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-       View v = layoutInflater.inflate(R.layout.item_message_user,parent,false);
+       /*View v = layoutInflater.inflate(R.layout.item_message_user,parent,false);
        ViewHolder vh = new ViewHolder(v);
-       return vh;
+       return vh;*/
 
-        /*View v = null;
-        ViewHolder vh;
         for (MessageItem m: messageItem) {
-            if (m.getIdUser() == USER_STATIC.getToken()) {
-                v = layoutInflater.inflate(R.layout.item_message_user, parent, false);
-            } else {
-                v = layoutInflater.inflate(R.layout.item_message_notuser, parent, false);
+            switch (viewType){
+                case 0:
+                    View v = layoutInflater.inflate(R.layout.item_message_user, parent, false);
+                    return new ViewHolder(v);
+                    break;
+
+                case 1:
+                    View v2 = layoutInflater.inflate(R.layout.item_message_notuser, parent, false);
+                    return new ViewHolder(v2);
+                    break;
+
             }
         }
-        vh = new ViewHolder(v);
-        return vh;*/
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        for(MessageItem m: messageItem){
+        /*for(MessageItem m: messageItem){
             holder.messageUser.setText(messageItem.get(position).getMessage());
+        }*/
+
+        switch (holder.getItemViewType()){
+            case 0:
+                ViewHolder vh0 = (ViewHolder)holder;
+                holder.messageUser.setText(messageItem.get(position).getMessage());
+
+            case 1:
+                ViewHolder1 vh1 = (ViewHolder1)holder;
+                holder.messageNotUser.setText(messageItem.get(position).getMessage());
+                holder.responseUserName.setText(messageItem.get(position).getIdUser());
         }
 
-        /*for (MessageItem m: messageItem) {
-            if (m.getIdUser() == USER_STATIC.getToken()) {
-                holder.messageUser.setText(messageItem.get(position).getMessage());
-            } else {
-                holder.responseUserName.setText(messageItem.get(position).getIdUser());
-                holder.messageNotUser.setText(messageItem.get(position).getMessage());
-            }
-        }*/
     }
 
     @Override
@@ -98,6 +113,28 @@ public class MessageAdapterLog extends RecyclerView.Adapter<MessageAdapterLog.Vi
 
         }
 
+    }
+
+    public class ViewHolder1 extends RecyclerView.ViewHolder implements View.OnClickListener{
+
+        public TextView messageNotUser;
+        public TextView responseUserName;
+
+        public ViewHolder1(View itemView) {
+            super(itemView);
+            messageNotUser = itemView.findViewById(R.id.txtMessageNotUser);
+            responseUserName = itemView.findViewById(R.id.txtMessageUserName);
+            itemView.setOnClickListener(this);
+
+        }
+
+        @Override
+        public void onClick(View v) {
+            if(mRecyclerViewOnClickListenerHack != null){
+                mRecyclerViewOnClickListenerHack.onClickListener(v,getPosition());
+            }
+
+        }
 
     }
 

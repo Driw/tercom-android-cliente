@@ -43,10 +43,6 @@ public class MessageLog extends AbstractAppCompatActivity {
         message.setMensagens(messageList);
     }
 
-    public MessageLog(Message message) {
-        this.message = message;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

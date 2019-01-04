@@ -47,7 +47,7 @@ public class NewMessage extends AbstractAppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        createToolbar();
+        setContentView(R.layout.activity_new_message);
         ButterKnife.bind(this);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         txtDataAtual.setText(String.valueOf(sdf.format(Calendar.getInstance().getTime())));

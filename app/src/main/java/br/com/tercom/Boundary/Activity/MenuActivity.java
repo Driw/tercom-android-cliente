@@ -21,7 +21,7 @@ public class MenuActivity extends AbstractAppCompatActivity {
     @OnClick(R.id.cardManufacturer) void sendToManufacturer (){
         createIntentAbs(ManufacturerActivity.class);
     }
-    @OnClick(R.id.cardContato) void sendToPermissions (){
+    @OnClick(R.id.cardContato) void sendToMessageList (){
         createIntentAbs(MessageList.class);
     }
 
