@@ -8,22 +8,16 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.text.ParseException;
-
 import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
-import br.com.tercom.Control.LoginTercomControl;
+import br.com.tercom.Control.LoginCustomerControl;
 import br.com.tercom.Control.ProductGroupControl;
 import br.com.tercom.Entity.ApiResponse;
-import br.com.tercom.Entity.Login;
-import br.com.tercom.Entity.LoginTercom;
+import br.com.tercom.Entity.LoginCustomer;
 import br.com.tercom.Entity.ProductGroup;
 import br.com.tercom.Entity.ProductList;
-import br.com.tercom.Entity.TercomEmployee;
-import br.com.tercom.Entity.TercomProfile;
 import br.com.tercom.Entity.User;
 import br.com.tercom.Enum.EnumDialogOptions;
 import br.com.tercom.R;
-import br.com.tercom.Util.CustomPair;
 import br.com.tercom.Util.DialogConfirm;
 import br.com.tercom.Util.DialogLoading;
 import butterknife.BindView;
@@ -34,7 +28,6 @@ import static br.com.tercom.Application.AppTercom.USER_STATIC;
 import static br.com.tercom.Util.Util.toast;
 
 public class LoginActivity extends AbstractAppCompatActivity {
-
 
     private LoginTask loginTask;
 
@@ -76,10 +69,8 @@ public class LoginActivity extends AbstractAppCompatActivity {
 
     }
 
-
-
     private class LoginTask extends AsyncTask<Void,Void,Void>{
-        private ApiResponse<LoginTercom> apiResponse;
+        private ApiResponse<LoginCustomer> apiResponse;
         private String login;
         private String senha;
         private DialogLoading dialogLoading;
@@ -102,7 +93,7 @@ public class LoginActivity extends AbstractAppCompatActivity {
         protected Void doInBackground(Void... voids) {
             if(Looper.myLooper() == null)
                 Looper.prepare();
-            LoginTercomControl loginTercomControl = new LoginTercomControl(LoginActivity.this);
+            LoginCustomerControl loginTercomControl = new LoginCustomerControl(LoginActivity.this);
             apiResponse = loginTercomControl.login(login,senha);
             return null;
         }
@@ -112,7 +103,7 @@ public class LoginActivity extends AbstractAppCompatActivity {
             dialogLoading.dismissD();
             DialogConfirm dialogConfirm = new DialogConfirm(LoginActivity.this);
             if(apiResponse.getStatusBoolean()){
-                dialogConfirm.init(EnumDialogOptions.CONFIRM,"Bem vindo(a), "+ apiResponse.getResult().getTercomEmployee().getName());
+                dialogConfirm.init(EnumDialogOptions.CONFIRM,"Bem vindo(a), "+ apiResponse.getResult().getCustomerEmployee().getName());
                 dialogConfirm.onClickChanges(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -123,26 +114,6 @@ public class LoginActivity extends AbstractAppCompatActivity {
 
             }else {
                 dialogConfirm.init(EnumDialogOptions.FAIL, apiResponse.getMessage());
-                dialogConfirm.onClickChanges(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        USER_STATIC = new LoginTercom();
-                        TercomEmployee tercomEmployee = new TercomEmployee();
-                        tercomEmployee.setEmail("teste@teste");
-                        tercomEmployee.setName("Joao");
-                        TercomProfile tercomProfile = new TercomProfile();
-                        tercomProfile.setAssignmentLevel(1);
-                        tercomProfile.setId(1);
-                        try {
-                            tercomProfile.setName("Profile Name");
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                        tercomEmployee.setTercomProfile(tercomProfile);
-                        USER_STATIC.setTercomEmployee(tercomEmployee);
-                        createIntentAbs(MenuActivity.class);
-                    }
-                });
             }
         }
     }

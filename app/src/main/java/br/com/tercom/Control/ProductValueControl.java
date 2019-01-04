@@ -9,7 +9,6 @@ import android.util.Pair;
 
 import java.util.TreeMap;
 
-import br.com.tercom.Boundary.Activity.ProductValueDetails;
 import br.com.tercom.Entity.ApiResponse;
 import br.com.tercom.Entity.ProductValue;
 import br.com.tercom.Entity.ProductValueList;
