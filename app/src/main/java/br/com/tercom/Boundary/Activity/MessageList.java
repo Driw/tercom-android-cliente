@@ -33,20 +33,17 @@ public class MessageList extends AbstractAppCompatActivity {
     RecyclerView rvMessageList;
 
     @OnClick(R.id.btnNewMessage) void newMessage(){
-        Intent newMessage = new Intent(MessageList.this, NewMessage.class);
-        startActivity(newMessage);
+        createIntentAbs(NewMessage.class);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_list);
-        createToolbar();
         ButterKnife.bind(this);
-        createMessageList();
     }
 
-    private void createMessageList(){
+    /*private void createMessageList(){
         ArrayList<Message> list = new ArrayList<Message>();
         ArrayList<MessageItem> array = new ArrayList<MessageItem>();
         for (int i = 0; i < 10; i++){
@@ -64,11 +61,11 @@ public class MessageList extends AbstractAppCompatActivity {
         messageAdapter.setmRecyclerViewOnClickListenerHack(new RecyclerViewOnClickListenerHack() {
             @Override
             public void onClickListener(View view, int position) {
-                Intent messageLog = new Intent(MessageList.this, MessageLog.class);
-                startActivity(messageLog);
+                createIntentAbs(MessageLog.class);
             }
         });
         rvMessageList.setAdapter(messageAdapter);
     }
+    */
 
 }
