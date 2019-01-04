@@ -36,7 +36,7 @@ public class NewMessage extends AbstractAppCompatActivity {
         MessageItem messageItem = new MessageItem();
         ArrayList<MessageItem> currentMessage = null;
 
-        messageItem.setIdUser(Integer.parseInt(USER_STATIC.getToken()));
+        messageItem.setIdUser(USER_STATIC.getToken());
         messageItem.setMessage(txtNewMessage.toString());
         currentMessage.add(messageItem);
 
