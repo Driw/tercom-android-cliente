@@ -9,10 +9,12 @@ import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import br.com.tercom.Adapter.MessageAdapter;
 import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
 import br.com.tercom.Entity.Message;
+import br.com.tercom.Entity.MessageItem;
 import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
 import br.com.tercom.R;
 import butterknife.BindView;
@@ -41,9 +43,23 @@ public class MessageList extends AbstractAppCompatActivity {
         setContentView(R.layout.activity_message_list);
         createToolbar();
         ButterKnife.bind(this);
+        createMessageList();
     }
 
-    private void createMessageList(ArrayList<Message> list){
+    private void createMessageList(){
+        ArrayList<Message> list = new ArrayList<Message>();
+        ArrayList<MessageItem> array = new ArrayList<MessageItem>();
+        for (int i = 0; i < 10; i++){
+            Message m = new Message();
+            MessageItem mI = new MessageItem();
+            m.setSubject("subject"+i);
+            m.setDate(Calendar.getInstance().getTime());
+            m.setStatus("status"+i);
+            mI.setMessage("message"+i);
+            mI.setIdUser("user"+i);
+            array.add(mI);
+            m.setMensagens(array);
+        }
         MessageAdapter messageAdapter = new MessageAdapter(this, list);
         messageAdapter.setmRecyclerViewOnClickListenerHack(new RecyclerViewOnClickListenerHack() {
             @Override

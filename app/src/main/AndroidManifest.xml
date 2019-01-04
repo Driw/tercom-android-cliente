@@ -20,6 +20,24 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:name=".Boundary.Activity.ProviderListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Boundary.Activity.ProviderAddActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Boundary.Activity.ServiceAddActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Boundary.Activity.ProductAddActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Boundary.Activity.ProviderContactAddActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Boundary.Activity.ProviderContactUpdateActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".Boundary.Activity.LoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -28,9 +46,33 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Boundary.Activity.MessageList" />
-        <activity android:name=".Boundary.Activity.NewMessage" />
-        <activity android:name=".Boundary.Activity.MessageLog"></activity>
+        <activity
+            android:name=".Boundary.Activity.ProviderDetails"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Boundary.Activity.ProductListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Boundary.Activity.ServiceListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Boundary.Activity.ProductCategoryAddActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Boundary.Activity.ManufacturerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Boundary.Activity.ProductDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Boundary.Activity.ProductValueListActivity"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".Boundary.Activity.ProductValueDetails" />
+        <activity android:name=".Boundary.Activity.ServiceDetailsActivity" />
+        <activity android:name=".Boundary.Activity.MenuActivity" />
+        <activity android:name=".Boundary.Activity.ServicePriceDetailsActivity" />
+        <activity android:name=".Boundary.Activity.ServicePriceListAcitivity" />
+        <activity android:name=".Boundary.Activity.PermissionsActivity"></activity>
     </application>
 
 </manifest>

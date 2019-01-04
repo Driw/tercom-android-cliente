@@ -28,6 +28,7 @@ import br.com.tercom.Control.ServicePriceControl;
 import br.com.tercom.Entity.ApiResponse;
 import br.com.tercom.Entity.ProviderList;
 import br.com.tercom.Entity.ServicePrice;
+import br.com.tercom.Entity.Services;
 import br.com.tercom.Enum.EnumDialogOptions;
 import br.com.tercom.Interface.IProductValueItem;
 import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
@@ -121,9 +122,16 @@ public class ServicePriceDetailsActivity extends AbstractAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service_price);
         ButterKnife.bind(this);
-        action = getIntent().getExtras().getInt("action");
-        idService = getIntent().getExtras().getInt("idService");
-
+        //TODO: Retornar as duas linhas abaixo para seus valores corretos.
+//        action = getIntent().getExtras().getInt("action");
+//        idService = getIntent().getExtras().getInt("idService");
+        action = ACTION_UPDATE;
+        idService = 2;
+        //TODO: Remover objeto
+        ServicePrice sPrice = new ServicePrice();
+        sPrice.setId(1);
+        Services s = sPrice.getService();
+        s.setId(2);
         if (action == ACTION_UPDATE)
             configureUpdate();
 

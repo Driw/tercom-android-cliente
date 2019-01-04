@@ -4,7 +4,7 @@ public enum EnumREST {
 
     //SERVICE
     AVALIABLE("avaliable"),
-    MANUFACTURE("manufacture"),
+    MANUFACTURE("manufacturer"),
     PRODUCT("product"),
     PRODUCTFAMILY("productFamily"),
     PRODUCTGROUP("productGroup"),
@@ -19,7 +19,8 @@ public enum EnumREST {
     SITE("site"),
     PRODUCTTYPE("productType"),
     SERVICEPRICE("servicePrice"),
-
+    PERMISSION("permission"),
+    LOGINTERCOM("loginTercom"),
 
 
 
@@ -40,6 +41,9 @@ public enum EnumREST {
     SET("set"),
     SETPHONE("setPhones"),
     GETSERVICE("getService"),
+    LOGIN("login"),
+    VERIFY("verify"),
+    LOGOUT("logout"),
 
     //FILTERS
     FAMILY("family"),

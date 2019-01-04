@@ -22,6 +22,10 @@ import static br.com.tercom.Application.AppTercom.USER_STATIC;
 
 public class NewMessage extends AbstractAppCompatActivity {
 
+    Message newMessage = new Message();
+    MessageItem messageItem = new MessageItem();
+    ArrayList<MessageItem> currentMessage = new ArrayList<MessageItem>();
+
     @BindView(R.id.txtSubject)
     EditText txtSubject;
     @BindView(R.id.txtNewMessage)
@@ -30,12 +34,7 @@ public class NewMessage extends AbstractAppCompatActivity {
     TextView txtDataAtual;
 
     @OnClick(R.id.btnNewMessage)
-    Message sendNewMessage() {
-
-        Message newMessage = new Message();
-        MessageItem messageItem = new MessageItem();
-        ArrayList<MessageItem> currentMessage = null;
-
+     void sendNewMessage() {
         messageItem.setIdUser(USER_STATIC.getToken());
         messageItem.setMessage(txtNewMessage.toString());
         currentMessage.add(messageItem);
@@ -43,9 +42,6 @@ public class NewMessage extends AbstractAppCompatActivity {
         newMessage.setDate(Calendar.getInstance().getTime());
         newMessage.setSubject(txtSubject.toString());
         newMessage.setMensagens(currentMessage);
-
-        return newMessage;
-
     }
 
     @Override

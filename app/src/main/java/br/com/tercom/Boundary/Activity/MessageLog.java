@@ -2,6 +2,7 @@ package br.com.tercom.Boundary.Activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -32,6 +33,8 @@ public class MessageLog extends AbstractAppCompatActivity {
     TextView txtMessageUserName;
     @BindView(R.id.txtNewMessage)
     EditText txtNewMessage;
+    @BindView(R.id.rvMessageLog)
+    RecyclerView rvMessageLog;
 
     @OnClick(R.id.btnRespond) void addNewMessage(){
         newMessageItem.setMessage(txtNewMessage.getText().toString());
@@ -50,7 +53,8 @@ public class MessageLog extends AbstractAppCompatActivity {
         setContentView(R.layout.activity_message_log);
         createToolbar();
         ButterKnife.bind(this);
-        MessageAdapterLog adapter = new MessageAdapterLog(this, message.getMensagens());
+        MessageAdapterLog messageAdapterLog = new MessageAdapterLog(this, message.getMensagens());
+        rvMessageLog.setAdapter(messageAdapterLog);
     }
 
 }

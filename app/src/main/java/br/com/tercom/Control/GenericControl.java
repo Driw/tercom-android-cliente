@@ -64,7 +64,7 @@ public abstract class GenericControl {
      */
 
     protected  String[] getValuesBase() {
-        return new String[] {AppTercom.USER_STATIC.getEmail(), AppTercom.USER_STATIC.getSenha()};
+        return new String[] {AppTercom.USER_STATIC.getTercomEmployee().getEmail(), AppTercom.USER_STATIC.getTercomEmployee().getPassword()};
     }
 
     /**
@@ -355,7 +355,6 @@ public abstract class GenericControl {
         return String.format(Locale.US,"%s=%s",key,result);
     }
 
-
     protected String getMultiplesParameters(String... param){
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i< param.length; i++){
@@ -368,6 +367,7 @@ public abstract class GenericControl {
 
         return sb.toString();
     }
+
 
 
 

@@ -22,6 +22,13 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import br.com.tercom.Application.AppTercom;
 import br.com.tercom.Boundary.Activity.LoginActivity;
+import br.com.tercom.Boundary.Activity.ManufacturerActivity;
+import br.com.tercom.Boundary.Activity.MenuActivity;
+import br.com.tercom.Boundary.Activity.ProductAddActivity;
+import br.com.tercom.Boundary.Activity.ProductListActivity;
+import br.com.tercom.Boundary.Activity.ProviderListActivity;
+import br.com.tercom.Boundary.Activity.ServiceAddActivity;
+import br.com.tercom.Boundary.Activity.ServiceListActivity;
 import br.com.tercom.Enum.EnumFont;
 import br.com.tercom.R;
 import br.com.tercom.Util.CustomTypeFace;
@@ -75,7 +82,7 @@ public abstract class AbstractAppCompatActivity extends AppCompatActivity {
         mToolbar.setTitleMarginBottom(10);
         setSupportActionBar(mToolbar);
         TextView textTitle = mToolbar.findViewById(R.id.textTitle);
-        textTitle.setTypeface(setFontSingleTxt(AppTercom.getContext(), EnumFont.FONT_RNS));
+//        textTitle.setTypeface(setFontSingleTxt(AppTercom.getContext(), EnumFont.FONT_RNS));
         CreateNavigationDrawer(mToolbar, index);
     }
 
@@ -87,7 +94,7 @@ public abstract class AbstractAppCompatActivity extends AppCompatActivity {
                 .withProfileImagesVisible(true)
                 .withCompactStyle(true)
                 .withDividerBelowHeader(true)
-                .addProfiles(new ProfileDrawerItem().withEmail(USER_STATIC.getEmail()).withName("Felipe Amalfi Lima"))
+                .addProfiles(new ProfileDrawerItem().withEmail(USER_STATIC.getTercomEmployee().getEmail()).withName(USER_STATIC.getTercomEmployee().getName()))
                 .withTextColor(Color.BLACK)
                 .build();
 
@@ -111,19 +118,19 @@ public abstract class AbstractAppCompatActivity extends AppCompatActivity {
                         //TODO
                         switch (position) {
                             case 1:
-                                createIntentAbs(LoginActivity.class);
+                                createIntentAbs(MenuActivity.class);
                                 break;
                             case 2:
-                                createIntentAbs(LoginActivity.class);
+                                createIntentAbs(ProductListActivity.class);
                                 break;
                             case 3:
-                                createIntentAbs(LoginActivity.class);
+                                createIntentAbs(ServiceListActivity.class);
                                 break;
                             case 4:
-                                createIntentAbs(LoginActivity.class);
+                                createIntentAbs(ProviderListActivity.class);
                                 break;
                             case 5:
-                                createIntentAbs(LoginActivity.class);
+                                createIntentAbs(ManufacturerActivity.class);
                                 break;
                             default:
                                 createIntentAbs(LoginActivity.class);

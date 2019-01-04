@@ -1,8 +1,9 @@
 package br.com.tercom.Entity;
 
 import br.com.tercom.Annotation.BindObject;
+import br.com.tercom.Interface.IProductValueItem;
 
-public class ServicePrice extends GenericEntity {
+public class ServicePrice extends GenericEntity implements IProductValueItem {
     private int id;
     @BindObject()
     private Services service;
