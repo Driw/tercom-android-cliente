@@ -26,10 +26,6 @@ public class NewMessage extends AbstractAppCompatActivity {
     MessageItem messageItem = new MessageItem();
     ArrayList<MessageItem> currentMessage = new ArrayList<MessageItem>();
 
-    @BindView(R.id.txtSubjectField)
-    EditText txtSubjectField;
-    @BindView(R.id.txtSendMessage)
-    EditText txtSendMessage;
     @BindView(R.id.txtDate)
     TextView txtDataAtual;
 

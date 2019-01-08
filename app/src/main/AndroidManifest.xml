@@ -76,6 +76,10 @@
         <activity android:name=".Boundary.Activity.MessageList" />
         <activity android:name=".Boundary.Activity.NewMessage" />
         <activity android:name=".Boundary.Activity.MessageLog" />
+        <activity android:name=".Boundary.Activity.OrderList" />
+        <activity android:name=".Boundary.Activity.NewOrderList" />
+        <activity android:name=".Boundary.Activity.NewOrderItem" />
+        <activity android:name=".Boundary.Activity.OrderDetail" />
     </application>
 
 </manifest>

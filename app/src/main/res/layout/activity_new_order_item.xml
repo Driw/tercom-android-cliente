@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <include
+        android:id="@+id/include_toolbar"
+        layout="@layout/component_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/rv_OrderList"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnOrderItemAdd"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Adicionar"
+        android:background="@drawable/shape_rec_blue_rounded"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/txtOrderProductLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginBottom="6dp"
+        android:text="Produto:"
+        app:layout_constraintBottom_toTopOf="@+id/txtOrderManufacturerLabel"
+        app:layout_constraintEnd_toStartOf="@+id/txtOrderProductName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include_toolbar" />
+
+    <TextView
+        android:id="@+id/txtOrderManufacturerLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="6dp"
+        android:text="Fabricante:"
+        app:layout_constraintBottom_toTopOf="@+id/txtOrderproviderLabel"
+        app:layout_constraintEnd_toStartOf="@+id/txtOrderManufacturerName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtOrderProductLabel" />
+
+    <TextView
+        android:id="@+id/txtOrderproviderLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:text="Fornecedor:"
+        app:layout_constraintEnd_toStartOf="@+id/txtOrderProviderName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtOrderManufacturerLabel" />
+
+    <TextView
+        android:id="@+id/txtOrderDescriptionLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="4dp"
+        android:text="Informações Adicionais:"
+        app:layout_constraintBottom_toTopOf="@+id/cardView13"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtOrderproviderLabel" />
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardView13"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="64dp"
+        app:cardCornerRadius="@dimen/materialize_typography_body1"
+        app:cardElevation="@dimen/materialize_typography_body1"
+        app:layout_constraintBottom_toTopOf="@+id/btnOrderItemAdd"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtOrderDescriptionLabel">
+
+        <EditText
+            android:id="@+id/txtOrderInformation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Informações complementares"
+            android:inputType="textPersonName"
+            android:textSize="14sp" />
+    </android.support.v7.widget.CardView>
+
+    <EditText
+        android:id="@+id/txtOrderProductName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="32dp"
+        android:ems="10"
+        android:hint="Nome do produto"
+        android:inputType="textPersonName"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/txtOrderManufacturerName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txtOrderProductLabel"
+        app:layout_constraintTop_toBottomOf="@+id/include_toolbar" />
+
+    <EditText
+        android:id="@+id/txtOrderManufacturerName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:ems="10"
+        android:hint="Opcional"
+        android:inputType="textPersonName"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/txtOrderProviderName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/txtOrderManufacturerLabel"
+        app:layout_constraintTop_toBottomOf="@+id/txtOrderProductName" />
+
+    <EditText
+        android:id="@+id/txtOrderProviderName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="20dp"
+        android:ems="10"
+        android:hint="Opcional"
+        android:inputType="textPersonName"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/txtOrderDescriptionLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txtOrderproviderLabel"
+        app:layout_constraintTop_toBottomOf="@+id/txtOrderManufacturerName" />
+
+
+</android.support.constraint.ConstraintLayout>

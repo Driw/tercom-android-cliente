@@ -27,6 +27,9 @@ public class MenuActivity extends AbstractAppCompatActivity {
     @OnClick(R.id.cardContato) void sendToPermissions (){
         createIntentAbs(MessageList.class);
     }
+    @OnClick(R.id.cardOrder) void sendToOrder (){
+        createIntentAbs(OrderList.class);
+    }
 
     @BindView(R.id.textView4)
     TextView txtWelcome;

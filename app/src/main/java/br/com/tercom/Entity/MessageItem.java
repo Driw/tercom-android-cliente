@@ -3,7 +3,7 @@ package br.com.tercom.Entity;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class MessageItem {
+public class MessageItem extends GenericEntity{
 
     private String message;
     private int idUser;
