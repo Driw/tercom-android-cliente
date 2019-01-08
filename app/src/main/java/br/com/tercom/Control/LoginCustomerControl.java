@@ -27,7 +27,7 @@ public class LoginCustomerControl extends GenericControl {
 
         try{
             String link = getBase(EnumREST.SITE, EnumREST.LOGINCUSTOMER, EnumREST.LOGIN);
-            Pair<String, String> completePost = new Pair<>(link, getPostValues(map));
+            Pair<String, String> completePost = new Pair<>(link, getPostValues(map, true));
             CustomPair<String> jsonResult =  callJson(EnumMethod.POST,activity,completePost);
             ApiResponse<LoginCustomer> providerApiResponse = new ApiResponse<>(LoginCustomer.class);
             if(jsonResult.first){
@@ -43,9 +43,9 @@ public class LoginCustomerControl extends GenericControl {
 
     public ApiResponse verify(int idLogin, int idCustomerEmployee, String token){
         TreeMap<String, String> map = new TreeMap<>();
-        map.put("idLogin", String.valueOf(idLogin));
-        map.put("idCustomerEmployee", String.valueOf(idCustomerEmployee));
-        map.put("token", token);
+        map.put("login_id", String.valueOf(idLogin));
+        map.put("login_customerEmployee", String.valueOf(idCustomerEmployee));
+        map.put("login_token", token);
         try{
             String link = getBase(EnumREST.SITE, EnumREST.LOGINCUSTOMER, EnumREST.VERIFY);
             Pair<String, String> completePost = new Pair<>(link, getPostValues(map));
@@ -64,9 +64,9 @@ public class LoginCustomerControl extends GenericControl {
 
     public ApiResponse logout(int idLogin, int idCustomerEmployee, String token){
         TreeMap<String, String> map = new TreeMap<>();
-        map.put("idLogin", String.valueOf(idLogin));
-        map.put("idCustomerEmployee", String.valueOf(idCustomerEmployee));
-        map.put("token", token);
+        map.put("Login_id", String.valueOf(idLogin));
+        map.put("login_customerEmployee", String.valueOf(idCustomerEmployee));
+        map.put("login_token", token);
         try{
             String link = getBase(EnumREST.SITE, EnumREST.LOGINCUSTOMER, EnumREST.LOGOUT);
             Pair<String, String> completePost = new Pair<>(link, getPostValues(map));

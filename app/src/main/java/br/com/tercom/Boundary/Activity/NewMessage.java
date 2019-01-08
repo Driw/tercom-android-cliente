@@ -26,22 +26,23 @@ public class NewMessage extends AbstractAppCompatActivity {
     MessageItem messageItem = new MessageItem();
     ArrayList<MessageItem> currentMessage = new ArrayList<MessageItem>();
 
-    @BindView(R.id.txtSubject)
-    EditText txtSubject;
-    @BindView(R.id.txtNewMessage)
-    EditText txtNewMessage;
+    @BindView(R.id.txtSubjectField)
+    EditText txtSubjectField;
+    @BindView(R.id.txtSendMessage)
+    EditText txtSendMessage;
     @BindView(R.id.txtDate)
     TextView txtDataAtual;
 
     @OnClick(R.id.btnNewMessage)
      void sendNewMessage() {
-        messageItem.setIdUser(USER_STATIC.getCustomerEmployeeId());
+        /*messageItem.setIdUser(USER_STATIC.getCustomerEmployeeId());
         messageItem.setMessage(txtNewMessage.toString());
+        messageItem.setMessageTime(Calendar.getInstance().getTime());
         currentMessage.add(messageItem);
 
         newMessage.setDate(Calendar.getInstance().getTime());
-        newMessage.setSubject(txtSubject.toString());
-        newMessage.setMensagens(currentMessage);
+        newMessage.setSubject(txtSubjectField.toString());
+        newMessage.setMensagens(currentMessage);*/
     }
 
     @Override

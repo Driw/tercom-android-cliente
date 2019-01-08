@@ -28,7 +28,7 @@ public class LoginTercomControl extends GenericControl {
 
         try{
             String link = getBase(EnumREST.SITE, EnumREST.LOGINCUSTOMER, EnumREST.LOGIN);
-            Pair<String, String> completePost = new Pair<>(link, getPostValues(map));
+            Pair<String, String> completePost = new Pair<>(link, getPostValues(map, true));
             CustomPair<String> jsonResult =  callJson(EnumMethod.POST,activity,completePost);
             ApiResponse<LoginTercom> providerApiResponse = new ApiResponse<>(LoginTercom.class);
             if(jsonResult.first){
@@ -44,9 +44,9 @@ public class LoginTercomControl extends GenericControl {
 
     public ApiResponse verify(int idLogin, int idTercomEmployee, String token){
         TreeMap<String, String> map = new TreeMap<>();
-        map.put("idLogin", String.valueOf(idLogin));
-        map.put("idTercomEmployee", String.valueOf(idTercomEmployee));
-        map.put("token", token);
+        map.put("login_id", String.valueOf(idLogin));
+        map.put("login_tercomEmployee", String.valueOf(idTercomEmployee));
+        map.put("login_token", token);
         try{
             String link = getBase(EnumREST.SITE, EnumREST.LOGINCUSTOMER, EnumREST.VERIFY);
             Pair<String, String> completePost = new Pair<>(link, getPostValues(map));
@@ -65,9 +65,9 @@ public class LoginTercomControl extends GenericControl {
 
     public ApiResponse logout(int idLogin, int idTercomEmployee, String token){
         TreeMap<String, String> map = new TreeMap<>();
-        map.put("idLogin", String.valueOf(idLogin));
-        map.put("idTercomEmployee", String.valueOf(idTercomEmployee));
-        map.put("token", token);
+        map.put("login_id", String.valueOf(idLogin));
+        map.put("login_tercomEmployee", String.valueOf(idTercomEmployee));
+        map.put("login_token", token);
         try{
             String link = getBase(EnumREST.SITE, EnumREST.LOGINCUSTOMER, EnumREST.LOGOUT);
             Pair<String, String> completePost = new Pair<>(link, getPostValues(map));

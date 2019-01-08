@@ -28,10 +28,9 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/btnNewMessage"
+            android:id="@+id/btnStartContact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:background="@drawable/shape_rec_blue_rounded"
             android:text="Iniciar contato"
             android:textColor="@color/colorPrimary"

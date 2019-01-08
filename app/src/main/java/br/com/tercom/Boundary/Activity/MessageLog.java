@@ -25,12 +25,6 @@ public class MessageLog extends AbstractAppCompatActivity {
     private MessageItem newMessageItem;
     private Message message;
 
-    @BindView(R.id.txtMessageUser)
-    TextView txtMessageUser;
-    @BindView(R.id.txtMessageNotUser)
-    TextView txtMessageNotUser;
-    @BindView(R.id.txtMessageUserName)
-    TextView txtMessageUserName;
     @BindView(R.id.txtNewMessage)
     EditText txtNewMessage;
     @BindView(R.id.rvMessageLog)
@@ -49,8 +43,8 @@ public class MessageLog extends AbstractAppCompatActivity {
         setContentView(R.layout.activity_message_log);
         createToolbar();
         ButterKnife.bind(this);
-        MessageAdapterLog messageAdapterLog = new MessageAdapterLog(this, message.getMensagens());
-        rvMessageLog.setAdapter(messageAdapterLog);
+        /*MessageAdapterLog messageAdapterLog = new MessageAdapterLog(this, message.getMensagens());
+        rvMessageLog.setAdapter(messageAdapterLog);*/
     }
 
 }

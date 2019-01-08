@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -23,16 +24,10 @@ import butterknife.OnClick;
 
 public class MessageList extends AbstractAppCompatActivity {
 
-    @BindView(R.id.txtSubject)
-    TextView txtSubject;
-    @BindView(R.id.txtDate)
-    TextView txtDate;
-    @BindView(R.id.txtStatus)
-    TextView txtxSatus;
     @BindView(R.id.rvMessageList)
     RecyclerView rvMessageList;
 
-    @OnClick(R.id.btnNewMessage) void newMessage(){
+    @OnClick(R.id.btnStartContact) void newMessage(){
         createIntentAbs(NewMessage.class);
     }
 
@@ -53,7 +48,7 @@ public class MessageList extends AbstractAppCompatActivity {
             m.setDate(Calendar.getInstance().getTime());
             m.setStatus("status"+i);
             mI.setMessage("message"+i);
-            mI.setIdUser("user"+i);
+            mI.setIdUser(i);
             array.add(mI);
             m.setMensagens(array);
         }
@@ -65,7 +60,7 @@ public class MessageList extends AbstractAppCompatActivity {
             }
         });
         rvMessageList.setAdapter(messageAdapter);
-    }
-    */
+    }*/
+
 
 }
