@@ -9,6 +9,15 @@ public class MessageItem extends GenericEntity{
     private int idUser;
     private Date messageTime;
 
+    public MessageItem() {
+    }
+
+    public MessageItem(String message, int idUser, Date messageTime) {
+        this.message = message;
+        this.idUser = idUser;
+        this.messageTime = messageTime;
+    }
+
     public Date getMessageTime() {
         return messageTime;
     }

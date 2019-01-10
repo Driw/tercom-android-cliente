@@ -45,45 +45,24 @@ public class MessageAdapterLog extends RecyclerView.Adapter<MessageAdapterLog.Vi
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+         switch (viewType){
+                case 0:
+                    View v0 = layoutInflater.inflate(R.layout.item_message_user, parent, false);
+                    return new ViewHolder(v0);
 
-       View v = layoutInflater.inflate(R.layout.item_message_user,parent,false);
-       ViewHolder vh = new ViewHolder(v);
-       return vh;
+                case 1:
+                    View v1 = layoutInflater.inflate(R.layout.item_message_notuser, parent, false);
+                    return new ViewHolder(v1);
 
-//        for (MessageItem m: messageItem) {
-//            switch (viewType){
-//                case 0:
-//                    View v = layoutInflater.inflate(R.layout.item_message_user, parent, false);
-//                    return new ViewHolder(v);
-//                    break;
-//
-//                case 1:
-//                    View v2 = layoutInflater.inflate(R.layout.item_message_notuser, parent, false);
-//                    return new ViewHolder(v2);
-//                    break;
-//
-//            }
-//        }
+                default:
+                    View vDefault = layoutInflater.inflate(R.layout.item_message_user, parent, false);
+                    return new ViewHolder(vDefault);
+            }
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
-        for(MessageItem m: messageItem){
-            holder.messageUser.setText(messageItem.get(position).getMessage());
-        }
-
-//        switch (holder.getItemViewType()){
-//            case 0:
-//                ViewHolder vh0 = (ViewHolder)holder;
-//                holder.messageUser.setText(messageItem.get(position).getMessage());
-//
-//            case 1:
-//                ViewHolder1 vh1 = (ViewHolder1)holder;
-//                holder.messageNotUser.setText(messageItem.get(position).getMessage());
-//                holder.responseUserName.setText(messageItem.get(position).getIdUser());
-//        }
-
+        holder.messageUser.setText(messageItem.get(position).getMessage());
     }
 
     @Override
@@ -93,13 +72,11 @@ public class MessageAdapterLog extends RecyclerView.Adapter<MessageAdapterLog.Vi
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         public TextView messageUser;
-        public TextView messageNotUser;
         public TextView responseUserName;
 
         public ViewHolder(View itemView) {
             super(itemView);
             messageUser = itemView.findViewById(R.id.txtMessageUser);
-            messageNotUser = itemView.findViewById(R.id.txtMessageNotUser);
             responseUserName = itemView.findViewById(R.id.txtMessageUserName);
             itemView.setOnClickListener(this);
 
@@ -114,30 +91,5 @@ public class MessageAdapterLog extends RecyclerView.Adapter<MessageAdapterLog.Vi
         }
 
     }
-
-    public class ViewHolder1 extends RecyclerView.ViewHolder implements View.OnClickListener{
-
-        public TextView messageNotUser;
-        public TextView responseUserName;
-
-        public ViewHolder1(View itemView) {
-            super(itemView);
-            messageNotUser = itemView.findViewById(R.id.txtMessageNotUser);
-            responseUserName = itemView.findViewById(R.id.txtMessageUserName);
-            itemView.setOnClickListener(this);
-
-        }
-
-        @Override
-        public void onClick(View v) {
-            if(mRecyclerViewOnClickListenerHack != null){
-                mRecyclerViewOnClickListenerHack.onClickListener(v,getPosition());
-            }
-
-        }
-
-    }
-
-
 
 }

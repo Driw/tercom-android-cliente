@@ -28,7 +28,7 @@ public class MessageList extends AbstractAppCompatActivity {
     RecyclerView rvMessageList;
 
     @OnClick(R.id.btnStartContact) void newMessage(){
-        createIntentAbs(NewMessage.class);
+        createIntentAbs(MessageLog.class);
     }
 
     @Override

@@ -156,9 +156,6 @@ public abstract class GenericControl {
         return map;
     }
 
-
-
-
     /**
      * Usado em GET e POST, ele gera os parametros baseado no formato (valor_valor) e retorna uma string completa com todos valores do array.
      * @param values É um array de strings que contém todos os valores necessários para a chamada.
