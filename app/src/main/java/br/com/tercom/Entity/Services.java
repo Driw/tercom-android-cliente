@@ -54,4 +54,5 @@ public class Services extends GenericEntity{
     public void setInactive(boolean inactive) {
         this.inactive = inactive;
     }
+
 }

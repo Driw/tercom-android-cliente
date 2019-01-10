@@ -1,5 +1,7 @@
 package br.com.tercom.Boundary.Activity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Looper;
@@ -9,11 +11,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
 import br.com.tercom.Control.LoginCustomerControl;
 import br.com.tercom.Control.ProductGroupControl;
 import br.com.tercom.Entity.ApiResponse;
 import br.com.tercom.Entity.LoginCustomer;
+import br.com.tercom.Entity.LoginTercom;
 import br.com.tercom.Entity.ProductGroup;
 import br.com.tercom.Entity.ProductList;
 import br.com.tercom.Entity.User;
@@ -30,7 +35,11 @@ import static br.com.tercom.Util.Util.toast;
 
 public class LoginActivity extends AbstractAppCompatActivity {
 
+    private static final String STRING_REFERENCE = "login_costumer";
+    private static final String STRING_LOGIN = "login";
+
     private LoginTask loginTask;
+    private SharedPreferences sharedPreferences;
 
     @BindView(R.id.txtEmail)
     EditText txtEmail;
@@ -71,6 +80,17 @@ public class LoginActivity extends AbstractAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_boundary);
         ButterKnife.bind(this);
+        sharedPreferences =  getSharedPreferences(STRING_REFERENCE, Context.MODE_PRIVATE);
+        try {
+            String getJson = sharedPreferences.getString(STRING_LOGIN,"");
+            if(!TextUtils.isEmpty(getJson)) {
+                USER_STATIC = new Gson().fromJson(getJson, LoginCustomer.class);
+                createIntentAbs(MenuActivity.class);
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
 
@@ -113,6 +133,9 @@ public class LoginActivity extends AbstractAppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         USER_STATIC = apiResponse.getResult();
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString(STRING_LOGIN, new Gson().toJson(USER_STATIC));
+                        editor.apply();
                         createIntentAbs(MenuActivity.class);
                     }
                 });

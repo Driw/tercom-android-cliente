@@ -2,11 +2,13 @@ package br.com.tercom.Boundary.Activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import static br.com.tercom.Application.AppTercom.USER_STATIC;
 
@@ -33,7 +35,14 @@ public class MessageLog extends AbstractAppCompatActivity {
     @OnClick(R.id.btnRespond) void addNewMessage(){
         newMessageItem.setMessage(txtNewMessage.getText().toString());
         newMessageItem.setIdUser(USER_STATIC.getCustomerEmployeeId());
-        messageList.add(newMessageItem);
+//        messageList.add(newMessageItem);
+        messageList.add(new MessageItem("bla bla bla",USER_STATIC.getId(),Calendar.getInstance().getTime()));
+        messageList.add(new MessageItem("bla bla bla",423423,Calendar.getInstance().getTime()));
+        messageList.add(new MessageItem("bla bla bla",USER_STATIC.getId(),Calendar.getInstance().getTime()));
+        messageList.add(new MessageItem("bla bla bla",43243223,Calendar.getInstance().getTime()));
+        messageList.add(new MessageItem("bla bla bla",USER_STATIC.getId(),Calendar.getInstance().getTime()));
+        messageList.add(new MessageItem("bla bla bla",423423423,Calendar.getInstance().getTime()));
+        messageList.add(new MessageItem("bla bla bla",USER_STATIC.getId(),Calendar.getInstance().getTime()));
         message.setMensagens(messageList);
     }
 
@@ -43,8 +52,20 @@ public class MessageLog extends AbstractAppCompatActivity {
         setContentView(R.layout.activity_message_log);
         createToolbar();
         ButterKnife.bind(this);
-        /*MessageAdapterLog messageAdapterLog = new MessageAdapterLog(this, message.getMensagens());
-        rvMessageLog.setAdapter(messageAdapterLog);*/
+        messageList = new ArrayList<>();
+        messageList.add(new MessageItem("bla bla bla",USER_STATIC.getId(),Calendar.getInstance().getTime()));
+        messageList.add(new MessageItem("bla bla bla",423423,Calendar.getInstance().getTime()));
+        messageList.add(new MessageItem("bla bla bla",USER_STATIC.getId(),Calendar.getInstance().getTime()));
+        messageList.add(new MessageItem("bla bla bla",43243223,Calendar.getInstance().getTime()));
+        messageList.add(new MessageItem("bla bla bla",USER_STATIC.getId(),Calendar.getInstance().getTime()));
+        messageList.add(new MessageItem("bla bla bla",423423423,Calendar.getInstance().getTime()));
+        messageList.add(new MessageItem("bla bla bla",USER_STATIC.getId(),Calendar.getInstance().getTime()));
+        message = new Message();
+        message.setMensagens(messageList);
+        MessageAdapterLog messageAdapterLog = new MessageAdapterLog(this, message.getMensagens());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
+        rvMessageLog.setLayoutManager(layoutManager);
+        rvMessageLog.setAdapter(messageAdapterLog);
     }
 
 }

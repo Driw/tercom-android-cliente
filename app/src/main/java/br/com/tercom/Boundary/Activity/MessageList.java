@@ -31,7 +31,7 @@ public class MessageList extends AbstractAppCompatActivity {
     ArrayList<MessageItem> array = new ArrayList<MessageItem>();
 
     @OnClick(R.id.btnStartContact) void newMessage(){
-        createIntentAbs(NewMessage.class);
+        createIntentAbs(MessageLog.class);
     }
 
     @Override
