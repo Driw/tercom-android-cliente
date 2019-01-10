@@ -35,15 +35,7 @@ public class MessageLog extends AbstractAppCompatActivity {
     @OnClick(R.id.btnRespond) void addNewMessage(){
         newMessageItem.setMessage(txtNewMessage.getText().toString());
         newMessageItem.setIdUser(USER_STATIC.getCustomerEmployeeId());
-//        messageList.add(newMessageItem);
-        messageList.add(new MessageItem("bla bla bla",USER_STATIC.getId(),Calendar.getInstance().getTime()));
-        messageList.add(new MessageItem("bla bla bla",423423,Calendar.getInstance().getTime()));
-        messageList.add(new MessageItem("bla bla bla",USER_STATIC.getId(),Calendar.getInstance().getTime()));
-        messageList.add(new MessageItem("bla bla bla",43243223,Calendar.getInstance().getTime()));
-        messageList.add(new MessageItem("bla bla bla",USER_STATIC.getId(),Calendar.getInstance().getTime()));
-        messageList.add(new MessageItem("bla bla bla",423423423,Calendar.getInstance().getTime()));
-        messageList.add(new MessageItem("bla bla bla",USER_STATIC.getId(),Calendar.getInstance().getTime()));
-        message.setMensagens(messageList);
+        messageList.add(newMessageItem);
     }
 
     @Override
@@ -52,6 +44,14 @@ public class MessageLog extends AbstractAppCompatActivity {
         setContentView(R.layout.activity_message_log);
         createToolbar();
         ButterKnife.bind(this);
+        populate();
+        MessageAdapterLog messageAdapterLog = new MessageAdapterLog(this, message.getMensagens());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
+        rvMessageLog.setLayoutManager(layoutManager);
+        rvMessageLog.setAdapter(messageAdapterLog);
+    }
+
+    private void populate() {
         messageList = new ArrayList<>();
         messageList.add(new MessageItem("bla bla bla",USER_STATIC.getId(),Calendar.getInstance().getTime()));
         messageList.add(new MessageItem("bla bla bla",423423,Calendar.getInstance().getTime()));
@@ -60,12 +60,9 @@ public class MessageLog extends AbstractAppCompatActivity {
         messageList.add(new MessageItem("bla bla bla",USER_STATIC.getId(),Calendar.getInstance().getTime()));
         messageList.add(new MessageItem("bla bla bla",423423423,Calendar.getInstance().getTime()));
         messageList.add(new MessageItem("bla bla bla",USER_STATIC.getId(),Calendar.getInstance().getTime()));
+        messageList.add(new MessageItem("Teste",423423423,Calendar.getInstance().getTime()));
         message = new Message();
         message.setMensagens(messageList);
-        MessageAdapterLog messageAdapterLog = new MessageAdapterLog(this, message.getMensagens());
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
-        rvMessageLog.setLayoutManager(layoutManager);
-        rvMessageLog.setAdapter(messageAdapterLog);
     }
 
 }

@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -24,14 +26,14 @@ import butterknife.OnClick;
 
 public class MessageList extends AbstractAppCompatActivity {
 
+    ArrayList<Message> messages;
+    ArrayList<MessageItem> messageItem;
+
     @BindView(R.id.rvMessageList)
     RecyclerView rvMessageList;
 
-    ArrayList<Message> list = new ArrayList<Message>();
-    ArrayList<MessageItem> array = new ArrayList<MessageItem>();
-
     @OnClick(R.id.btnStartContact) void newMessage(){
-        createIntentAbs(MessageLog.class);
+        createIntentAbs(NewMessage.class);
     }
 
     @Override
@@ -39,19 +41,30 @@ public class MessageList extends AbstractAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_list);
         ButterKnife.bind(this);
-        createMessageList();
-    }
-
-    private void createMessageList(){
-        MessageAdapter messageAdapter = new MessageAdapter(this, list);
+        createToolbar();
+        populate();
+        MessageAdapter messageAdapter = new MessageAdapter(this, messages);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayout.VERTICAL, false);
+        rvMessageList.setLayoutManager(layoutManager);
+        rvMessageList.setAdapter(messageAdapter);
         messageAdapter.setmRecyclerViewOnClickListenerHack(new RecyclerViewOnClickListenerHack() {
             @Override
             public void onClickListener(View view, int position) {
                 createIntentAbs(MessageLog.class);
             }
         });
-        rvMessageList.setAdapter(messageAdapter);
     }
 
+    private void populate(){
+        messages = new ArrayList<Message>();
+        messageItem = new ArrayList<MessageItem>();
+        for (int i = 0; i < 5; i++){
+            Message m = new Message();
+            m.setSubject("Subject");
+            m.setDate(Calendar.getInstance().getTime());
+            m.setMensagens(messageItem);
+            messages.add(m);
+        }
+    }
 
 }

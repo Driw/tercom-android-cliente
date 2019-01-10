@@ -10,16 +10,14 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-
-import br.com.tercom.Entity.MessageItem;
+import br.com.tercom.Entity.ProdutoGenerico;
 import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
 import br.com.tercom.R;
-import static br.com.tercom.Application.AppTercom.USER_STATIC;
 
-public class MessageAdapterLog extends RecyclerView.Adapter<MessageAdapterLog.ViewHolder> {
+public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.ViewHolder> {
 
+    private ArrayList<ProdutoGenerico> produtos;
     private LayoutInflater layoutInflater;
-    private ArrayList<MessageItem> messageItem;
     private Context context;
 
     private RecyclerViewOnClickListenerHack mRecyclerViewOnClickListenerHack;
@@ -28,54 +26,40 @@ public class MessageAdapterLog extends RecyclerView.Adapter<MessageAdapterLog.Vi
         this.mRecyclerViewOnClickListenerHack = mRecyclerViewOnClickListenerHack;
     }
 
-    public MessageAdapterLog(Context c, ArrayList<MessageItem> messages) {
+    public OrderDetailAdapter (Context c, ArrayList<ProdutoGenerico> produtos){
         layoutInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.messageItem = messages;
+        this.produtos = produtos;
         this.context = c;
     }
 
     @Override
-    public int getItemViewType(int position) {
-        if (messageItem.get(position).getIdUser() == USER_STATIC.getId()) {
-            return 0;
-        } else {
-            return 1;
-        }
-    }
-
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-         switch (viewType){
-                case 0:
-                    View v0 = layoutInflater.inflate(R.layout.item_message_user, parent, false);
-                    return new ViewHolder(v0);
-
-                case 1:
-                    View v1 = layoutInflater.inflate(R.layout.item_message_notuser, parent, false);
-                    return new ViewHolder(v1);
-
-                default:
-                    View vDefault = layoutInflater.inflate(R.layout.item_message_user, parent, false);
-                    return new ViewHolder(vDefault);
-            }
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = layoutInflater.inflate(R.layout.item_order_detail, parent, false);
+        return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.messageUser.setText(messageItem.get(position).getMessage());
+        holder.txtOrderDetailProductName.setText(produtos.get(position).getName());
+        holder.txtOrderDetailManufacturerName.setText(produtos.get(position).getManufacturer());
+        holder.txtOrderDetailProviderName.setText(produtos.get(position).getProvider());
     }
 
     @Override
-    public int getItemCount() { return messageItem.size(); }
-
+    public int getItemCount() {
+        return produtos.size();
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-
-        public TextView messageUser;
+        public TextView txtOrderDetailProductName;
+        public TextView txtOrderDetailManufacturerName;
+        public TextView txtOrderDetailProviderName;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            messageUser = itemView.findViewById(R.id.txtMessageUser);
+            txtOrderDetailProductName = itemView.findViewById(R.id.txtOrderDetailProductName);
+            txtOrderDetailManufacturerName = itemView.findViewById(R.id.txtOrderDetailManufacturerName);
+            txtOrderDetailProviderName = itemView.findViewById(R.id.txtOrderDetailProviderName);
             itemView.setOnClickListener(this);
 
         }
