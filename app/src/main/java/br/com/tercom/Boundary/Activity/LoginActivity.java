@@ -3,6 +3,7 @@ package br.com.tercom.Boundary.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Looper;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -60,6 +61,10 @@ public class LoginActivity extends AbstractAppCompatActivity {
 
 
     }
+
+    /*@OnClick(R.id.btn_login) void login() {
+        createIntentAbs(MenuActivity.class);
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

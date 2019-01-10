@@ -27,6 +27,9 @@ public class MessageList extends AbstractAppCompatActivity {
     @BindView(R.id.rvMessageList)
     RecyclerView rvMessageList;
 
+    ArrayList<Message> list = new ArrayList<Message>();
+    ArrayList<MessageItem> array = new ArrayList<MessageItem>();
+
     @OnClick(R.id.btnStartContact) void newMessage(){
         createIntentAbs(NewMessage.class);
     }
@@ -36,22 +39,10 @@ public class MessageList extends AbstractAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_list);
         ButterKnife.bind(this);
+        createMessageList();
     }
 
-    /*private void createMessageList(){
-        ArrayList<Message> list = new ArrayList<Message>();
-        ArrayList<MessageItem> array = new ArrayList<MessageItem>();
-        for (int i = 0; i < 10; i++){
-            Message m = new Message();
-            MessageItem mI = new MessageItem();
-            m.setSubject("subject"+i);
-            m.setDate(Calendar.getInstance().getTime());
-            m.setStatus("status"+i);
-            mI.setMessage("message"+i);
-            mI.setIdUser(i);
-            array.add(mI);
-            m.setMensagens(array);
-        }
+    private void createMessageList(){
         MessageAdapter messageAdapter = new MessageAdapter(this, list);
         messageAdapter.setmRecyclerViewOnClickListenerHack(new RecyclerViewOnClickListenerHack() {
             @Override
@@ -60,7 +51,7 @@ public class MessageList extends AbstractAppCompatActivity {
             }
         });
         rvMessageList.setAdapter(messageAdapter);
-    }*/
+    }
 
 
 }

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import br.com.tercom.Entity.Message;
+import br.com.tercom.Entity.MessageItem;
 import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
 import br.com.tercom.R;
 
@@ -18,6 +19,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     private LayoutInflater layoutInflater;
     private ArrayList<Message> messages;
+    private ArrayList<MessageItem> messageItems;
     private Context context;
 
     private RecyclerViewOnClickListenerHack mRecyclerViewOnClickListenerHack;
@@ -42,7 +44,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.txtSubject.setText(messages.get(position).getSubject());
-        holder.txtDate.setText(messages.get(position).getDate().toString());
+        holder.txtMessageSentDate.setText(messages.get(position).getDate().toString());
     }
 
     @Override
@@ -50,13 +52,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView txtSubject;
-        public TextView txtDate;
+        public TextView txtMessageSentDate;
         public TextView txtStatus;
 
         public ViewHolder(View itemView) {
             super(itemView);
             txtSubject = itemView.findViewById(R.id.txtSubject);
-            txtDate = itemView.findViewById(R.id.txtDate);
+            txtMessageSentDate = itemView.findViewById(R.id.txtMessageSentDate);
+            txtStatus = itemView.findViewById(R.id.txtStatus);
             itemView.setOnClickListener(this);
 
         }

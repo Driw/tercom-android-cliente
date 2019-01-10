@@ -46,24 +46,23 @@ public class MessageAdapterLog extends RecyclerView.Adapter<MessageAdapterLog.Vi
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-       View v = layoutInflater.inflate(R.layout.item_message_user,parent,false);
+       /*View v = layoutInflater.inflate(R.layout.item_message_user,parent,false);
        ViewHolder vh = new ViewHolder(v);
-       return vh;
+       return vh;*/
 
-//        for (MessageItem m: messageItem) {
-//            switch (viewType){
-//                case 0:
-//                    View v = layoutInflater.inflate(R.layout.item_message_user, parent, false);
-//                    return new ViewHolder(v);
-//                    break;
-//
-//                case 1:
-//                    View v2 = layoutInflater.inflate(R.layout.item_message_notuser, parent, false);
-//                    return new ViewHolder(v2);
-//                    break;
-//
-//            }
-//        }
+
+            switch (viewType){
+                case 0:
+                    View v = layoutInflater.inflate(R.layout.item_message_user, parent, false);
+                    return new ViewHolder(v);
+                    break;
+
+                case 1:
+                    View v2 = layoutInflater.inflate(R.layout.item_message_notuser, parent, false);
+                    return new ViewHolder(v2);
+                    break;
+
+            }
     }
 
     @Override
