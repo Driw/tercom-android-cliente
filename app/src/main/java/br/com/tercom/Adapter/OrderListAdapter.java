@@ -11,13 +11,14 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import br.com.tercom.Entity.Order;
+import br.com.tercom.Entity.OrderRequest;
 import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
 import br.com.tercom.R;
 
 public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.ViewHolder> {
 
     private LayoutInflater layoutInflater;
-    private ArrayList<Order> orders;
+    private ArrayList<OrderRequest> orders;
     private Context context;
 
     private RecyclerViewOnClickListenerHack mRecyclerViewOnClickListenerHack;
@@ -26,7 +27,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
         this.mRecyclerViewOnClickListenerHack = mRecyclerViewOnClickListenerHack;
     }
 
-    public OrderListAdapter(Context c, ArrayList<Order> orders){
+    public OrderListAdapter(Context c, ArrayList<OrderRequest> orders){
         layoutInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.orders = orders;
         this.context = c;
@@ -40,8 +41,8 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.txtOrderNumber.setText(String.valueOf(orders.get(position).getOrderNumber()));
-        holder.txtOrderStatus.setText(orders.get(position).getOrderStatus());
+        holder.txtOrderNumber.setText(String.valueOf(orders.get(position).getId()));
+        holder.txtOrderStatus.setText(String.valueOf(orders.get(position).getStatus()));
     }
 
     @Override
@@ -57,7 +58,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
 
             public ViewHolder(View itemView) {
                 super(itemView);
-                txtOrderOverview = itemView.findViewById(R.id.txtOrderNumber);
+                txtOrderNumber = itemView.findViewById(R.id.txtOrderNumber);
                 txtOrderStatus = itemView.findViewById(R.id.txtOrderStatus);
                 txtOrderOverview = itemView.findViewById(R.id.txtOrderOverview);
                 itemView.setOnClickListener(this);
