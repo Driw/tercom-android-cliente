@@ -63,7 +63,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/txtOrderStatus" />
 
             <android.support.design.widget.FloatingActionButton
-                android:id="@+id/floatingActionButton"
+                android:id="@+id/fabRemoveOrder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="97dp"

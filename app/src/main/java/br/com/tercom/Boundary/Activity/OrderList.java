@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import br.com.tercom.Adapter.OrderListAdapter;
 import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
 import br.com.tercom.Entity.Order;
+import br.com.tercom.Entity.OrderRequest;
 import br.com.tercom.Entity.Product;
 import br.com.tercom.Entity.ProdutoGenerico;
 import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
@@ -22,8 +23,7 @@ import butterknife.OnClick;
 
 public class OrderList extends AbstractAppCompatActivity {
 
-    private ArrayList<Order> orders;
-    private ArrayList<ProdutoGenerico> produtos;
+    private ArrayList<OrderRequest> orders;
 
     @BindView(R.id.rv_OrderList)
     RecyclerView rv_OrderList;
@@ -46,20 +46,19 @@ public class OrderList extends AbstractAppCompatActivity {
         orderListAdapter.setmRecyclerViewOnClickListenerHack(new RecyclerViewOnClickListenerHack() {
             @Override
             public void onClickListener(View view, int position) {
-                createIntentAbs(MessageList.class);
+                createIntentAbs(OrderDetail.class);
             }
         });
     }
 
     private void populate(){
 
-        orders = new ArrayList<Order>();
-        produtos = new ArrayList<ProdutoGenerico>();
+        orders = new ArrayList<OrderRequest>();
 
         for (int i = 0; i < 5; i++) {
-            Order o = new Order();
-            o.setOrderNumber(i);
-            o.setProdutos(produtos);
+            OrderRequest o = new OrderRequest();
+            o.setId(i);
+            o.setStatus(i);
             orders.add(o);
         }
     }

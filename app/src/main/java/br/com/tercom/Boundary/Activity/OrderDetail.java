@@ -9,7 +9,11 @@ import java.util.ArrayList;
 
 import br.com.tercom.Adapter.OrderDetailAdapter;
 import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
+import br.com.tercom.Entity.Manufacture;
+import br.com.tercom.Entity.OrderItemProduct;
+import br.com.tercom.Entity.Product;
 import br.com.tercom.Entity.ProdutoGenerico;
+import br.com.tercom.Entity.Provider;
 import br.com.tercom.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,7 +21,7 @@ import butterknife.OnClick;
 
 public class OrderDetail extends AbstractAppCompatActivity {
 
-    ArrayList<ProdutoGenerico> produtos;
+    ArrayList<OrderItemProduct> produtos;
 
     @BindView(R.id.rvOrderDetail)
     RecyclerView rvOrderDetail;
@@ -42,9 +46,21 @@ public class OrderDetail extends AbstractAppCompatActivity {
     }
 
     private void populate(){
-        produtos = new ArrayList<ProdutoGenerico>();
-
-        //produtos.add("Produto")
+        produtos = new ArrayList<OrderItemProduct>();
+        for (int i = 0; i < 5; i++){
+            OrderItemProduct o = new OrderItemProduct();
+            Product p = new Product();
+            Manufacture m = new Manufacture();
+            Provider pr = new Provider();
+            p.setName("Teste");
+            m.setFantasyName("Teste");
+            pr.setFantasyName("Teste");
+            o.setId(i);
+            o.setProduct(p);
+            o.setManufacturer(m);
+            o.setProvider(pr);
+            produtos.add(o);
+        }
     }
 
 }

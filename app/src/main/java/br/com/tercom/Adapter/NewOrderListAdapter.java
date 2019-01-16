@@ -3,6 +3,7 @@ package br.com.tercom.Adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,25 +11,29 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import br.com.tercom.Entity.OrderItemProduct;
 import br.com.tercom.Entity.Product;
 import br.com.tercom.Entity.ProdutoGenerico;
 import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
 import br.com.tercom.R;
 
-public class NewOrderListAdaprter extends RecyclerView.Adapter<NewOrderListAdaprter.ViewHolder> {
+public class NewOrderListAdapter extends RecyclerView.Adapter<NewOrderListAdapter.ViewHolder> {
 
     private LayoutInflater layoutInflater;
+    private ArrayList<OrderItemProduct> orders;
     private Context context;
-    private ArrayList<ProdutoGenerico> produtos;
 
     private RecyclerViewOnClickListenerHack mRecyclerViewOnClickListenerHack;
 
-    public void setmRecyclerViewOnClickListenerHack(RecyclerViewOnClickListenerHack mRecyclerViewOnClickListenerHack) {
-        this.mRecyclerViewOnClickListenerHack = mRecyclerViewOnClickListenerHack;
+    public NewOrderListAdapter(Context c, ArrayList<OrderItemProduct> orders) {
+        layoutInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.context = c;
+        this.orders = orders;
+
     }
 
-    public NewOrderListAdaprter(Context c, ArrayList<Product> products){
-        layoutInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    public void setmRecyclerViewOnClickListenerHack(RecyclerViewOnClickListenerHack mRecyclerViewOnClickListenerHack) {
+        this.mRecyclerViewOnClickListenerHack = mRecyclerViewOnClickListenerHack;
     }
 
     @Override
@@ -38,18 +43,18 @@ public class NewOrderListAdaprter extends RecyclerView.Adapter<NewOrderListAdapr
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.txtNewOrderListItemProduct.setText(produtos.get(position).getName());
-        holder.txtNewOrderListItemManufacturer.setText(produtos.get(position).getManufacturer());
-        holder.txtNewOrderListItemProvider.setText(produtos.get(position).getProvider());
+    public void onBindViewHolder(@NonNull NewOrderListAdapter.ViewHolder holder, int position) {
+        holder.txtNewOrderListItemManufacturer.setText(orders.get(position).getManufacturer().getFantasyName());
+        holder.txtNewOrderListItemProduct.setText(orders.get(position).getProduct().getName());
+        holder.txtNewOrderListItemProvider.setText(orders.get(position).getProvider().getFantasyName());
     }
 
     @Override
     public int getItemCount() {
-        return produtos.size();
+        return orders.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         public TextView txtNewOrderListItemProduct;
         public TextView txtNewOrderListItemManufacturer;
@@ -66,8 +71,8 @@ public class NewOrderListAdaprter extends RecyclerView.Adapter<NewOrderListAdapr
 
         @Override
         public void onClick(View v) {
-            if (mRecyclerViewOnClickListenerHack != null) {
-                mRecyclerViewOnClickListenerHack.onClickListener(v, getPosition());
+            if(mRecyclerViewOnClickListenerHack != null){
+                mRecyclerViewOnClickListenerHack.onClickListener(v,getPosition());
             }
 
         }

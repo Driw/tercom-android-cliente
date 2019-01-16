@@ -10,13 +10,14 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import br.com.tercom.Entity.OrderItemProduct;
 import br.com.tercom.Entity.ProdutoGenerico;
 import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
 import br.com.tercom.R;
 
 public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.ViewHolder> {
 
-    private ArrayList<ProdutoGenerico> produtos;
+    private ArrayList<OrderItemProduct> produtos;
     private LayoutInflater layoutInflater;
     private Context context;
 
@@ -26,7 +27,7 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
         this.mRecyclerViewOnClickListenerHack = mRecyclerViewOnClickListenerHack;
     }
 
-    public OrderDetailAdapter (Context c, ArrayList<ProdutoGenerico> produtos){
+    public OrderDetailAdapter (Context c, ArrayList<OrderItemProduct> produtos){
         layoutInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.produtos = produtos;
         this.context = c;
@@ -40,9 +41,9 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.txtOrderDetailProductName.setText(produtos.get(position).getName());
-        holder.txtOrderDetailManufacturerName.setText(produtos.get(position).getManufacturer());
-        holder.txtOrderDetailProviderName.setText(produtos.get(position).getProvider());
+        holder.txtOrderDetailProductName.setText(produtos.get(position).getProduct().getName());
+        holder.txtOrderDetailManufacturerName.setText(produtos.get(position).getManufacturer().getFantasyName());
+        holder.txtOrderDetailProviderName.setText(produtos.get(position).getProvider().getFantasyName());
     }
 
     @Override
