@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import java.util.Calendar;
+
 import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
 import br.com.tercom.Control.LoginCustomerControl;
 import br.com.tercom.Control.ProductGroupControl;
@@ -65,10 +67,6 @@ public class LoginActivity extends AbstractAppCompatActivity {
                 loginTask.execute();
             }
         }
-
-
-
-
     }
 
     /*@OnClick(R.id.btn_login) void login() {
