@@ -2,6 +2,8 @@ package br.com.tercom.Entity;
 
 import java.util.Calendar;
 
+import br.com.tercom.Annotation.BindObject;
+
 public class OrderRequest extends GenericEntity {
     public final Float MIN_BUDGET = 0f;
     public final int ORS_NONE = 0;
@@ -16,10 +18,11 @@ public class OrderRequest extends GenericEntity {
     private Float budget;
     private int status;
     private String statusMessage;
-    private String register;
-    private String expiration;
+    @BindObject
+    private Register register;
+    @BindObject
+    private Expiration expiration;
     private CustomerEmployee customerEmployee;
-    private TercomEmployee tercomEmployee;
 
     public int getId() {
         return id;
@@ -59,27 +62,20 @@ public class OrderRequest extends GenericEntity {
         return this;
     }
 
-    public String getRegister() {
+    public Register getRegister() {
         return register;
     }
 
-    public OrderRequest setRegister(String register) {
+    public void setRegister(Register register) {
         this.register = register;
-        return this;
     }
 
-    public void setRegisterCurrent(){
-        register = String.valueOf(Calendar.getInstance().getTimeInMillis());
-    }
-
-    public String getExpiration() {
+    public Expiration getExpiration() {
         return expiration;
     }
 
-    public OrderRequest setExpiration(String expiration) {
-        //TODO: Rever - Não entendi como funciona
+    public void setExpiration(Expiration expiration) {
         this.expiration = expiration;
-        return this;
     }
 
     public CustomerEmployee getCustomerEmployee() {
@@ -92,19 +88,6 @@ public class OrderRequest extends GenericEntity {
 
     public OrderRequest setCustomerEmployee(CustomerEmployee customerEmployee) {
         this.customerEmployee = customerEmployee;
-        return this;
-    }
-
-    public TercomEmployee getTercomEmployee() {
-        if(tercomEmployee == null) {
-            tercomEmployee = new TercomEmployee();
-            tercomEmployee.setId(0);
-        }
-        return tercomEmployee;
-    }
-
-    public OrderRequest setTercomEmployee(TercomEmployee tercomEmployee) {
-        this.tercomEmployee = tercomEmployee;
         return this;
     }
 }

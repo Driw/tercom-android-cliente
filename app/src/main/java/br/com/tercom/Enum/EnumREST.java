@@ -46,6 +46,7 @@ public enum EnumREST {
     LOGIN("login"),
     VERIFY("verify"),
     LOGOUT("logout"),
+    ORDERREQUEST("orderRequest"),
 
     //FILTERS
     FAMILY("family"),
