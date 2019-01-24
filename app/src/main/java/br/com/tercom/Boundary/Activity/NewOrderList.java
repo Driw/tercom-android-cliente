@@ -1,33 +1,57 @@
 package br.com.tercom.Boundary.Activity;
 
+import android.app.Dialog;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 
 import br.com.tercom.Adapter.NewOrderListAdapter;
 import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
+import br.com.tercom.Boundary.BoundaryUtil.Mask;
+import br.com.tercom.Control.OrderRequestControl;
+import br.com.tercom.Entity.ApiResponse;
 import br.com.tercom.Entity.Manufacture;
 import br.com.tercom.Entity.OrderItemProduct;
+import br.com.tercom.Entity.OrderRequest;
 import br.com.tercom.Entity.Product;
 import br.com.tercom.Entity.Provider;
+import br.com.tercom.Enum.EnumDialogOptions;
 import br.com.tercom.R;
+import br.com.tercom.Util.CustomPair;
+import br.com.tercom.Util.DialogConfirm;
+import br.com.tercom.Util.Util;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class NewOrderList extends AbstractAppCompatActivity {
 
-    ArrayList<OrderItemProduct> orders;
+
 
     @BindView(R.id.rvNewOrderList)
     RecyclerView rvNewOrderList;
 
-    @OnClick(R.id.btn_addNewOrderItem) void addNewOrderItem() {
-        createIntentAbs(NewOrderItem.class);
+    @OnClick(R.id.btn_addNewOrderItem)
+    void addNewOrderItem() {
+
+
+
     }
+
     @OnClick(R.id.btnCompleteOrder) void completeOrder() {
         //TODO
     }
@@ -38,29 +62,14 @@ public class NewOrderList extends AbstractAppCompatActivity {
         setContentView(R.layout.activity_new_order_list);
         createToolbar();
         ButterKnife.bind(this);
-        populate();
+    }
+
+    private void createListOrder(ArrayList<OrderItemProduct> orders) {
         NewOrderListAdapter newOrderitemAdapter = new NewOrderListAdapter(this, orders);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rvNewOrderList.setLayoutManager(layoutManager);
         rvNewOrderList.setAdapter(newOrderitemAdapter);
     }
 
-    private void populate(){
-        orders = new ArrayList<OrderItemProduct>();
-        for (int i = 0; i < 5; i++){
-            OrderItemProduct o = new OrderItemProduct();
-            Product p = new Product();
-            Manufacture m = new Manufacture();
-            Provider pr = new Provider();
-            p.setName("Teste");
-            m.setFantasyName("Teste");
-            pr.setFantasyName("Teste");
-            o.setId(i);
-            o.setProduct(p);
-            o.setManufacturer(m);
-            o.setProvider(pr);
-            orders.add(o);
-        }
-    }
 
 }

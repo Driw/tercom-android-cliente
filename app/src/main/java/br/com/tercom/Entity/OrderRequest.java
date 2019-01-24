@@ -22,6 +22,7 @@ public class OrderRequest extends GenericEntity {
     private Register register;
     @BindObject
     private Expiration expiration;
+    @BindObject
     private CustomerEmployee customerEmployee;
 
     public int getId() {
