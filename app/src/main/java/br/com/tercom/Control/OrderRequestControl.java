@@ -6,7 +6,7 @@ import android.util.Pair;
 import java.util.TreeMap;
 
 import br.com.tercom.Entity.ApiResponse;
-import br.com.tercom.Entity.Manufacture;
+import br.com.tercom.Entity.OrderRequest;
 import br.com.tercom.Enum.EnumMethod;
 import br.com.tercom.Enum.EnumREST;
 import br.com.tercom.Util.CustomPair;
@@ -24,11 +24,11 @@ public class OrderRequestControl extends GenericControl {
             String link = getBase(EnumREST.SITE, EnumREST.ORDERREQUEST, EnumREST.ADD);
             Pair<String, String> completePost = new Pair<>(link, getPostValues(map));
             CustomPair<String> jsonResult =  callJson(EnumMethod.POST,activity,completePost);
-            ApiResponse<Manufacture> providerApiResponse = new ApiResponse<>(Manufacture.class);
+            ApiResponse<OrderRequest> orderApiResponse = new ApiResponse<>(OrderRequest.class);
             if(jsonResult.first){
-                providerApiResponse = populateApiResponse(providerApiResponse,jsonResult.second);
+                orderApiResponse = populateApiResponse(orderApiResponse,jsonResult.second);
             }
-            return providerApiResponse;
+            return orderApiResponse;
         } catch (Exception e) {
             e.printStackTrace();
             return getErrorResponse();

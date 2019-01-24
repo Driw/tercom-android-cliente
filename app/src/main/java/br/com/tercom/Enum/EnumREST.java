@@ -47,6 +47,11 @@ public enum EnumREST {
     VERIFY("verify"),
     LOGOUT("logout"),
     ORDERREQUEST("orderRequest"),
+    GETBYPRODUCT("getByProduct"),
+    GETBYSERVICE("getByService"),
+    ORDERITEMPRODUCT("orderItemProduct"),
+    ORDERITEMSERVICE("orderItemService"),
+
 
     //FILTERS
     FAMILY("family"),
