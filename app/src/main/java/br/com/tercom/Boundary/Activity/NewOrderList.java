@@ -1,6 +1,7 @@
 package br.com.tercom.Boundary.Activity;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -45,11 +46,20 @@ public class NewOrderList extends AbstractAppCompatActivity {
     @BindView(R.id.rvNewOrderList)
     RecyclerView rvNewOrderList;
 
-    @OnClick(R.id.btn_addNewOrderItem)
-    void addNewOrderItem() {
+    @OnClick(R.id.btn_addNewOrderItemmenu_service)
+    void addNewOrderItemService () {
+        Intent addService = new Intent(NewOrderList.this, NewOrderItem.class);
+        String extra1 = "Teste";
+        addService.putExtra("Texto", extra1);
+        startActivity(addService);
+    }
 
-
-
+    @OnClick(R.id.btn_addNewOrderItemmenu_product)
+    void addNewOrderItemProduct() {
+        Intent addProduct = new Intent(NewOrderList.this, NewOrderItem.class);
+        String extra2 = "Teste";
+        addProduct.putExtra("Texto", extra2);
+        startActivity(addProduct);
     }
 
     @OnClick(R.id.btnCompleteOrder) void completeOrder() {

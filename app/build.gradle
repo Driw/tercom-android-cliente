@@ -47,4 +47,6 @@ dependencies {
     annotationProcessor "android.arch.persistence.room:compiler:$room_version"
     // Test helpers - Não sei se precisa ou pra que serve, rever futuramente.
     //testImplementation "android.arch.persistence.room:testing:$room_version"
+
+    implementation 'com.github.clans:fab:1.6.4' //FAB Menu
 }

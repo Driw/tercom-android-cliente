@@ -1,1 +1,3 @@
-include ':app'
+include ':app', ':fabmenu', ':library'
+project(':fabmenu').projectDir = new File('app/src/main/assets/libs/FloatingActionButton-master/sample')
+project(':library').projectDir = new File('app/src/main/assets/libs/FloatingActionButton-master/library')
