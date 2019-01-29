@@ -46,19 +46,22 @@ public class NewOrderList extends AbstractAppCompatActivity {
     @BindView(R.id.rvNewOrderList)
     RecyclerView rvNewOrderList;
 
+    String extra1 = "Teste";
+    String extra2 = "Teste";
+
     @OnClick(R.id.btn_addNewOrderItemmenu_service)
     void addNewOrderItemService () {
         Intent addService = new Intent(NewOrderList.this, NewOrderItem.class);
-        String extra1 = "Teste";
-        addService.putExtra("Texto", extra1);
+        addService.putExtra("typeAdd", extra1);
+        addService.putExtra("orderRequestId", extra2);
         startActivity(addService);
     }
 
     @OnClick(R.id.btn_addNewOrderItemmenu_product)
     void addNewOrderItemProduct() {
         Intent addProduct = new Intent(NewOrderList.this, NewOrderItem.class);
-        String extra2 = "Teste";
-        addProduct.putExtra("Texto", extra2);
+        addProduct.putExtra("typeAdd", extra1);
+        addProduct.putExtra("orderRequestId", extra2);
         startActivity(addProduct);
     }
 
