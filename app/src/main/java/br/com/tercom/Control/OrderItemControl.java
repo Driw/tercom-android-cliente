@@ -7,6 +7,7 @@ import java.util.TreeMap;
 
 import br.com.tercom.Entity.ApiResponse;
 import br.com.tercom.Entity.OrderItemProduct;
+import br.com.tercom.Entity.OrderItemProductList;
 import br.com.tercom.Entity.OrderItemService;
 import br.com.tercom.Enum.EnumMethod;
 import br.com.tercom.Enum.EnumREST;
@@ -62,6 +63,36 @@ public class OrderItemControl extends GenericControl {
             return getErrorResponse();
         }
 
+    }
+
+    public ApiResponse getAllProducts(int idOrderRequest){
+        try{
+            String link = getLink(getBase(EnumREST.SITE, EnumREST.ORDERITEMSERVICE, EnumREST.ADD), String.valueOf(idOrderRequest));
+            CustomPair<String> jsonResult =  callJson(EnumMethod.POST,activity,link);
+            ApiResponse<OrderItemProductList> orderApiResponse = new ApiResponse<>(OrderItemProductList.class);
+            if(jsonResult.first){
+                orderApiResponse = populateApiResponse(orderApiResponse,jsonResult.second);
+            }
+            return orderApiResponse;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return getErrorResponse();
+        }
+    }
+
+    public ApiResponse getAllServices(int idOrderRequest){
+        try{
+            String link = getLink(getBase(EnumREST.SITE, EnumREST.ORDERITEMSERVICE, EnumREST.ADD), String.valueOf(idOrderRequest));
+            CustomPair<String> jsonResult =  callJson(EnumMethod.POST,activity,link);
+            ApiResponse<OrderItemProductList> orderApiResponse = new ApiResponse<>(OrderItemProductList.class);
+            if(jsonResult.first){
+                orderApiResponse = populateApiResponse(orderApiResponse,jsonResult.second);
+            }
+            return orderApiResponse;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return getErrorResponse();
+        }
     }
 
 }
