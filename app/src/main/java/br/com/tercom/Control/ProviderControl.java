@@ -184,4 +184,34 @@ public class ProviderControl extends GenericControl {
         }
     }
 
+    public ApiResponse getByProduct(int idProduct){
+        try {
+            String link = getLink(getBase(EnumREST.SITE, EnumREST.PROVIDER, EnumREST.GETBYPRODUCT), String.valueOf(idProduct));
+            CustomPair<String> jsonResult =  callJson(EnumMethod.POST,activity, link);
+            ApiResponse<Provider> providerApiResponse = new ApiResponse<>(Provider.class);
+            if(jsonResult.first){
+                providerApiResponse = populateApiResponse(providerApiResponse,jsonResult.second);
+            }
+            return providerApiResponse;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return getErrorResponse();
+        }
+    }
+
+    public ApiResponse getByService(int idService){
+        try {
+            String link = getLink(getBase(EnumREST.SITE, EnumREST.PROVIDER, EnumREST.GETBYPRODUCT), String.valueOf(idService));
+            CustomPair<String> jsonResult =  callJson(EnumMethod.POST,activity, link);
+            ApiResponse<Provider> providerApiResponse = new ApiResponse<>(Provider.class);
+            if(jsonResult.first){
+                providerApiResponse = populateApiResponse(providerApiResponse,jsonResult.second);
+            }
+            return providerApiResponse;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return getErrorResponse();
+        }
+    }
+
 }

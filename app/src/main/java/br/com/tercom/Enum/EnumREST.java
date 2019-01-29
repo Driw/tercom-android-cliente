@@ -21,6 +21,7 @@ public enum EnumREST {
     SERVICEPRICE("servicePrice"),
     PERMISSION("permission"),
     LOGINCUSTOMER("loginCustomer"),
+    MANAGEPERMISSIONS("managePermissions"),
 
 
 
@@ -45,6 +46,12 @@ public enum EnumREST {
     LOGIN("login"),
     VERIFY("verify"),
     LOGOUT("logout"),
+    ORDERREQUEST("orderRequest"),
+    GETBYPRODUCT("getByProduct"),
+    GETBYSERVICE("getByService"),
+    ORDERITEMPRODUCT("orderItemProduct"),
+    ORDERITEMSERVICE("orderItemService"),
+
 
     //FILTERS
     FAMILY("family"),
@@ -52,7 +59,8 @@ public enum EnumREST {
     GROUP("group"),
     NAME("name"),
     SUBGROUP("subgroup"),
-    SECTOR("sector");
+    SECTOR("sector"),
+    CUSTOMER("customer");
 
 
     public String path;

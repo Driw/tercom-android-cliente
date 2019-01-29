@@ -15,10 +15,14 @@
         android:gravity="center"
         android:minHeight="@dimen/toolbar_height"
         android:title="Home"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:titleMarginBottom="@dimen/toolbar_titleMarginBottom"
         app:titleMarginStart="@dimen/toolbar_titleMarginStart"
         app:titleMarginTop="@dimen/toolbar_titleMarginTop"
         app:titleTextColor="@color/colorPrimary">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
