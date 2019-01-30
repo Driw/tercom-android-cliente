@@ -18,6 +18,8 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 
 import br.com.tercom.Adapter.NewOrderListAdapter;
@@ -41,27 +43,24 @@ import butterknife.OnClick;
 
 public class NewOrderList extends AbstractAppCompatActivity {
 
-
+    private OrderRequest orderRequest;
 
     @BindView(R.id.rvNewOrderList)
     RecyclerView rvNewOrderList;
 
-    String extra1 = "Teste";
-    String extra2 = "Teste";
-
     @OnClick(R.id.btn_addNewOrderItemmenu_service)
     void addNewOrderItemService () {
         Intent addService = new Intent(NewOrderList.this, NewOrderItem.class);
-        addService.putExtra("typeAdd", extra1);
-        addService.putExtra("orderRequestId", extra2);
+        addService.putExtra("typeAdd", NewOrderItem.ADD_SERVICE);
+        addService.putExtra("orderRequestId", orderRequest.getId());
         startActivity(addService);
     }
 
     @OnClick(R.id.btn_addNewOrderItemmenu_product)
     void addNewOrderItemProduct() {
         Intent addProduct = new Intent(NewOrderList.this, NewOrderItem.class);
-        addProduct.putExtra("typeAdd", extra1);
-        addProduct.putExtra("orderRequestId", extra2);
+        addProduct.putExtra("typeAdd", NewOrderItem.ADD_PRODUCT);
+        addProduct.putExtra("orderRequestId", orderRequest.getId());
         startActivity(addProduct);
     }
 
@@ -73,6 +72,7 @@ public class NewOrderList extends AbstractAppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_order_list);
+        orderRequest = new Gson().fromJson(getIntent().getExtras().getString("orderRequest"),OrderRequest.class);
         createToolbar();
         ButterKnife.bind(this);
     }

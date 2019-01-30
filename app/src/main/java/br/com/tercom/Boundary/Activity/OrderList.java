@@ -1,6 +1,7 @@
 package br.com.tercom.Boundary.Activity;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
@@ -16,7 +17,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.google.gson.Gson;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import br.com.tercom.Adapter.OrderListAdapter;
 import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
@@ -106,7 +112,7 @@ public class OrderList extends AbstractAppCompatActivity {
 
         public NewOrderTask(double budget, String expirationDate) {
             this.budget = budget;
-            this.expirationDate = expirationDate;
+            this.expirationDate = convertDateFormat(expirationDate);
         }
 
         @Override
@@ -121,7 +127,10 @@ public class OrderList extends AbstractAppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             if(apiResponse.getStatusBoolean()){
-                createIntentAbs(NewOrderList.class);
+                Intent intent = new Intent();
+                intent.setClass(OrderList.this,NewOrderList.class);
+                intent.putExtra("orderRequest",new Gson().toJson(apiResponse.getResult()));
+                startActivity(intent);
             }else{
                 DialogConfirm dialogConfirm = new DialogConfirm(OrderList.this);
                 dialogConfirm.init(EnumDialogOptions.FAIL,apiResponse.getMessage());
@@ -129,7 +138,15 @@ public class OrderList extends AbstractAppCompatActivity {
         }
     }
 
-
+    private String convertDateFormat(String expirationDate){
+        try {
+            SimpleDateFormat finalDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            return finalDateFormat.format(new SimpleDateFormat("dd/MM/yyyy").parse(expirationDate));
+        }catch (Exception e){
+            e.printStackTrace();
+            return expirationDate;
+        }
+    }
 
 
 }

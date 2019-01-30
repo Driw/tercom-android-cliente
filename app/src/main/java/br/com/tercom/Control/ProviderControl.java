@@ -188,7 +188,7 @@ public class ProviderControl extends GenericControl {
         try {
             String link = getLink(getBase(EnumREST.SITE, EnumREST.PROVIDER, EnumREST.GETBYPRODUCT), String.valueOf(idProduct));
             CustomPair<String> jsonResult =  callJson(EnumMethod.POST,activity, link);
-            ApiResponse<Provider> providerApiResponse = new ApiResponse<>(Provider.class);
+            ApiResponse<ProviderList> providerApiResponse = new ApiResponse<>(ProviderList.class);
             if(jsonResult.first){
                 providerApiResponse = populateApiResponse(providerApiResponse,jsonResult.second);
             }
