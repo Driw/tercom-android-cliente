@@ -3,14 +3,14 @@ package br.com.tercom.Entity;
 import java.util.Date;
 
 public class Register extends GenericEntity {
-    private Date date;
+    private String date;
     private String timezone;
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

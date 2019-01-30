@@ -23,10 +23,14 @@ import br.com.tercom.Adapter.CategoryAdapter;
 import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
 import br.com.tercom.Control.OrderItemControl;
 import br.com.tercom.Control.ProductControl;
+import br.com.tercom.Control.ProviderControl;
 import br.com.tercom.Control.ServiceControl;
 import br.com.tercom.Entity.ApiResponse;
+import br.com.tercom.Entity.Manufacture;
 import br.com.tercom.Entity.Product;
 import br.com.tercom.Entity.ProductList;
+import br.com.tercom.Entity.Provider;
+import br.com.tercom.Entity.ProviderContact;
 import br.com.tercom.Entity.Services;
 import br.com.tercom.Entity.ServicesList;
 import br.com.tercom.Enum.EnumDialogOptions;
@@ -35,6 +39,7 @@ import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
 import br.com.tercom.R;
 import br.com.tercom.Util.DialogConfirm;
 import br.com.tercom.Util.DialogLoading;
+import br.com.tercom.Util.Util;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -43,6 +48,8 @@ public class NewOrderItem extends AbstractAppCompatActivity {
 
     public static final int ADD_PRODUCT = 1;
     public static final int ADD_SERVICE = 2;
+    public static final int GET_PROVIDER = 3;
+    public static final int GET_MANUFACTURE = 4;
 
     private int selectedType;
     private OrderItemControl orderItemControl;
@@ -56,6 +63,8 @@ public class NewOrderItem extends AbstractAppCompatActivity {
     private  Dialog dialog;
     private Product selectedProduct;
     private Services selectedServices;
+    private Provider selectedProvider;
+    private Manufacture selectedManufacture;
 
 
     @BindView(R.id.txtOrderProductName)
@@ -218,6 +227,8 @@ public class NewOrderItem extends AbstractAppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             if(apiResponse.getStatusBoolean()){
                 createListProducts(apiResponse.getResult());
+            }else{
+                Util.toast(NewOrderItem.this,apiResponse.getMessage());
             }
         }
     }

@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Locale;
 
@@ -77,7 +78,10 @@ public abstract class GenericEntity {
                                 if (field.getType() == Float.class) {
                                     Float f = Float.parseFloat(String.valueOf(jObj.get(field.getName())));
                                     field.set(this, f);
-                                } else {
+                                } else if(field.getType() == Date.class){
+                                    field.set(this,String.valueOf(jObj.get(field.getName())));
+                                }
+                                else {
                                     field.set(this, jObj.get(field.getName()));
                                 }
                             }
