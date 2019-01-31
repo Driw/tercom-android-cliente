@@ -1,6 +1,10 @@
 package br.com.tercom.Entity;
 
-public class OrderItemProduct extends GenericEntity {
+import java.util.Collection;
+
+import br.com.tercom.Interface.iNewOrderItem;
+
+public class OrderItemProduct extends GenericEntity implements iNewOrderItem {
     public final int MAX_OBSERVATION_LENS = 128;
 
     private int id;
@@ -15,6 +19,7 @@ public class OrderItemProduct extends GenericEntity {
         betterPrice = false;
     }
 
+    @Override
     public int getId() {
         return id;
     }
@@ -40,6 +45,7 @@ public class OrderItemProduct extends GenericEntity {
         return this;
     }
 
+    @Override
     public Provider getProvider() {
         if(provider == null){
             provider = new Provider();
@@ -66,6 +72,7 @@ public class OrderItemProduct extends GenericEntity {
         return this;
     }
 
+    @Override
     public boolean isBetterPrice() {
         return betterPrice;
     }
@@ -75,6 +82,7 @@ public class OrderItemProduct extends GenericEntity {
         return this;
     }
 
+    @Override
     public String getObservations() {
         return observations;
     }

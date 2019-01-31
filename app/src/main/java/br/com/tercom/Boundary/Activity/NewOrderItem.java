@@ -234,7 +234,7 @@ public class NewOrderItem extends AbstractAppCompatActivity {
         rvSearch.setLayoutManager(layoutManager);
         rvSearch.setAdapter(categoryAdapter);
     }
-    
+
     private class ProductTask extends AsyncTask<Void,Void,Void>{
 
         private ApiResponse<ProductList> apiResponse;
@@ -413,3 +413,20 @@ public class NewOrderItem extends AbstractAppCompatActivity {
     }
 
 }
+
+/*
+
+Fazer Task para preencher a recyclerView de New Order List
+
+Apiresponse de 2 entidades - OrderItemProductList e OrderItemServiceList
+
+Criar interface implementando métodos pertinentes - seguir exemplo de Category Adapter -------- OK
+
+ArrayList< ? extends InterfaceCriada>
+
+array.addAll( API result List) e passa esse array para criar a view
+
+OrderItemControl
+
+
+ */

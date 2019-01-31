@@ -31,6 +31,7 @@ import br.com.tercom.Control.OrderRequestControl;
 import br.com.tercom.Entity.ApiResponse;
 import br.com.tercom.Entity.Order;
 import br.com.tercom.Entity.OrderRequest;
+import br.com.tercom.Entity.OrderRequestList;
 import br.com.tercom.Entity.Product;
 import br.com.tercom.Entity.ProdutoGenerico;
 import br.com.tercom.Enum.EnumDialogOptions;
@@ -46,6 +47,8 @@ import butterknife.OnClick;
 public class OrderList extends AbstractAppCompatActivity {
 
     private NewOrderTask newOrderTask;
+    private OrderRequest selectORderRequest;
+    private Dialog dialog;
 
     @BindView(R.id.rv_OrderList)
     RecyclerView rv_OrderList;
@@ -148,5 +151,47 @@ public class OrderList extends AbstractAppCompatActivity {
         }
     }
 
+    private void createOrderRequestList(final OrderRequestList result){
+        OrderListAdapter categoryAdapter = new OrderListAdapter(this, result.getList());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        categoryAdapter.setmRecyclerViewOnClickListenerHack(new RecyclerViewOnClickListenerHack() {
+            @Override
+            public void onClickListener(View view, int position) {
+                selectORderRequest = result.getList().get(position);
+                dialog.dismiss();
+            }
+        });
+        rv_OrderList.setLayoutManager(layoutManager);
+        rv_OrderList.setAdapter(categoryAdapter);
+    }
+
+    private class getOrderInQueueTask extends AsyncTask<Void, Void, Void> {
+        private ApiResponse<OrderRequestList> apiResponse;
+        private int mode = 4;
+
+        public getOrderInQueueTask (int mode) {
+            this.mode = mode;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            if (Looper.myLooper() == null){
+                Looper.prepare();
+            }
+            OrderRequestControl orderRequestControl = new OrderRequestControl(OrderList.this);
+            apiResponse = orderRequestControl.getAll(mode);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if(apiResponse.getStatusBoolean()){
+                createOrderRequestList(apiResponse.getResult());
+            } else {
+                DialogConfirm dialogConfirm = new DialogConfirm(OrderList.this);
+                dialogConfirm.init(EnumDialogOptions.FAIL,apiResponse.getMessage());
+            }
+        }
+    }
 
 }

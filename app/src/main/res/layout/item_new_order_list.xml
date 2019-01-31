@@ -22,36 +22,36 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/txtNewOrderListItemProduct"
+                android:id="@+id/txtNewOrderListItemID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="Nome do Produto"
+                android:text="Id do item"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/txtNewOrderListItemManufacturer"
+                android:id="@+id/txtNewOrderListItemName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="4dp"
-                android:text="Fornecedor"
+                android:layout_marginTop="8dp"
+                android:text="Nome do Item"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtNewOrderListItemProduct" />
+                app:layout_constraintTop_toBottomOf="@+id/txtNewOrderListItemID" />
 
             <TextView
                 android:id="@+id/txtNewOrderListItemProvider"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="Fabricante"
+                android:text="Fornecedor"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtNewOrderListItemManufacturer" />
+                app:layout_constraintTop_toBottomOf="@+id/txtNewOrderListItemName" />
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/fabRemoveOrderItem"

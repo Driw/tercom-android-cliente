@@ -15,17 +15,18 @@ import br.com.tercom.Entity.OrderItemProduct;
 import br.com.tercom.Entity.Product;
 import br.com.tercom.Entity.ProdutoGenerico;
 import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
+import br.com.tercom.Interface.iNewOrderItem;
 import br.com.tercom.R;
 
 public class NewOrderListAdapter extends RecyclerView.Adapter<NewOrderListAdapter.ViewHolder> {
 
     private LayoutInflater layoutInflater;
-    private ArrayList<OrderItemProduct> orders;
+    private ArrayList<? extends iNewOrderItem> orders;
     private Context context;
 
     private RecyclerViewOnClickListenerHack mRecyclerViewOnClickListenerHack;
 
-    public NewOrderListAdapter(Context c, ArrayList<OrderItemProduct> orders) {
+    public NewOrderListAdapter(Context c, ArrayList<? extends iNewOrderItem> orders) {
         layoutInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.context = c;
         this.orders = orders;
@@ -44,8 +45,8 @@ public class NewOrderListAdapter extends RecyclerView.Adapter<NewOrderListAdapte
 
     @Override
     public void onBindViewHolder(@NonNull NewOrderListAdapter.ViewHolder holder, int position) {
-        holder.txtNewOrderListItemManufacturer.setText(orders.get(position).getManufacturer().getFantasyName());
-        holder.txtNewOrderListItemProduct.setText(orders.get(position).getProduct().getName());
+        holder.txtNewOrderListItemID.setText(orders.get(position).getId());
+        holder.txtNewOrderListItemName.setText(orders.get(position).getObservations()); //CHECAR ESTA INFORMAÇÂO
         holder.txtNewOrderListItemProvider.setText(orders.get(position).getProvider().getFantasyName());
     }
 
@@ -56,14 +57,14 @@ public class NewOrderListAdapter extends RecyclerView.Adapter<NewOrderListAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        public TextView txtNewOrderListItemProduct;
-        public TextView txtNewOrderListItemManufacturer;
+        public TextView txtNewOrderListItemID;
+        public TextView txtNewOrderListItemName;
         public TextView txtNewOrderListItemProvider;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            txtNewOrderListItemProduct = itemView.findViewById(R.id.txtNewOrderListItemProduct);
-            txtNewOrderListItemManufacturer = itemView.findViewById(R.id.txtNewOrderListItemManufacturer);
+            txtNewOrderListItemID = itemView.findViewById(R.id.txtNewOrderListItemID);
+            txtNewOrderListItemName = itemView.findViewById(R.id.txtNewOrderListItemName);
             txtNewOrderListItemProvider = itemView.findViewById(R.id.txtNewOrderListItemProvider);
             itemView.setOnClickListener(this);
 

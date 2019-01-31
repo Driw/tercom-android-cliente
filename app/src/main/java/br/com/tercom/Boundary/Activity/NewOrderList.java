@@ -25,14 +25,19 @@ import java.util.ArrayList;
 import br.com.tercom.Adapter.NewOrderListAdapter;
 import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
 import br.com.tercom.Boundary.BoundaryUtil.Mask;
+import br.com.tercom.Control.OrderItemControl;
 import br.com.tercom.Control.OrderRequestControl;
 import br.com.tercom.Entity.ApiResponse;
 import br.com.tercom.Entity.Manufacture;
 import br.com.tercom.Entity.OrderItemProduct;
+import br.com.tercom.Entity.OrderItemProductList;
+import br.com.tercom.Entity.OrderItemService;
+import br.com.tercom.Entity.OrderItemServiceList;
 import br.com.tercom.Entity.OrderRequest;
 import br.com.tercom.Entity.Product;
 import br.com.tercom.Entity.Provider;
 import br.com.tercom.Enum.EnumDialogOptions;
+import br.com.tercom.Interface.iNewOrderItem;
 import br.com.tercom.R;
 import br.com.tercom.Util.CustomPair;
 import br.com.tercom.Util.DialogConfirm;
@@ -44,6 +49,11 @@ import butterknife.OnClick;
 public class NewOrderList extends AbstractAppCompatActivity {
 
     private OrderRequest orderRequest;
+    private Dialog dialog;
+    private OrderItemProduct selectedProduct;
+    private ArrayList<? extends iNewOrderItem> list;
+    //private ArrayList<OrderItemProduct> listProducts;
+    //private ArrayList<OrderItemService> listServices;
 
     @BindView(R.id.rvNewOrderList)
     RecyclerView rvNewOrderList;
@@ -77,12 +87,53 @@ public class NewOrderList extends AbstractAppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    private void createListOrder(ArrayList<OrderItemProduct> orders) {
-        NewOrderListAdapter newOrderitemAdapter = new NewOrderListAdapter(this, orders);
+    private void createNewOrderList(ArrayList<? extends iNewOrderItem> list) {
+        NewOrderListAdapter newOrderitemAdapter = new NewOrderListAdapter(this, list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rvNewOrderList.setLayoutManager(layoutManager);
         rvNewOrderList.setAdapter(newOrderitemAdapter);
     }
 
+    private class getAllProductListTask extends AsyncTask<Void, Void, Void> {
+        private ApiResponse<OrderItemProductList> apiResponseProduct;
+        private ApiResponse<OrderItemServiceList> apiResponseService;
+        private int id;
+
+        public getAllProductListTask (int id){
+            this.id = id;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            if(Looper.myLooper() == null) {
+                Looper.prepare();
+            }
+            OrderItemControl orderItemControl = new OrderItemControl(NewOrderList.this);
+            apiResponseProduct = orderItemControl.getAllProducts(id);
+            apiResponseService = orderItemControl.getAllServices(id);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if(apiResponseProduct.getStatusBoolean()){
+                //list.addAll(apiResponseProduct.getResult().getList());
+                //listProducts.addAll(apiResponseProduct.getResult().getList());
+            } else {
+                DialogConfirm dialogConfirm = new DialogConfirm(NewOrderList.this);
+                dialogConfirm.init(EnumDialogOptions.FAIL, apiResponseProduct.getMessage());
+            }
+            if(apiResponseService.getStatusBoolean()){
+                //list.addAll(apiResponseService.getResult().getList());
+                //listServices.addAll(apiResponseService.getResult().getList());
+            } else {
+                DialogConfirm dialogConfirm = new DialogConfirm(NewOrderList.this);
+                dialogConfirm.init(EnumDialogOptions.FAIL, apiResponseService.getMessage());
+            }
+            //createNewOrderList(listProducts);
+            //createNewOrderList(listServices);
+            //createNewOrderList(list);
+        }
+    }
 
 }
