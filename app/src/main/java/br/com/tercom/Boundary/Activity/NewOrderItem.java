@@ -20,17 +20,22 @@ import android.widget.TextView;
 import br.com.tercom.Adapter.AddProductAdapter;
 import br.com.tercom.Adapter.AddServiceAdapter;
 import br.com.tercom.Adapter.CategoryAdapter;
+import br.com.tercom.Adapter.GetManufacturerAdapter;
+import br.com.tercom.Adapter.GetProviderAdapter;
 import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
+import br.com.tercom.Control.ManufactureControl;
 import br.com.tercom.Control.OrderItemControl;
 import br.com.tercom.Control.ProductControl;
 import br.com.tercom.Control.ProviderControl;
 import br.com.tercom.Control.ServiceControl;
 import br.com.tercom.Entity.ApiResponse;
 import br.com.tercom.Entity.Manufacture;
+import br.com.tercom.Entity.ManufactureList;
 import br.com.tercom.Entity.Product;
 import br.com.tercom.Entity.ProductList;
 import br.com.tercom.Entity.Provider;
 import br.com.tercom.Entity.ProviderContact;
+import br.com.tercom.Entity.ProviderList;
 import br.com.tercom.Entity.Services;
 import br.com.tercom.Entity.ServicesList;
 import br.com.tercom.Enum.EnumDialogOptions;
@@ -184,8 +189,6 @@ public class NewOrderItem extends AbstractAppCompatActivity {
         rvSearch.setAdapter(categoryAdapter);
     }
 
-
-
     private void createListServices(final ServicesList result) {
         AddServiceAdapter categoryAdapter = new AddServiceAdapter(this,result.getList());
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
@@ -201,9 +204,37 @@ public class NewOrderItem extends AbstractAppCompatActivity {
         rvSearch.setAdapter(categoryAdapter);
     }
 
+    private void createListProvider(final ProviderList result) {
+        GetProviderAdapter categoryAdapter = new GetProviderAdapter(this, result.getList());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        categoryAdapter.setmRecyclerViewOnClickListenerHack(new RecyclerViewOnClickListenerHack() {
+            @Override
+            public void onClickListener(View view, int position) {
+                selectedProvider = result.getList().get(position);
+                txtOrderProviderName.setText(result.getList().get(position).getFantasyName());
+                dialog.dismiss();
+            }
+        });
+        rvSearch.setLayoutManager(layoutManager);
+        rvSearch.setAdapter(categoryAdapter);
+    }
 
 
-
+    private void createListManufacturer(final ManufactureList result) {
+        GetManufacturerAdapter categoryAdapter = new GetManufacturerAdapter(this, result.getList());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        categoryAdapter.setmRecyclerViewOnClickListenerHack(new RecyclerViewOnClickListenerHack() {
+            @Override
+            public void onClickListener(View view, int position) {
+                selectedManufacture = result.getList().get(position);
+                txtOrderManufacturerName.setText(result.getList().get(position).getFantasyName());
+                dialog.dismiss();
+            }
+        });
+        rvSearch.setLayoutManager(layoutManager);
+        rvSearch.setAdapter(categoryAdapter);
+    }
+    
     private class ProductTask extends AsyncTask<Void,Void,Void>{
 
         private ApiResponse<ProductList> apiResponse;
@@ -319,5 +350,66 @@ public class NewOrderItem extends AbstractAppCompatActivity {
         }
     }
 
+
+    private class GetProviderTask extends AsyncTask<Void, Void, Void>{
+        private ApiResponse<ProviderList> apiResponse;
+        private String name;
+
+        public GetProviderTask(String name){
+            this.name = name;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            if(Looper.myLooper()==null){
+                Looper.prepare();
+            }
+            ProviderControl providerControl = new ProviderControl(NewOrderItem.this);
+            apiResponse = providerControl.search(name);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if (apiResponse.getStatusBoolean()) {
+                createListProvider(apiResponse.getResult());
+            }else{
+                DialogConfirm dialogConfirm = new DialogConfirm(NewOrderItem.this);
+                dialogConfirm.init(EnumDialogOptions.FAIL,apiResponse.getMessage());
+            }
+        }
+
+    }
+
+
+    private class GetManufacturerTask extends AsyncTask<Void, Void, Void>{
+        private ApiResponse<ManufactureList> apiResponse;
+        private String value;
+
+        public GetManufacturerTask(String value){
+            this.value = value;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            if(Looper.myLooper()==null){
+                Looper.prepare();
+            }
+            ManufactureControl manufactureControl = new ManufactureControl(NewOrderItem.this);
+            apiResponse = manufactureControl.search(value);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if (apiResponse.getStatusBoolean()) {
+                createListManufacturer(apiResponse.getResult());
+            }else{
+                DialogConfirm dialogConfirm = new DialogConfirm(NewOrderItem.this);
+                dialogConfirm.init(EnumDialogOptions.FAIL,apiResponse.getMessage());
+            }
+        }
+
+    }
 
 }
