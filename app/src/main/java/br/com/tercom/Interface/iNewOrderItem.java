@@ -8,5 +8,6 @@ public interface iNewOrderItem {
     public Provider getProvider();
     public boolean isBetterPrice();
     public String getObservations();
+    public String getName();
 
 }

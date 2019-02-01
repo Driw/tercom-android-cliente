@@ -62,6 +62,15 @@ public class OrderItemService extends GenericEntity implements iNewOrderItem {
         return observations;
     }
 
+    @Override
+    public String getName() {
+        if (service != null) {
+            return service.getName();
+        } else {
+            return "";
+        }
+    }
+
     public void setObservations(String observations) {
         this.observations = observations;
     }
