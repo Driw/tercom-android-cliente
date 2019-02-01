@@ -67,10 +67,12 @@ public abstract class GenericEntity {
                             BindObject bo = field.getAnnotation(BindObject.class);
                             if (bo.type() == BindObject.TYPE.OBJECT) {
                                 Class<? extends GenericEntity> classe = (Class<? extends GenericEntity>) field.getType();
+                                if(!jObj.isNull(field.getName()))
                                 field.set(this, classe.newInstance().toObject(jObj.getJSONObject(field.getName()).toString(), classe));
                             } else {
                                 ParameterizedType listType = (ParameterizedType) field.getGenericType();
                                 Class<? extends GenericEntity> classe = (Class<? extends GenericEntity>) listType.getActualTypeArguments()[0];
+                                if(!jObj.isNull(field.getName()))
                                 field.set(this, toList(jObj.get(field.getName()).toString(), classe));
                             }
                         } else {

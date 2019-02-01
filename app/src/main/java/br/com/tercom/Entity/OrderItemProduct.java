@@ -24,6 +24,14 @@ public class OrderItemProduct extends GenericEntity implements iNewOrderItem {
         return id;
     }
 
+    @Override
+    public String getName() {
+        if(product != null)
+            return product.getName();
+        else
+            return "";
+    }
+
     public void setId(int id) {
         this.id = id;
     }

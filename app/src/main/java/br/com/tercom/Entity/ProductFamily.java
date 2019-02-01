@@ -13,6 +13,7 @@ public class ProductFamily extends GenericEntity implements IProductCategory{
     private ArrayList<ProductGroup> productGroups;
 
 
+    @Override
     public int getId() {
         return id;
     }
@@ -21,7 +22,7 @@ public class ProductFamily extends GenericEntity implements IProductCategory{
         this.id = id;
     }
 
-
+    @Override
     public String getName() {
         return name;
     }
@@ -31,6 +32,7 @@ public class ProductFamily extends GenericEntity implements IProductCategory{
         this.name = name;
     }
 
+    @Override
     public int getType() {
         return type;
     }

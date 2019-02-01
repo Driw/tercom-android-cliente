@@ -16,8 +16,9 @@ public class CustomerEmployee extends GenericEntity{
     private Phone phone;
     @BindObject
     private Phone cellphone;
-    private boolean enable;
-    private Date register;
+    private boolean enabled;
+    @BindObject
+    private Register register;
 
     public CustomerEmployee(){
         id = 0;
@@ -28,7 +29,7 @@ public class CustomerEmployee extends GenericEntity{
         password = "";
         phone = new Phone();
         cellphone = new Phone();
-        enable = false;
+        enabled = false;
     }
 
     public int getId() {
@@ -96,18 +97,18 @@ public class CustomerEmployee extends GenericEntity{
     }
 
     public boolean isEnable() {
-        return enable;
+        return enabled;
     }
 
     public void setEnable(boolean enable) {
-        this.enable = enable;
+        this.enabled = enable;
     }
 
-    public Date getRegister() {
+    public Register getRegister() {
         return register;
     }
 
-    public void setRegister(Date register) {
+    public void setRegister(Register register) {
         this.register = register;
     }
 }
