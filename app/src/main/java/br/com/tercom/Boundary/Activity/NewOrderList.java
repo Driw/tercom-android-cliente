@@ -117,14 +117,14 @@ public class NewOrderList extends AbstractAppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             if(apiResponseProduct.getStatusBoolean()){
-                //list.addAll(apiResponseProduct.getResult().getList());
+                list.addAll(apiResponseProduct.getResult().getList());
                 //listProducts.addAll(apiResponseProduct.getResult().getList());
             } else {
                 DialogConfirm dialogConfirm = new DialogConfirm(NewOrderList.this);
                 dialogConfirm.init(EnumDialogOptions.FAIL, apiResponseProduct.getMessage());
             }
             if(apiResponseService.getStatusBoolean()){
-                //list.addAll(apiResponseService.getResult().getList());
+                list.addAll(apiResponseService.getResult().getList());
                 //listServices.addAll(apiResponseService.getResult().getList());
             } else {
                 DialogConfirm dialogConfirm = new DialogConfirm(NewOrderList.this);
@@ -132,7 +132,7 @@ public class NewOrderList extends AbstractAppCompatActivity {
             }
             //createNewOrderList(listProducts);
             //createNewOrderList(listServices);
-            //createNewOrderList(list);
+            createNewOrderList(list);
         }
     }
 

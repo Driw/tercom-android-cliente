@@ -87,6 +87,16 @@ public class OrderItemProduct extends GenericEntity implements iNewOrderItem {
         return observations;
     }
 
+    @Override
+    public String getName() {
+        if (product != null) {
+            return product.getName();
+        } else {
+            return "";
+        }
+
+    }
+
     public void setObservations(String observations) {
         if(observations != null && observations.length() > MAX_OBSERVATION_LENS)
             throw new StringIndexOutOfBoundsException(String.format("Observações deve possuir até %s", String.valueOf(MAX_OBSERVATION_LENS)));

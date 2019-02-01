@@ -46,7 +46,7 @@ public class NewOrderListAdapter extends RecyclerView.Adapter<NewOrderListAdapte
     @Override
     public void onBindViewHolder(@NonNull NewOrderListAdapter.ViewHolder holder, int position) {
         holder.txtNewOrderListItemID.setText(orders.get(position).getId());
-        holder.txtNewOrderListItemName.setText(orders.get(position).getObservations()); //CHECAR ESTA INFORMAÇÂO
+        holder.txtNewOrderListItemName.setText(orders.get(position).getName());
         holder.txtNewOrderListItemProvider.setText(orders.get(position).getProvider().getFantasyName());
     }
 
