@@ -51,9 +51,7 @@ public class NewOrderList extends AbstractAppCompatActivity {
     private OrderRequest orderRequest;
     private Dialog dialog;
     private OrderItemProduct selectedProduct;
-    private ArrayList<? extends iNewOrderItem> list;
-    //private ArrayList<OrderItemProduct> listProducts;
-    //private ArrayList<OrderItemService> listServices;
+    private ArrayList<iNewOrderItem> list;
 
     @BindView(R.id.rvNewOrderList)
     RecyclerView rvNewOrderList;
@@ -100,6 +98,7 @@ public class NewOrderList extends AbstractAppCompatActivity {
         private int id;
 
         public getAllProductListTask (int id){
+            list = new ArrayList<>();
             this.id = id;
         }
 
@@ -117,22 +116,14 @@ public class NewOrderList extends AbstractAppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             if(apiResponseProduct.getStatusBoolean()){
-                list.addAll(apiResponseProduct.getResult().getList());
-                //listProducts.addAll(apiResponseProduct.getResult().getList());
-            } else {
-                DialogConfirm dialogConfirm = new DialogConfirm(NewOrderList.this);
-                dialogConfirm.init(EnumDialogOptions.FAIL, apiResponseProduct.getMessage());
+                list.addAll(apiResponseProduct.getResult().getList() );
             }
             if(apiResponseService.getStatusBoolean()){
                 list.addAll(apiResponseService.getResult().getList());
-                //listServices.addAll(apiResponseService.getResult().getList());
-            } else {
-                DialogConfirm dialogConfirm = new DialogConfirm(NewOrderList.this);
-                dialogConfirm.init(EnumDialogOptions.FAIL, apiResponseService.getMessage());
             }
-            //createNewOrderList(listProducts);
-            //createNewOrderList(listServices);
-            createNewOrderList(list);
+            if(list.size() > 0)
+                createNewOrderList(list);
+
         }
     }
 
