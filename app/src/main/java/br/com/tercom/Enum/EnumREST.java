@@ -4,7 +4,7 @@ public enum EnumREST {
 
     //SERVICE
     AVALIABLE("avaliable"),
-    MANUFACTURE("manufacturer"),
+    MANUFACTURE("manufacture"),
     PRODUCT("product"),
     PRODUCTFAMILY("productFamily"),
     PRODUCTGROUP("productGroup"),
@@ -51,6 +51,7 @@ public enum EnumREST {
     GETBYSERVICE("getByService"),
     ORDERITEMPRODUCT("orderItemProduct"),
     ORDERITEMSERVICE("orderItemService"),
+    SETQUEUED("setQueued"),
 
 
     //FILTERS
