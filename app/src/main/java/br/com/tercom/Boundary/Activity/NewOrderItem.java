@@ -70,6 +70,8 @@ public class NewOrderItem extends AbstractAppCompatActivity {
     private Services selectedServices;
     private Provider selectedProvider;
     private Manufacture selectedManufacture;
+    private GetProviderTask getProviderTask;
+    private GetManufacturerTask getManufacturerTask;
 
 
     @BindView(R.id.txtOrderProductName)
@@ -91,6 +93,16 @@ public class NewOrderItem extends AbstractAppCompatActivity {
 
     @OnClick(R.id.txtOrderProductName) void selectAdd() {
         initDialog(selectedType);
+
+    }
+
+    @OnClick(R.id.txtOrderProviderName) void searchProvider() {
+        initDialogManufacturerProvider(GET_PROVIDER);
+
+    }
+
+    @OnClick(R.id.txtOrderManufacturerName) void searchManufacturer() {
+        initDialogManufacturerProvider(GET_MANUFACTURE);
 
     }
 
@@ -137,6 +149,29 @@ public class NewOrderItem extends AbstractAppCompatActivity {
 
     }
 
+
+    private void initDialogManufacturerProvider(final int typeReference) {
+        dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setContentView(R.layout.dialog_search_info_price);
+        rvSearch = dialog.findViewById(R.id.rv_search);
+        editSearch = dialog.findViewById(R.id.editSearch);
+        editSearch.setVisibility(View.GONE);
+        switch (typeReference){
+            case GET_PROVIDER:
+                searchProvider(selectedType == ADD_PRODUCT ? selectedProduct.getId() : selectedServices.getId(), selectedType);
+                break;
+            case GET_MANUFACTURE:
+                searchManufacturer(selectedProduct.getId());
+                break;
+        }
+
+        dialog.show();
+
+    }
+
     private void search(int reference,String value){
 
         switch (reference){
@@ -161,6 +196,20 @@ public class NewOrderItem extends AbstractAppCompatActivity {
         if(productTask == null || productTask.getStatus() != AsyncTask.Status.RUNNING){
             productTask = new ProductTask(name);
             productTask.execute();
+        }
+    }
+
+    private void searchProvider(int id, int type) {
+        if(getProviderTask == null || getProviderTask.getStatus() != AsyncTask.Status.RUNNING){
+            getProviderTask = new GetProviderTask(id,type);
+            getProviderTask.execute();
+        }
+    }
+
+    private void searchManufacturer(int id) {
+        if(getManufacturerTask == null || getManufacturerTask.getStatus() != AsyncTask.Status.RUNNING){
+            getManufacturerTask = new GetManufacturerTask(id);
+            getManufacturerTask.execute();
         }
     }
 
@@ -351,12 +400,14 @@ public class NewOrderItem extends AbstractAppCompatActivity {
     }
 
 
+
     private class GetProviderTask extends AsyncTask<Void, Void, Void>{
         private ApiResponse<ProviderList> apiResponse;
-        private String name;
+        private int value;
+        private int type;
 
-        public GetProviderTask(String name){
-            this.name = name;
+        public GetProviderTask(int value, int type){
+            this.value = value;
         }
 
         @Override
@@ -365,7 +416,7 @@ public class NewOrderItem extends AbstractAppCompatActivity {
                 Looper.prepare();
             }
             ProviderControl providerControl = new ProviderControl(NewOrderItem.this);
-            apiResponse = providerControl.search(name);
+            apiResponse = type == ADD_PRODUCT ? providerControl.getByProduct(value): providerControl.getByService(value);
             return null;
         }
 
@@ -384,9 +435,9 @@ public class NewOrderItem extends AbstractAppCompatActivity {
 
     private class GetManufacturerTask extends AsyncTask<Void, Void, Void>{
         private ApiResponse<ManufactureList> apiResponse;
-        private String value;
+        private int value;
 
-        public GetManufacturerTask(String value){
+        public GetManufacturerTask(int value){
             this.value = value;
         }
 
@@ -396,7 +447,7 @@ public class NewOrderItem extends AbstractAppCompatActivity {
                 Looper.prepare();
             }
             ManufactureControl manufactureControl = new ManufactureControl(NewOrderItem.this);
-            apiResponse = manufactureControl.search(value);
+            apiResponse = manufactureControl.getByProduct(value);
             return null;
         }
 

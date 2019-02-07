@@ -113,7 +113,7 @@ public class ManufactureControl extends GenericControl {
         try {
             String link = getLink(getBase(EnumREST.SITE, EnumREST.MANUFACTURE, EnumREST.GETBYPRODUCT), String.valueOf(idProduct));
             CustomPair<String> jsonResult =  callJson(EnumMethod.GET,activity,link);
-            ApiResponse<Manufacture> providerApiResponse = new ApiResponse<>(Manufacture.class);
+            ApiResponse<ManufactureList> providerApiResponse = new ApiResponse<>(ManufactureList.class);
             if(jsonResult.first){
                 providerApiResponse = populateApiResponse(providerApiResponse,jsonResult.second);
             }

@@ -13,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -28,6 +29,7 @@ import br.com.tercom.Boundary.BoundaryUtil.Mask;
 import br.com.tercom.Control.OrderItemControl;
 import br.com.tercom.Control.OrderRequestControl;
 import br.com.tercom.Entity.ApiResponse;
+import br.com.tercom.Entity.CustomerProfile;
 import br.com.tercom.Entity.Manufacture;
 import br.com.tercom.Entity.OrderItemProduct;
 import br.com.tercom.Entity.OrderItemProductList;
@@ -36,6 +38,7 @@ import br.com.tercom.Entity.OrderItemServiceList;
 import br.com.tercom.Entity.OrderRequest;
 import br.com.tercom.Entity.Product;
 import br.com.tercom.Entity.Provider;
+import br.com.tercom.Entity.TercomProfile;
 import br.com.tercom.Enum.EnumDialogOptions;
 import br.com.tercom.Interface.iNewOrderItem;
 import br.com.tercom.R;
@@ -45,6 +48,8 @@ import br.com.tercom.Util.Util;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static br.com.tercom.Application.AppTercom.USER_STATIC;
 
 public class NewOrderList extends AbstractAppCompatActivity {
 
@@ -83,6 +88,9 @@ public class NewOrderList extends AbstractAppCompatActivity {
         orderRequest = new Gson().fromJson(getIntent().getExtras().getString("orderRequest"),OrderRequest.class);
         createToolbar();
         ButterKnife.bind(this);
+        CustomerProfile tercomProfile = USER_STATIC.getCustomerEmployee().getCustomerProfile();
+        Log.i("tag",tercomProfile.getName());
+
     }
 
     private void createNewOrderList(ArrayList<? extends iNewOrderItem> list) {

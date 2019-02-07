@@ -4,7 +4,7 @@ public enum EnumREST {
 
     //SERVICE
     AVALIABLE("avaliable"),
-    MANUFACTURE("manufacture"),
+    MANUFACTURE("manufacturer"),
     PRODUCT("product"),
     PRODUCTFAMILY("productFamily"),
     PRODUCTGROUP("productGroup"),
