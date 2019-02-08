@@ -19,7 +19,6 @@ import android.widget.TextView;
 
 import br.com.tercom.Adapter.AddProductAdapter;
 import br.com.tercom.Adapter.AddServiceAdapter;
-import br.com.tercom.Adapter.CategoryAdapter;
 import br.com.tercom.Adapter.GetManufacturerAdapter;
 import br.com.tercom.Adapter.GetProviderAdapter;
 import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
@@ -34,7 +33,6 @@ import br.com.tercom.Entity.ManufactureList;
 import br.com.tercom.Entity.Product;
 import br.com.tercom.Entity.ProductList;
 import br.com.tercom.Entity.Provider;
-import br.com.tercom.Entity.ProviderContact;
 import br.com.tercom.Entity.ProviderList;
 import br.com.tercom.Entity.Services;
 import br.com.tercom.Entity.ServicesList;
@@ -43,13 +41,12 @@ import br.com.tercom.Enum.EnumREST;
 import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
 import br.com.tercom.R;
 import br.com.tercom.Util.DialogConfirm;
-import br.com.tercom.Util.DialogLoading;
 import br.com.tercom.Util.Util;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class NewOrderItem extends AbstractAppCompatActivity {
+public class NewOrderItemActivity extends AbstractAppCompatActivity {
 
     public static final int ADD_PRODUCT = 1;
     public static final int ADD_SERVICE = 2;
@@ -249,7 +246,7 @@ public class NewOrderItem extends AbstractAppCompatActivity {
         protected Void doInBackground(Void... voids) {
             if(Looper.myLooper() == null)
                 Looper.prepare();
-            ProductControl productControl = new ProductControl(NewOrderItem.this);
+            ProductControl productControl = new ProductControl(NewOrderItemActivity.this);
             apiResponse = productControl.search(value, EnumREST.NAME);
             return null;
         }
@@ -259,7 +256,7 @@ public class NewOrderItem extends AbstractAppCompatActivity {
             if(apiResponse.getStatusBoolean()){
                 createListProducts(apiResponse.getResult());
             }else{
-                Util.toast(NewOrderItem.this,apiResponse.getMessage());
+                Util.toast(NewOrderItemActivity.this,apiResponse.getMessage());
             }
         }
     }
@@ -279,7 +276,7 @@ public class NewOrderItem extends AbstractAppCompatActivity {
         protected Void doInBackground(Void... voids) {
             if(Looper.myLooper() == null)
                 Looper.prepare();
-            ServiceControl serviceControl = new ServiceControl(NewOrderItem.this);
+            ServiceControl serviceControl = new ServiceControl(NewOrderItemActivity.this);
             apiResponse = serviceControl.search(name, EnumREST.NAME);
             return null;
         }
@@ -289,7 +286,7 @@ public class NewOrderItem extends AbstractAppCompatActivity {
             if (apiResponse.getStatusBoolean()) {
                 createListServices(apiResponse.getResult());
             }else{
-                DialogConfirm dialogConfirm = new DialogConfirm(NewOrderItem.this);
+                DialogConfirm dialogConfirm = new DialogConfirm(NewOrderItemActivity.this);
                 dialogConfirm.init(EnumDialogOptions.FAIL,apiResponse.getMessage());
             }
         }
@@ -364,7 +361,7 @@ public class NewOrderItem extends AbstractAppCompatActivity {
             if(Looper.myLooper()==null){
                 Looper.prepare();
             }
-            ProviderControl providerControl = new ProviderControl(NewOrderItem.this);
+            ProviderControl providerControl = new ProviderControl(NewOrderItemActivity.this);
             apiResponse = providerControl.search(name);
             return null;
         }
@@ -374,7 +371,7 @@ public class NewOrderItem extends AbstractAppCompatActivity {
             if (apiResponse.getStatusBoolean()) {
                 createListProvider(apiResponse.getResult());
             }else{
-                DialogConfirm dialogConfirm = new DialogConfirm(NewOrderItem.this);
+                DialogConfirm dialogConfirm = new DialogConfirm(NewOrderItemActivity.this);
                 dialogConfirm.init(EnumDialogOptions.FAIL,apiResponse.getMessage());
             }
         }
@@ -395,7 +392,7 @@ public class NewOrderItem extends AbstractAppCompatActivity {
             if(Looper.myLooper()==null){
                 Looper.prepare();
             }
-            ManufactureControl manufactureControl = new ManufactureControl(NewOrderItem.this);
+            ManufactureControl manufactureControl = new ManufactureControl(NewOrderItemActivity.this);
             apiResponse = manufactureControl.search(value);
             return null;
         }
@@ -405,7 +402,7 @@ public class NewOrderItem extends AbstractAppCompatActivity {
             if (apiResponse.getStatusBoolean()) {
                 createListManufacturer(apiResponse.getResult());
             }else{
-                DialogConfirm dialogConfirm = new DialogConfirm(NewOrderItem.this);
+                DialogConfirm dialogConfirm = new DialogConfirm(NewOrderItemActivity.this);
                 dialogConfirm.init(EnumDialogOptions.FAIL,apiResponse.getMessage());
             }
         }

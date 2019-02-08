@@ -15,25 +15,19 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 
+import com.github.clans.fab.FloatingActionButton;
 import com.google.gson.Gson;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 
 import br.com.tercom.Adapter.OrderListAdapter;
 import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
 import br.com.tercom.Boundary.BoundaryUtil.Mask;
 import br.com.tercom.Control.OrderRequestControl;
 import br.com.tercom.Entity.ApiResponse;
-import br.com.tercom.Entity.Order;
 import br.com.tercom.Entity.OrderRequest;
 import br.com.tercom.Entity.OrderRequestList;
-import br.com.tercom.Entity.Product;
-import br.com.tercom.Entity.ProdutoGenerico;
 import br.com.tercom.Enum.EnumDialogOptions;
 import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
 import br.com.tercom.R;
@@ -44,7 +38,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class OrderList extends AbstractAppCompatActivity {
+public class OrderListActivity extends AbstractAppCompatActivity {
 
     private NewOrderTask newOrderTask;
     private OrderRequest selectORderRequest;
@@ -54,7 +48,8 @@ public class OrderList extends AbstractAppCompatActivity {
     RecyclerView rv_OrderList;
 
     @OnClick(R.id.btnNewOrder) void newOrder(){
-        initDialog();
+        createIntentAbs(OrderDetailActivity.class);
+        //initDialog();
     }
 
     @Override
@@ -67,7 +62,7 @@ public class OrderList extends AbstractAppCompatActivity {
 
 
     private void initDialog() {
-        Dialog dialog = new Dialog(OrderList.this);
+        Dialog dialog = new Dialog(OrderListActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(R.layout.dialog_new_order);
@@ -82,7 +77,7 @@ public class OrderList extends AbstractAppCompatActivity {
                 if (pair.first){
                     initRequest(txtMaxBudget.getText().toString(),txtExpirationDate.getText().toString());
                 }else{
-                    Util.toast(OrderList.this,pair.second);
+                    Util.toast(OrderListActivity.this,pair.second);
                 }
             }
         });
@@ -122,7 +117,7 @@ public class OrderList extends AbstractAppCompatActivity {
         protected Void doInBackground(Void... voids) {
             if(Looper.myLooper() == null)
                 Looper.prepare();
-            OrderRequestControl orderRequestControl = new OrderRequestControl(OrderList.this);
+            OrderRequestControl orderRequestControl = new OrderRequestControl(OrderListActivity.this);
             apiResponse = orderRequestControl.add(budget,expirationDate);
             return null;
         }
@@ -131,11 +126,11 @@ public class OrderList extends AbstractAppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             if(apiResponse.getStatusBoolean()){
                 Intent intent = new Intent();
-                intent.setClass(OrderList.this,NewOrderList.class);
+                intent.setClass(OrderListActivity.this, NewOrderListActivity.class);
                 intent.putExtra("orderRequest",new Gson().toJson(apiResponse.getResult()));
                 startActivity(intent);
             }else{
-                DialogConfirm dialogConfirm = new DialogConfirm(OrderList.this);
+                DialogConfirm dialogConfirm = new DialogConfirm(OrderListActivity.this);
                 dialogConfirm.init(EnumDialogOptions.FAIL,apiResponse.getMessage());
             }
         }
@@ -178,7 +173,7 @@ public class OrderList extends AbstractAppCompatActivity {
             if (Looper.myLooper() == null){
                 Looper.prepare();
             }
-            OrderRequestControl orderRequestControl = new OrderRequestControl(OrderList.this);
+            OrderRequestControl orderRequestControl = new OrderRequestControl(OrderListActivity.this);
             apiResponse = orderRequestControl.getAll(mode);
             return null;
         }
@@ -188,7 +183,7 @@ public class OrderList extends AbstractAppCompatActivity {
             if(apiResponse.getStatusBoolean()){
                 createOrderRequestList(apiResponse.getResult());
             } else {
-                DialogConfirm dialogConfirm = new DialogConfirm(OrderList.this);
+                DialogConfirm dialogConfirm = new DialogConfirm(OrderListActivity.this);
                 dialogConfirm.init(EnumDialogOptions.FAIL,apiResponse.getMessage());
             }
         }

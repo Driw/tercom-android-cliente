@@ -14,7 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class NewrOrderItem extends AbstractAppCompatActivity {
+public class NewrOrderItemActivity extends AbstractAppCompatActivity {
 
     private OrderItemProduct orderItemProduct;
     private Product produto;

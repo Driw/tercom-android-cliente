@@ -73,13 +73,13 @@
         <activity android:name=".Boundary.Activity.ServicePriceDetailsActivity" />
         <activity android:name=".Boundary.Activity.ServicePriceListAcitivity" />
         <activity android:name=".Boundary.Activity.PermissionsActivity" />
-        <activity android:name=".Boundary.Activity.MessageList" />
-        <activity android:name=".Boundary.Activity.NewMessage" />
-        <activity android:name=".Boundary.Activity.MessageLog" />
-        <activity android:name=".Boundary.Activity.OrderList" />
-        <activity android:name=".Boundary.Activity.NewOrderList" />
-        <activity android:name=".Boundary.Activity.NewOrderItem" />
-        <activity android:name=".Boundary.Activity.OrderDetail" />
+        <activity android:name=".Boundary.Activity.MessageListActivity" />
+        <activity android:name=".Boundary.Activity.NewMessageActivity" />
+        <activity android:name=".Boundary.Activity.MessageLogActivity" />
+        <activity android:name=".Boundary.Activity.OrderListActivity" />
+        <activity android:name=".Boundary.Activity.NewOrderListActivity" />
+        <activity android:name=".Boundary.Activity.NewOrderItemActivity" />
+        <activity android:name=".Boundary.Activity.OrderDetailActivity" />
     </application>
 
 </manifest>

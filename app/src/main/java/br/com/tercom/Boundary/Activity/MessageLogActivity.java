@@ -21,7 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MessageLog extends AbstractAppCompatActivity {
+public class MessageLogActivity extends AbstractAppCompatActivity {
 
     private ArrayList<MessageItem> messageList;
     private MessageItem newMessageItem;

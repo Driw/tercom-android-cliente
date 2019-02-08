@@ -45,7 +45,7 @@
                 android:id="@+id/txt_expiration_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Data de expiração da cotação"
+                android:hint="Data de expiração da cotação (dd/mm/aaaa)"
                 android:inputType="datetime"
                 android:textSize="14sp" />
         </android.support.design.widget.TextInputLayout>
