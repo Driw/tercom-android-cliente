@@ -51,6 +51,7 @@ public enum EnumREST {
     GETBYSERVICE("getByService"),
     ORDERITEMPRODUCT("orderItemProduct"),
     ORDERITEMSERVICE("orderItemService"),
+    SETQUEUED("setQueued"),
 
 
     //FILTERS

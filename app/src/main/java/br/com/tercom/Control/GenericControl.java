@@ -251,7 +251,8 @@ public abstract class GenericControl {
 
         try{
             if(method == EnumMethod.GET) {
-                jsonCalled = new HttpUtil().httpConnectionGET((String)link, activity);
+                TreeMap<String, String> map = new TreeMap<>();
+                jsonCalled = new HttpUtil().httpConnectionPOST(new Pair<>((String) link,getPostValues(map)), activity);
             }
             if(method == EnumMethod.POST) {
                 jsonCalled = new HttpUtil().httpConnectionPOST((Pair) link, activity);

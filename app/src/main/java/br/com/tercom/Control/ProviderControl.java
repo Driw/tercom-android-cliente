@@ -187,7 +187,7 @@ public class ProviderControl extends GenericControl {
     public ApiResponse getByProduct(int idProduct){
         try {
             String link = getLink(getBase(EnumREST.SITE, EnumREST.PROVIDER, EnumREST.GETBYPRODUCT), String.valueOf(idProduct));
-            CustomPair<String> jsonResult =  callJson(EnumMethod.POST,activity, link);
+            CustomPair<String> jsonResult =  callJson(EnumMethod.GET,activity, link);
             ApiResponse<ProviderList> providerApiResponse = new ApiResponse<>(ProviderList.class);
             if(jsonResult.first){
                 providerApiResponse = populateApiResponse(providerApiResponse,jsonResult.second);
@@ -202,8 +202,8 @@ public class ProviderControl extends GenericControl {
     public ApiResponse getByService(int idService){
         try {
             String link = getLink(getBase(EnumREST.SITE, EnumREST.PROVIDER, EnumREST.GETBYPRODUCT), String.valueOf(idService));
-            CustomPair<String> jsonResult =  callJson(EnumMethod.POST,activity, link);
-            ApiResponse<Provider> providerApiResponse = new ApiResponse<>(Provider.class);
+            CustomPair<String> jsonResult =  callJson(EnumMethod.GET,activity, link);
+            ApiResponse<ProviderList> providerApiResponse = new ApiResponse<>(ProviderList.class);
             if(jsonResult.first){
                 providerApiResponse = populateApiResponse(providerApiResponse,jsonResult.second);
             }

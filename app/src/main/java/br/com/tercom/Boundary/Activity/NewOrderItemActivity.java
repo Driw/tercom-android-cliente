@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import br.com.tercom.Adapter.AddProductAdapter;
 import br.com.tercom.Adapter.AddServiceAdapter;
+import br.com.tercom.Adapter.CategoryAdapter;
 import br.com.tercom.Adapter.GetManufacturerAdapter;
 import br.com.tercom.Adapter.GetProviderAdapter;
 import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
@@ -33,6 +34,7 @@ import br.com.tercom.Entity.ManufactureList;
 import br.com.tercom.Entity.Product;
 import br.com.tercom.Entity.ProductList;
 import br.com.tercom.Entity.Provider;
+import br.com.tercom.Entity.ProviderContact;
 import br.com.tercom.Entity.ProviderList;
 import br.com.tercom.Entity.Services;
 import br.com.tercom.Entity.ServicesList;
@@ -41,12 +43,13 @@ import br.com.tercom.Enum.EnumREST;
 import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
 import br.com.tercom.R;
 import br.com.tercom.Util.DialogConfirm;
+import br.com.tercom.Util.DialogLoading;
 import br.com.tercom.Util.Util;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class NewOrderItemActivity extends AbstractAppCompatActivity {
+public class NewOrderItem extends AbstractAppCompatActivity {
 
     public static final int ADD_PRODUCT = 1;
     public static final int ADD_SERVICE = 2;
@@ -67,6 +70,8 @@ public class NewOrderItemActivity extends AbstractAppCompatActivity {
     private Services selectedServices;
     private Provider selectedProvider;
     private Manufacture selectedManufacture;
+    private GetProviderTask getProviderTask;
+    private GetManufacturerTask getManufacturerTask;
 
 
     @BindView(R.id.txtOrderProductName)
@@ -88,6 +93,16 @@ public class NewOrderItemActivity extends AbstractAppCompatActivity {
 
     @OnClick(R.id.txtOrderProductName) void selectAdd() {
         initDialog(selectedType);
+
+    }
+
+    @OnClick(R.id.txtOrderProviderName) void searchProvider() {
+        initDialogManufacturerProvider(GET_PROVIDER);
+
+    }
+
+    @OnClick(R.id.txtOrderManufacturerName) void searchManufacturer() {
+        initDialogManufacturerProvider(GET_MANUFACTURE);
 
     }
 
@@ -134,6 +149,29 @@ public class NewOrderItemActivity extends AbstractAppCompatActivity {
 
     }
 
+
+    private void initDialogManufacturerProvider(final int typeReference) {
+        dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setContentView(R.layout.dialog_search_info_price);
+        rvSearch = dialog.findViewById(R.id.rv_search);
+        editSearch = dialog.findViewById(R.id.editSearch);
+        editSearch.setVisibility(View.GONE);
+        switch (typeReference){
+            case GET_PROVIDER:
+                searchProvider(selectedType == ADD_PRODUCT ? selectedProduct.getId() : selectedServices.getId(), selectedType);
+                break;
+            case GET_MANUFACTURE:
+                searchManufacturer(selectedProduct.getId());
+                break;
+        }
+
+        dialog.show();
+
+    }
+
     private void search(int reference,String value){
 
         switch (reference){
@@ -158,6 +196,20 @@ public class NewOrderItemActivity extends AbstractAppCompatActivity {
         if(productTask == null || productTask.getStatus() != AsyncTask.Status.RUNNING){
             productTask = new ProductTask(name);
             productTask.execute();
+        }
+    }
+
+    private void searchProvider(int id, int type) {
+        if(getProviderTask == null || getProviderTask.getStatus() != AsyncTask.Status.RUNNING){
+            getProviderTask = new GetProviderTask(id,type);
+            getProviderTask.execute();
+        }
+    }
+
+    private void searchManufacturer(int id) {
+        if(getManufacturerTask == null || getManufacturerTask.getStatus() != AsyncTask.Status.RUNNING){
+            getManufacturerTask = new GetManufacturerTask(id);
+            getManufacturerTask.execute();
         }
     }
 
@@ -246,7 +298,7 @@ public class NewOrderItemActivity extends AbstractAppCompatActivity {
         protected Void doInBackground(Void... voids) {
             if(Looper.myLooper() == null)
                 Looper.prepare();
-            ProductControl productControl = new ProductControl(NewOrderItemActivity.this);
+            ProductControl productControl = new ProductControl(NewOrderItem.this);
             apiResponse = productControl.search(value, EnumREST.NAME);
             return null;
         }
@@ -256,7 +308,7 @@ public class NewOrderItemActivity extends AbstractAppCompatActivity {
             if(apiResponse.getStatusBoolean()){
                 createListProducts(apiResponse.getResult());
             }else{
-                Util.toast(NewOrderItemActivity.this,apiResponse.getMessage());
+                Util.toast(NewOrderItem.this,apiResponse.getMessage());
             }
         }
     }
@@ -276,7 +328,7 @@ public class NewOrderItemActivity extends AbstractAppCompatActivity {
         protected Void doInBackground(Void... voids) {
             if(Looper.myLooper() == null)
                 Looper.prepare();
-            ServiceControl serviceControl = new ServiceControl(NewOrderItemActivity.this);
+            ServiceControl serviceControl = new ServiceControl(NewOrderItem.this);
             apiResponse = serviceControl.search(name, EnumREST.NAME);
             return null;
         }
@@ -286,7 +338,7 @@ public class NewOrderItemActivity extends AbstractAppCompatActivity {
             if (apiResponse.getStatusBoolean()) {
                 createListServices(apiResponse.getResult());
             }else{
-                DialogConfirm dialogConfirm = new DialogConfirm(NewOrderItemActivity.this);
+                DialogConfirm dialogConfirm = new DialogConfirm(NewOrderItem.this);
                 dialogConfirm.init(EnumDialogOptions.FAIL,apiResponse.getMessage());
             }
         }
@@ -348,12 +400,14 @@ public class NewOrderItemActivity extends AbstractAppCompatActivity {
     }
 
 
+
     private class GetProviderTask extends AsyncTask<Void, Void, Void>{
         private ApiResponse<ProviderList> apiResponse;
-        private String name;
+        private int value;
+        private int type;
 
-        public GetProviderTask(String name){
-            this.name = name;
+        public GetProviderTask(int value, int type){
+            this.value = value;
         }
 
         @Override
@@ -361,8 +415,8 @@ public class NewOrderItemActivity extends AbstractAppCompatActivity {
             if(Looper.myLooper()==null){
                 Looper.prepare();
             }
-            ProviderControl providerControl = new ProviderControl(NewOrderItemActivity.this);
-            apiResponse = providerControl.search(name);
+            ProviderControl providerControl = new ProviderControl(NewOrderItem.this);
+            apiResponse = type == ADD_PRODUCT ? providerControl.getByProduct(value): providerControl.getByService(value);
             return null;
         }
 
@@ -371,7 +425,7 @@ public class NewOrderItemActivity extends AbstractAppCompatActivity {
             if (apiResponse.getStatusBoolean()) {
                 createListProvider(apiResponse.getResult());
             }else{
-                DialogConfirm dialogConfirm = new DialogConfirm(NewOrderItemActivity.this);
+                DialogConfirm dialogConfirm = new DialogConfirm(NewOrderItem.this);
                 dialogConfirm.init(EnumDialogOptions.FAIL,apiResponse.getMessage());
             }
         }
@@ -381,9 +435,9 @@ public class NewOrderItemActivity extends AbstractAppCompatActivity {
 
     private class GetManufacturerTask extends AsyncTask<Void, Void, Void>{
         private ApiResponse<ManufactureList> apiResponse;
-        private String value;
+        private int value;
 
-        public GetManufacturerTask(String value){
+        public GetManufacturerTask(int value){
             this.value = value;
         }
 
@@ -392,8 +446,8 @@ public class NewOrderItemActivity extends AbstractAppCompatActivity {
             if(Looper.myLooper()==null){
                 Looper.prepare();
             }
-            ManufactureControl manufactureControl = new ManufactureControl(NewOrderItemActivity.this);
-            apiResponse = manufactureControl.search(value);
+            ManufactureControl manufactureControl = new ManufactureControl(NewOrderItem.this);
+            apiResponse = manufactureControl.getByProduct(value);
             return null;
         }
 
@@ -402,7 +456,7 @@ public class NewOrderItemActivity extends AbstractAppCompatActivity {
             if (apiResponse.getStatusBoolean()) {
                 createListManufacturer(apiResponse.getResult());
             }else{
-                DialogConfirm dialogConfirm = new DialogConfirm(NewOrderItemActivity.this);
+                DialogConfirm dialogConfirm = new DialogConfirm(NewOrderItem.this);
                 dialogConfirm.init(EnumDialogOptions.FAIL,apiResponse.getMessage());
             }
         }
