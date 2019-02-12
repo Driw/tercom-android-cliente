@@ -50,13 +50,17 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static br.com.tercom.Application.AppTercom.USER_STATIC;
+import static br.com.tercom.Util.Util.toast;
 
 public class NewOrderList extends AbstractAppCompatActivity {
+
 
     private OrderRequest orderRequest;
     private Dialog dialog;
     private OrderItemProduct selectedProduct;
     private ArrayList<iNewOrderItem> list;
+    private GetAllProductListTask getAllProductListTask;
+    private CompleteOrderTask completeOrderTask;
 
     @BindView(R.id.rvNewOrderList)
     RecyclerView rvNewOrderList;
@@ -66,7 +70,7 @@ public class NewOrderList extends AbstractAppCompatActivity {
         Intent addService = new Intent(NewOrderList.this, NewOrderItem.class);
         addService.putExtra("typeAdd", NewOrderItem.ADD_SERVICE);
         addService.putExtra("orderRequestId", orderRequest.getId());
-        startActivity(addService);
+        startActivityForResult(addService, NewOrderItem.ADD_SERVICE );
     }
 
     @OnClick(R.id.btn_addNewOrderItemmenu_product)
@@ -74,13 +78,13 @@ public class NewOrderList extends AbstractAppCompatActivity {
         Intent addProduct = new Intent(NewOrderList.this, NewOrderItem.class);
         addProduct.putExtra("typeAdd", NewOrderItem.ADD_PRODUCT);
         addProduct.putExtra("orderRequestId", orderRequest.getId());
-        startActivity(addProduct);
+        startActivityForResult(addProduct,NewOrderItem.ADD_PRODUCT);
     }
 
     @OnClick(R.id.btnCompleteOrder) void completeOrder() {
-        //TODO
+        initCompleteOrderTask();
     }
-
+    
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,8 +92,8 @@ public class NewOrderList extends AbstractAppCompatActivity {
         orderRequest = new Gson().fromJson(getIntent().getExtras().getString("orderRequest"),OrderRequest.class);
         createToolbar();
         ButterKnife.bind(this);
-        CustomerProfile tercomProfile = USER_STATIC.getCustomerEmployee().getCustomerProfile();
-        Log.i("tag",tercomProfile.getName());
+        initGetAllProducts();
+
 
     }
 
@@ -100,12 +104,35 @@ public class NewOrderList extends AbstractAppCompatActivity {
         rvNewOrderList.setAdapter(newOrderitemAdapter);
     }
 
-    private class getAllProductListTask extends AsyncTask<Void, Void, Void> {
+
+    private void initGetAllProducts(){
+        if(getAllProductListTask == null || getAllProductListTask.getStatus() != AsyncTask.Status.RUNNING){
+            getAllProductListTask = new GetAllProductListTask(orderRequest.getId());
+            getAllProductListTask.execute();
+        }
+    }
+
+    private void initCompleteOrderTask(){
+        if(completeOrderTask == null || completeOrderTask.getStatus() != AsyncTask.Status.RUNNING){
+            completeOrderTask = new CompleteOrderTask(orderRequest.getId());
+            completeOrderTask.execute();
+        }
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if(resultCode == RESULT_OK)
+            initGetAllProducts();
+    }
+
+    private class GetAllProductListTask extends AsyncTask<Void, Void, Void> {
         private ApiResponse<OrderItemProductList> apiResponseProduct;
         private ApiResponse<OrderItemServiceList> apiResponseService;
         private int id;
 
-        public getAllProductListTask (int id){
+        public GetAllProductListTask (int id){
             list = new ArrayList<>();
             this.id = id;
         }
@@ -134,5 +161,30 @@ public class NewOrderList extends AbstractAppCompatActivity {
 
         }
     }
+
+    private class CompleteOrderTask extends AsyncTask<Void,Void,Void>{
+        ApiResponse<OrderRequest> apiResponse;
+        private int id;
+
+        public CompleteOrderTask(int id) {
+            this.id = id;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            if(Looper.myLooper() == null)
+                Looper.prepare();
+            OrderRequestControl orderRequestControl = new OrderRequestControl(NewOrderList.this);
+            apiResponse = orderRequestControl.setQueued(id);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            toast(NewOrderList.this,apiResponse.getMessage());
+            finish();
+        }
+    }
+
 
 }

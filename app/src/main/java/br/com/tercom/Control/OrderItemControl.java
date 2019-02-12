@@ -1,6 +1,7 @@
 package br.com.tercom.Control;
 
 import android.app.Activity;
+import android.text.TextUtils;
 import android.util.Pair;
 
 import java.util.TreeMap;
@@ -23,8 +24,11 @@ public class OrderItemControl extends GenericControl {
         TreeMap<String, String> map = new TreeMap<>();
         map.put("idOrderRequest", String.valueOf(idOrderRequest));
         map.put("idProduct", String.valueOf(idProduct));
+        if(idProvider != 0)
         map.put("idProvider", String.valueOf(idProvider));
+        if(idManufacturer != 0)
         map.put("idManufacturer", String.valueOf(idManufacturer));
+        if (!TextUtils.isEmpty(observation))
         map.put("observation", observation);
         map.put("betterPrice", String.valueOf(betterPrice));
         try{
@@ -47,7 +51,9 @@ public class OrderItemControl extends GenericControl {
         TreeMap<String, String> map = new TreeMap<>();
         map.put("idOrderRequest", String.valueOf(idOrderRequest));
         map.put("idService", String.valueOf(idService));
+        if(idProvider != 0)
         map.put("idProvider", String.valueOf(idProvider));
+        if(!TextUtils.isEmpty(observations))
         map.put("observations", observations);
         map.put("betterPrice", String.valueOf(betterPrice));
         try{
@@ -68,8 +74,8 @@ public class OrderItemControl extends GenericControl {
 
     public ApiResponse getAllProducts(int idOrderRequest){
         try{
-            String link = getLink(getBase(EnumREST.SITE, EnumREST.ORDERITEMSERVICE, EnumREST.ADD), String.valueOf(idOrderRequest));
-            CustomPair<String> jsonResult =  callJson(EnumMethod.POST,activity,link);
+            String link = getLink(getBase(EnumREST.SITE, EnumREST.ORDERITEMPRODUCT, EnumREST.GETALL), String.valueOf(idOrderRequest));
+            CustomPair<String> jsonResult =  callJson(EnumMethod.GET,activity,link);
             ApiResponse<OrderItemProductList> orderApiResponse = new ApiResponse<>(OrderItemProductList.class);
             if(jsonResult.first){
                 orderApiResponse = populateApiResponse(orderApiResponse,jsonResult.second);
@@ -83,8 +89,8 @@ public class OrderItemControl extends GenericControl {
 
     public ApiResponse getAllServices(int idOrderRequest){
         try{
-            String link = getLink(getBase(EnumREST.SITE, EnumREST.ORDERITEMSERVICE, EnumREST.ADD), String.valueOf(idOrderRequest));
-            CustomPair<String> jsonResult =  callJson(EnumMethod.POST,activity,link);
+            String link = getLink(getBase(EnumREST.SITE, EnumREST.ORDERITEMSERVICE, EnumREST.GETALL), String.valueOf(idOrderRequest));
+            CustomPair<String> jsonResult =  callJson(EnumMethod.GET,activity,link);
             ApiResponse<OrderItemServiceList> orderApiResponse = new ApiResponse<>(OrderItemServiceList.class);
             if(jsonResult.first){
                 orderApiResponse = populateApiResponse(orderApiResponse,jsonResult.second);

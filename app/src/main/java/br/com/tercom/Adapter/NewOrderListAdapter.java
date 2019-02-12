@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import br.com.tercom.Entity.OrderItemProduct;
 import br.com.tercom.Entity.Product;
@@ -45,7 +46,7 @@ public class NewOrderListAdapter extends RecyclerView.Adapter<NewOrderListAdapte
 
     @Override
     public void onBindViewHolder(@NonNull NewOrderListAdapter.ViewHolder holder, int position) {
-        holder.txtNewOrderListItemID.setText(orders.get(position).getId());
+        holder.txtNewOrderListItemID.setText(String.format(Locale.getDefault(),"Id: %s",String.valueOf(orders.get(position).getId())));
         holder.txtNewOrderListItemName.setText(orders.get(position).getName());
         holder.txtNewOrderListItemProvider.setText(orders.get(position).getProvider().getFantasyName());
     }

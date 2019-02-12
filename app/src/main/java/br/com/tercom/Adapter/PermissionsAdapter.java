@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import br.com.tercom.Entity.Permission;
 import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
@@ -41,7 +42,7 @@ public class PermissionsAdapter extends RecyclerView.Adapter<PermissionsAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.permissionName.setText(permissions.get(position).getAction());
+        holder.permissionName.setText(String.format(Locale.US,"%s: %s",permissions.get(position).getPacket(),permissions.get(position).getAction()));
     }
 
 

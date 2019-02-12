@@ -2,14 +2,18 @@ package br.com.tercom.Entity;
 
 import java.util.Collection;
 
+import br.com.tercom.Annotation.BindObject;
 import br.com.tercom.Interface.iNewOrderItem;
 
 public class OrderItemProduct extends GenericEntity implements iNewOrderItem {
     public final int MAX_OBSERVATION_LENS = 128;
 
     private int id;
+    @BindObject
     private Product product;
+    @BindObject
     private Provider provider;
+    @BindObject
     private Manufacture manufacturer;
     private boolean betterPrice;
     private String observations;

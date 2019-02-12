@@ -31,6 +31,8 @@ import br.com.tercom.Control.ServiceControl;
 import br.com.tercom.Entity.ApiResponse;
 import br.com.tercom.Entity.Manufacture;
 import br.com.tercom.Entity.ManufactureList;
+import br.com.tercom.Entity.OrderItemProduct;
+import br.com.tercom.Entity.OrderItemService;
 import br.com.tercom.Entity.Product;
 import br.com.tercom.Entity.ProductList;
 import br.com.tercom.Entity.Provider;
@@ -48,6 +50,8 @@ import br.com.tercom.Util.Util;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static br.com.tercom.Util.Util.toast;
 
 public class NewOrderItem extends AbstractAppCompatActivity {
 
@@ -86,8 +90,33 @@ public class NewOrderItem extends AbstractAppCompatActivity {
     TextView txtOrderManufacturerLabel;
     @BindView(R.id.txtOrderproviderLabel)
     TextView txtOrderproviderLabel;
+    @BindView(R.id.txtOrderInformation)
+    EditText txtOrderInformation;
 
     @OnClick(R.id.btnOrderItemAdd) void addOrderItem() {
+        switch (selectedType){
+
+            case ADD_PRODUCT:
+                initProduct(orderRequestId,
+                        selectedProduct.getId(),
+                        selectedProvider != null? selectedProvider.getId(): 0,
+                        selectedManufacture != null? selectedManufacture.getId(): 0,
+                        !TextUtils.isEmpty(txtOrderInformation.getText().toString())? txtOrderInformation.getText().toString() : "",
+                        true
+                        );
+                break;
+            case ADD_SERVICE:
+                initService(orderRequestId,
+                        selectedServices.getId(),
+                        selectedProvider != null? selectedProvider.getId(): 0,
+                        !TextUtils.isEmpty(txtOrderInformation.getText().toString())? txtOrderInformation.getText().toString() : "",
+                        true
+                );
+                break;
+
+            default:
+                toast(NewOrderItem.this,"Não foi possível adicionar o valor.");
+        }
 
     }
 
@@ -97,12 +126,18 @@ public class NewOrderItem extends AbstractAppCompatActivity {
     }
 
     @OnClick(R.id.txtOrderProviderName) void searchProvider() {
-        initDialogManufacturerProvider(GET_PROVIDER);
+        if(selectedProduct != null || selectedServices != null)
+            initDialogManufacturerProvider(GET_PROVIDER);
+        else
+            toast(NewOrderItem.this,selectedType == ADD_PRODUCT ? "É necessário selecionar o produto antes": "É necessário selecionar o serviço antes." );
 
     }
 
     @OnClick(R.id.txtOrderManufacturerName) void searchManufacturer() {
+        if(selectedProduct != null)
         initDialogManufacturerProvider(GET_MANUFACTURE);
+        else
+            toast(NewOrderItem.this,"É necessário selecionar o produto antes");
 
     }
 
@@ -213,14 +248,18 @@ public class NewOrderItem extends AbstractAppCompatActivity {
         }
     }
 
-    private void initService() {
+    private void initService( int idOrderRequest, int idService, int idProvider, String observations, boolean betterPrice) {
         if(addServiceTask == null || addServiceTask.getStatus() != AsyncTask.Status.RUNNING){
-
+            addServiceTask = new AddServiceTask(idOrderRequest,idService,idProvider,observations,betterPrice);
+            addServiceTask.execute();
         }
     }
 
-    private void initProduct() {
-
+    private void initProduct( int idOrderRequest, int idProduct, int idProvider, int idManufacturer, String observation, boolean betterPrice) {
+        if(addProductTask == null || addProductTask.getStatus() != AsyncTask.Status.RUNNING){
+            addProductTask = new AddProductTask(idOrderRequest,idProduct,idProvider,idManufacturer,observation,betterPrice);
+            addProductTask.execute();
+        }
     }
 
     private void createListProducts(final ProductList result) {
@@ -308,7 +347,7 @@ public class NewOrderItem extends AbstractAppCompatActivity {
             if(apiResponse.getStatusBoolean()){
                 createListProducts(apiResponse.getResult());
             }else{
-                Util.toast(NewOrderItem.this,apiResponse.getMessage());
+                toast(NewOrderItem.this,apiResponse.getMessage());
             }
         }
     }
@@ -348,6 +387,7 @@ public class NewOrderItem extends AbstractAppCompatActivity {
 
 
     private class AddProductTask extends AsyncTask<Void,Void,Void>{
+        private ApiResponse<OrderItemProduct> apiResponse;
         private int idOrderRequest;
         private int idProduct;
         private int idProvider;
@@ -366,15 +406,27 @@ public class NewOrderItem extends AbstractAppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            if(Looper.myLooper() != null)
+            if(Looper.myLooper() == null)
                 Looper.prepare();
-            orderItemControl.addProduct(idOrderRequest,idProduct,idProvider,idManufacturer,observation,betterPrice);
+           apiResponse =  orderItemControl.addProduct(idOrderRequest,idProduct,idProvider,idManufacturer,observation,betterPrice);
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if(apiResponse.getStatusBoolean()){
+                toast(NewOrderItem.this,apiResponse.getMessage());
+                setResult(RESULT_OK);
+                finish();
+            }else{
+                toast(NewOrderItem.this,apiResponse.getMessage());
+            }
         }
     }
 
 
     private class AddServiceTask extends AsyncTask<Void,Void,Void>{
+        private ApiResponse<OrderItemService> apiResponse;
         private int idOrderRequest;
         private int idService;
         private int idProvider;
@@ -393,9 +445,16 @@ public class NewOrderItem extends AbstractAppCompatActivity {
         protected Void doInBackground(Void... voids) {
             if(Looper.myLooper()== null)
                 Looper.prepare();
-            orderItemControl.addService(idOrderRequest,idService,idProvider,observations,betterPrice);
+            apiResponse = orderItemControl.addService(idOrderRequest,idService,idProvider,observations,betterPrice);
 
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if(apiResponse.getStatusBoolean()){
+                toast(NewOrderItem.this,apiResponse.getMessage());
+            }
         }
     }
 
@@ -416,7 +475,7 @@ public class NewOrderItem extends AbstractAppCompatActivity {
                 Looper.prepare();
             }
             ProviderControl providerControl = new ProviderControl(NewOrderItem.this);
-            apiResponse = type == ADD_PRODUCT ? providerControl.getByProduct(value): providerControl.getByService(value);
+            apiResponse = (type == ADD_PRODUCT ? providerControl.getByProduct(value): providerControl.getByService(value));
             return null;
         }
 
