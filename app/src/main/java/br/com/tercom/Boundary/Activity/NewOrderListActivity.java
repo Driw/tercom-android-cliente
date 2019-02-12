@@ -52,7 +52,7 @@ import butterknife.OnClick;
 import static br.com.tercom.Application.AppTercom.USER_STATIC;
 import static br.com.tercom.Util.Util.toast;
 
-public class NewOrderList extends AbstractAppCompatActivity {
+public class NewOrderListActivity extends AbstractAppCompatActivity {
 
 
     private OrderRequest orderRequest;
@@ -67,24 +67,24 @@ public class NewOrderList extends AbstractAppCompatActivity {
 
     @OnClick(R.id.btn_addNewOrderItemmenu_service)
     void addNewOrderItemService () {
-        Intent addService = new Intent(NewOrderList.this, NewOrderItem.class);
-        addService.putExtra("typeAdd", NewOrderItem.ADD_SERVICE);
+        Intent addService = new Intent(NewOrderListActivity.this, NewOrderItemActivity.class);
+        addService.putExtra("typeAdd", NewOrderItemActivity.ADD_SERVICE);
         addService.putExtra("orderRequestId", orderRequest.getId());
-        startActivityForResult(addService, NewOrderItem.ADD_SERVICE );
+        startActivityForResult(addService, NewOrderItemActivity.ADD_SERVICE );
     }
 
     @OnClick(R.id.btn_addNewOrderItemmenu_product)
     void addNewOrderItemProduct() {
-        Intent addProduct = new Intent(NewOrderList.this, NewOrderItem.class);
-        addProduct.putExtra("typeAdd", NewOrderItem.ADD_PRODUCT);
+        Intent addProduct = new Intent(NewOrderListActivity.this, NewOrderItemActivity.class);
+        addProduct.putExtra("typeAdd", NewOrderItemActivity.ADD_PRODUCT);
         addProduct.putExtra("orderRequestId", orderRequest.getId());
-        startActivityForResult(addProduct,NewOrderItem.ADD_PRODUCT);
+        startActivityForResult(addProduct,NewOrderItemActivity.ADD_PRODUCT);
     }
 
     @OnClick(R.id.btnCompleteOrder) void completeOrder() {
         initCompleteOrderTask();
     }
-    
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -142,7 +142,7 @@ public class NewOrderList extends AbstractAppCompatActivity {
             if(Looper.myLooper() == null) {
                 Looper.prepare();
             }
-            OrderItemControl orderItemControl = new OrderItemControl(NewOrderList.this);
+            OrderItemControl orderItemControl = new OrderItemControl(NewOrderListActivity.this);
             apiResponseProduct = orderItemControl.getAllProducts(id);
             apiResponseService = orderItemControl.getAllServices(id);
             return null;
@@ -174,14 +174,14 @@ public class NewOrderList extends AbstractAppCompatActivity {
         protected Void doInBackground(Void... voids) {
             if(Looper.myLooper() == null)
                 Looper.prepare();
-            OrderRequestControl orderRequestControl = new OrderRequestControl(NewOrderList.this);
+            OrderRequestControl orderRequestControl = new OrderRequestControl(NewOrderListActivity.this);
             apiResponse = orderRequestControl.setQueued(id);
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            toast(NewOrderList.this,apiResponse.getMessage());
+            toast(NewOrderListActivity.this,apiResponse.getMessage());
             finish();
         }
     }

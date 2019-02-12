@@ -53,7 +53,7 @@ import butterknife.OnClick;
 
 import static br.com.tercom.Util.Util.toast;
 
-public class NewOrderItem extends AbstractAppCompatActivity {
+public class NewOrderItemActivity extends AbstractAppCompatActivity {
 
     public static final int ADD_PRODUCT = 1;
     public static final int ADD_SERVICE = 2;
@@ -115,7 +115,7 @@ public class NewOrderItem extends AbstractAppCompatActivity {
                 break;
 
             default:
-                toast(NewOrderItem.this,"Não foi possível adicionar o valor.");
+                toast(NewOrderItemActivity.this,"Não foi possível adicionar o valor.");
         }
 
     }
@@ -129,7 +129,7 @@ public class NewOrderItem extends AbstractAppCompatActivity {
         if(selectedProduct != null || selectedServices != null)
             initDialogManufacturerProvider(GET_PROVIDER);
         else
-            toast(NewOrderItem.this,selectedType == ADD_PRODUCT ? "É necessário selecionar o produto antes": "É necessário selecionar o serviço antes." );
+            toast(NewOrderItemActivity.this,selectedType == ADD_PRODUCT ? "É necessário selecionar o produto antes": "É necessário selecionar o serviço antes." );
 
     }
 
@@ -137,7 +137,7 @@ public class NewOrderItem extends AbstractAppCompatActivity {
         if(selectedProduct != null)
         initDialogManufacturerProvider(GET_MANUFACTURE);
         else
-            toast(NewOrderItem.this,"É necessário selecionar o produto antes");
+            toast(NewOrderItemActivity.this,"É necessário selecionar o produto antes");
 
     }
 
@@ -337,7 +337,7 @@ public class NewOrderItem extends AbstractAppCompatActivity {
         protected Void doInBackground(Void... voids) {
             if(Looper.myLooper() == null)
                 Looper.prepare();
-            ProductControl productControl = new ProductControl(NewOrderItem.this);
+            ProductControl productControl = new ProductControl(NewOrderItemActivity.this);
             apiResponse = productControl.search(value, EnumREST.NAME);
             return null;
         }
@@ -347,7 +347,7 @@ public class NewOrderItem extends AbstractAppCompatActivity {
             if(apiResponse.getStatusBoolean()){
                 createListProducts(apiResponse.getResult());
             }else{
-                toast(NewOrderItem.this,apiResponse.getMessage());
+                toast(NewOrderItemActivity.this,apiResponse.getMessage());
             }
         }
     }
@@ -367,7 +367,7 @@ public class NewOrderItem extends AbstractAppCompatActivity {
         protected Void doInBackground(Void... voids) {
             if(Looper.myLooper() == null)
                 Looper.prepare();
-            ServiceControl serviceControl = new ServiceControl(NewOrderItem.this);
+            ServiceControl serviceControl = new ServiceControl(NewOrderItemActivity.this);
             apiResponse = serviceControl.search(name, EnumREST.NAME);
             return null;
         }
@@ -377,7 +377,7 @@ public class NewOrderItem extends AbstractAppCompatActivity {
             if (apiResponse.getStatusBoolean()) {
                 createListServices(apiResponse.getResult());
             }else{
-                DialogConfirm dialogConfirm = new DialogConfirm(NewOrderItem.this);
+                DialogConfirm dialogConfirm = new DialogConfirm(NewOrderItemActivity.this);
                 dialogConfirm.init(EnumDialogOptions.FAIL,apiResponse.getMessage());
             }
         }
@@ -415,11 +415,11 @@ public class NewOrderItem extends AbstractAppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             if(apiResponse.getStatusBoolean()){
-                toast(NewOrderItem.this,apiResponse.getMessage());
+                toast(NewOrderItemActivity.this,apiResponse.getMessage());
                 setResult(RESULT_OK);
                 finish();
             }else{
-                toast(NewOrderItem.this,apiResponse.getMessage());
+                toast(NewOrderItemActivity.this,apiResponse.getMessage());
             }
         }
     }
@@ -453,7 +453,7 @@ public class NewOrderItem extends AbstractAppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             if(apiResponse.getStatusBoolean()){
-                toast(NewOrderItem.this,apiResponse.getMessage());
+                toast(NewOrderItemActivity.this,apiResponse.getMessage());
             }
         }
     }
@@ -474,7 +474,7 @@ public class NewOrderItem extends AbstractAppCompatActivity {
             if(Looper.myLooper()==null){
                 Looper.prepare();
             }
-            ProviderControl providerControl = new ProviderControl(NewOrderItem.this);
+            ProviderControl providerControl = new ProviderControl(NewOrderItemActivity.this);
             apiResponse = (type == ADD_PRODUCT ? providerControl.getByProduct(value): providerControl.getByService(value));
             return null;
         }
@@ -484,7 +484,7 @@ public class NewOrderItem extends AbstractAppCompatActivity {
             if (apiResponse.getStatusBoolean()) {
                 createListProvider(apiResponse.getResult());
             }else{
-                DialogConfirm dialogConfirm = new DialogConfirm(NewOrderItem.this);
+                DialogConfirm dialogConfirm = new DialogConfirm(NewOrderItemActivity.this);
                 dialogConfirm.init(EnumDialogOptions.FAIL,apiResponse.getMessage());
             }
         }
@@ -505,7 +505,7 @@ public class NewOrderItem extends AbstractAppCompatActivity {
             if(Looper.myLooper()==null){
                 Looper.prepare();
             }
-            ManufactureControl manufactureControl = new ManufactureControl(NewOrderItem.this);
+            ManufactureControl manufactureControl = new ManufactureControl(NewOrderItemActivity.this);
             apiResponse = manufactureControl.getByProduct(value);
             return null;
         }
@@ -515,7 +515,7 @@ public class NewOrderItem extends AbstractAppCompatActivity {
             if (apiResponse.getStatusBoolean()) {
                 createListManufacturer(apiResponse.getResult());
             }else{
-                DialogConfirm dialogConfirm = new DialogConfirm(NewOrderItem.this);
+                DialogConfirm dialogConfirm = new DialogConfirm(NewOrderItemActivity.this);
                 dialogConfirm.init(EnumDialogOptions.FAIL,apiResponse.getMessage());
             }
         }
