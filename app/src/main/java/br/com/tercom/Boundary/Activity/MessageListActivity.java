@@ -1,16 +1,11 @@
 package br.com.tercom.Boundary.Activity;
 
-import android.content.Context;
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -24,7 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MessageList extends AbstractAppCompatActivity {
+public class MessageListActivity extends AbstractAppCompatActivity {
 
     ArrayList<Message> messages;
     ArrayList<MessageItem> messageItem;
@@ -33,7 +28,7 @@ public class MessageList extends AbstractAppCompatActivity {
     RecyclerView rvMessageList;
 
     @OnClick(R.id.btnStartContact) void newMessage(){
-        createIntentAbs(NewMessage.class);
+        createIntentAbs(NewMessageActivity.class);
     }
 
     @Override
@@ -50,7 +45,7 @@ public class MessageList extends AbstractAppCompatActivity {
         messageAdapter.setmRecyclerViewOnClickListenerHack(new RecyclerViewOnClickListenerHack() {
             @Override
             public void onClickListener(View view, int position) {
-                createIntentAbs(MessageLog.class);
+                createIntentAbs(MessageLogActivity.class);
             }
         });
     }

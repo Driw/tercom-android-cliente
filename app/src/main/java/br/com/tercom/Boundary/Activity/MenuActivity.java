@@ -13,10 +13,10 @@ import butterknife.OnClick;
 public class MenuActivity extends AbstractAppCompatActivity {
 
     @OnClick(R.id.cardContato) void sendToMessages (){
-        createIntentAbs(MessageList.class);
+        createIntentAbs(MessageListActivity.class);
     }
     @OnClick(R.id.cardOrder) void sendToOrder (){
-        createIntentAbs(OrderList.class);
+        createIntentAbs(OrderListActivity.class);
     }
     @OnClick(R.id.cardPermission) void sendToPermission (){
         createIntentAbs(PermissionsActivity.class);

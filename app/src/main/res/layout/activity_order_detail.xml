@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -15,30 +16,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/cardOderDetail"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:cardCornerRadius="3dp"
-        app:cardElevation="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnRemoveOrder"
-        app:layout_constraintEnd_toEndOf="parent"
+    <TextView
+        android:id="@+id/txtOrderRequestedProducts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="16dp"
+        android:text="Produtos Solicitados:"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include_toolbar">
+        app:layout_constraintTop_toBottomOf="@+id/include_toolbar"
+        fab:layout_constraintBottom_toTopOf="@+id/rv_OrderDetailListExpanded" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvOrderDetail"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="6dp" />
-    </android.support.v7.widget.CardView>
 
     <Button
-        android:id="@+id/btnOrderEdit"
+        android:id="@+id/btnEditOrder"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -51,20 +45,32 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/btnRemoveOrder"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_OrderDetailListExpanded"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/shape_rec_corner_red"
-        android:text="Remover Pedido"
-        android:textColor="@color/colorPrimary"
-        app:layout_constraintBottom_toTopOf="@+id/btnOrderEdit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardOderDetail" />
+        android:layout_marginBottom="16dp"
+        fab:layout_constraintBottom_toTopOf="@+id/btnEditOrder"
+        fab:layout_constraintEnd_toEndOf="parent"
+        fab:layout_constraintHorizontal_bias="0.0"
+        fab:layout_constraintStart_toStartOf="parent"
+        fab:layout_constraintTop_toBottomOf="@+id/txtOrderRequestedProducts" />
+
+    <ToggleButton
+        android:id="@+id/tbtnOrderDetailItemType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/shape_rec_green_rounded"
+        android:textColor="@color/primary"
+        android:textOff="Serviços"
+        android:textOn="Produtos"
+        android:textSize="16sp"
+        fab:layout_constraintEnd_toEndOf="parent"
+        fab:layout_constraintTop_toBottomOf="@+id/include_toolbar" />
 
 </android.support.constraint.ConstraintLayout>

@@ -41,9 +41,7 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.txtOrderDetailProductName.setText(produtos.get(position).getProduct().getName());
-        holder.txtOrderDetailManufacturerName.setText(produtos.get(position).getManufacturer().getFantasyName());
-        holder.txtOrderDetailProviderName.setText(produtos.get(position).getProvider().getFantasyName());
+        holder.txtOrderDetailItemName.setText(produtos.get(position).getProduct().getName());
     }
 
     @Override
@@ -52,15 +50,11 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        public TextView txtOrderDetailProductName;
-        public TextView txtOrderDetailManufacturerName;
-        public TextView txtOrderDetailProviderName;
+        public TextView txtOrderDetailItemName;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            txtOrderDetailProductName = itemView.findViewById(R.id.txtOrderDetailProductName);
-            txtOrderDetailManufacturerName = itemView.findViewById(R.id.txtOrderDetailManufacturerName);
-            txtOrderDetailProviderName = itemView.findViewById(R.id.txtOrderDetailProviderName);
+            txtOrderDetailItemName = itemView.findViewById(R.id.txtOrderDetailItemName);
             itemView.setOnClickListener(this);
 
         }

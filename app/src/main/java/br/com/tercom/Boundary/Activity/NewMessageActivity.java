@@ -20,7 +20,7 @@ import butterknife.OnClick;
 
 import static br.com.tercom.Application.AppTercom.USER_STATIC;
 
-public class NewMessage extends AbstractAppCompatActivity {
+public class NewMessageActivity extends AbstractAppCompatActivity {
 
     Message newMessage = new Message();
     MessageItem messageItem = new MessageItem();
