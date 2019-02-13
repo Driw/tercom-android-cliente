@@ -76,9 +76,9 @@ public class OrderDetailActivity extends AbstractAppCompatActivity {
         createToolbar();
         populate();
         if (produtos.size() == 0){
-            selectedItemType = typeProduct;
-        } else {
             selectedItemType = typeService;
+        } else {
+            selectedItemType = typeProduct;
         }
         setAdapter(selectedItemType);
     }

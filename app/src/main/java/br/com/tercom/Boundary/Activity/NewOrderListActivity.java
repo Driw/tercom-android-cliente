@@ -19,6 +19,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.github.clans.fab.FloatingActionButton;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ import br.com.tercom.Entity.OrderItemServiceList;
 import br.com.tercom.Entity.OrderRequest;
 import br.com.tercom.Entity.Product;
 import br.com.tercom.Entity.Provider;
+import br.com.tercom.Entity.Services;
 import br.com.tercom.Entity.TercomProfile;
 import br.com.tercom.Enum.EnumDialogOptions;
 import br.com.tercom.Interface.iNewOrderItem;
@@ -89,11 +91,45 @@ public class NewOrderListActivity extends AbstractAppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_order_list);
-        orderRequest = new Gson().fromJson(getIntent().getExtras().getString("orderRequest"),OrderRequest.class);
+        orderRequest = new OrderRequest();
         createToolbar();
         ButterKnife.bind(this);
-        initGetAllProducts();
+        //orderRequest = new Gson().fromJson(getIntent().getExtras().getString("orderRequest"),OrderRequest.class);
+        //initGetAllProducts();
+        populate();
+        NewOrderListAdapter newOrderListAdapter = new NewOrderListAdapter(this, list);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        rvNewOrderList.setLayoutManager(layoutManager);
+        rvNewOrderList.setAdapter(newOrderListAdapter);
+    }
 
+    public void populate() {
+        list = new ArrayList<iNewOrderItem>();
+        OrderItemProduct orderItemProduct = new OrderItemProduct();
+        OrderItemService orderItemService = new OrderItemService();
+        Product product = new Product();
+        Services services = new Services();
+        Provider provider = new Provider();
+        Manufacture manufacture = new Manufacture();
+
+        product.setName("Produto Teste");
+        services.setName("Serviço Teste");
+        provider.setFantasyName("Fornecedor Teste");
+        manufacture.setFantasyName("Fabricante Teste");
+
+        orderItemProduct.setId(1);
+        orderItemProduct.setProduct(product);
+        orderItemProduct.setProvider(provider);
+        orderItemProduct.setManufacturer(manufacture);
+        orderItemProduct.setObservations("teste");
+
+        orderItemService.setId(1);
+        orderItemService.setService(services);
+        orderItemService.setProvider(provider);
+        orderItemService.setObservations("teste");
+
+        list.add(orderItemProduct);
+        list.add(orderItemService);
 
     }
 

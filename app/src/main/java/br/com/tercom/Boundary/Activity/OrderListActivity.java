@@ -48,7 +48,7 @@ public class OrderListActivity extends AbstractAppCompatActivity {
     RecyclerView rv_OrderList;
 
     @OnClick(R.id.btnNewOrder) void newOrder(){
-        createIntentAbs(OrderDetailActivity.class);
+        createIntentAbs(NewOrderListActivity.class);
         //initDialog();
     }
 

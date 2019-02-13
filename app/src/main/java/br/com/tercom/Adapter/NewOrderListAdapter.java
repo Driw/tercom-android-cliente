@@ -18,6 +18,8 @@ import br.com.tercom.Entity.ProdutoGenerico;
 import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
 import br.com.tercom.Interface.iNewOrderItem;
 import br.com.tercom.R;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class NewOrderListAdapter extends RecyclerView.Adapter<NewOrderListAdapter.ViewHolder> {
 
@@ -49,6 +51,12 @@ public class NewOrderListAdapter extends RecyclerView.Adapter<NewOrderListAdapte
         holder.txtNewOrderListItemID.setText(String.format(Locale.getDefault(),"Id: %s",String.valueOf(orders.get(position).getId())));
         holder.txtNewOrderListItemName.setText(orders.get(position).getName());
         holder.txtNewOrderListItemProvider.setText(orders.get(position).getProvider().getFantasyName());
+        if (orders.get(position).getManufacturer() != null){
+            holder.txtNewOrderListItemManufacturer.setText(orders.get(position).getManufacturer().getFantasyName());
+        } else {
+            holder.txtNewOrderListItemManufacturer.setVisibility(View.GONE);
+        }
+
     }
 
     @Override
@@ -61,12 +69,14 @@ public class NewOrderListAdapter extends RecyclerView.Adapter<NewOrderListAdapte
         public TextView txtNewOrderListItemID;
         public TextView txtNewOrderListItemName;
         public TextView txtNewOrderListItemProvider;
+        public TextView txtNewOrderListItemManufacturer;
 
         public ViewHolder(View itemView) {
             super(itemView);
             txtNewOrderListItemID = itemView.findViewById(R.id.txtNewOrderListItemID);
             txtNewOrderListItemName = itemView.findViewById(R.id.txtNewOrderListItemName);
             txtNewOrderListItemProvider = itemView.findViewById(R.id.txtNewOrderListItemProvider);
+            txtNewOrderListItemManufacturer = itemView.findViewById(R.id.txtNewOrderListItemManufacturer);
             itemView.setOnClickListener(this);
 
         }
