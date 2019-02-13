@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -66,6 +67,8 @@ public class NewOrderListActivity extends AbstractAppCompatActivity {
 
     @BindView(R.id.rvNewOrderList)
     RecyclerView rvNewOrderList;
+    @BindView(R.id.btn_addNewOrderItemMenu)
+    FloatingActionMenu btn_addNewOrderItemMenu;
 
     @OnClick(R.id.btn_addNewOrderItemmenu_service)
     void addNewOrderItemService () {
@@ -73,6 +76,7 @@ public class NewOrderListActivity extends AbstractAppCompatActivity {
         addService.putExtra("typeAdd", NewOrderItemActivity.ADD_SERVICE);
         addService.putExtra("orderRequestId", orderRequest.getId());
         startActivityForResult(addService, NewOrderItemActivity.ADD_SERVICE );
+        btn_addNewOrderItemMenu.close(false);
     }
 
     @OnClick(R.id.btn_addNewOrderItemmenu_product)
@@ -81,6 +85,7 @@ public class NewOrderListActivity extends AbstractAppCompatActivity {
         addProduct.putExtra("typeAdd", NewOrderItemActivity.ADD_PRODUCT);
         addProduct.putExtra("orderRequestId", orderRequest.getId());
         startActivityForResult(addProduct,NewOrderItemActivity.ADD_PRODUCT);
+        btn_addNewOrderItemMenu.close(false);
     }
 
     @OnClick(R.id.btnCompleteOrder) void completeOrder() {
