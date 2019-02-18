@@ -454,6 +454,10 @@ public class NewOrderItemActivity extends AbstractAppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             if(apiResponse.getStatusBoolean()){
                 toast(NewOrderItemActivity.this,apiResponse.getMessage());
+                setResult(RESULT_OK);
+                finish();
+            }else{
+                toast(NewOrderItemActivity.this,apiResponse.getMessage());
             }
         }
     }

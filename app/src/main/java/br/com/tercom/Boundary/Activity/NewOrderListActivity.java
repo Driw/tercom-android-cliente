@@ -99,43 +99,8 @@ public class NewOrderListActivity extends AbstractAppCompatActivity {
         orderRequest = new OrderRequest();
         createToolbar();
         ButterKnife.bind(this);
-        //orderRequest = new Gson().fromJson(getIntent().getExtras().getString("orderRequest"),OrderRequest.class);
-        //initGetAllProducts();
-        populate();
-        NewOrderListAdapter newOrderListAdapter = new NewOrderListAdapter(this, list);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        rvNewOrderList.setLayoutManager(layoutManager);
-        rvNewOrderList.setAdapter(newOrderListAdapter);
-    }
-
-    public void populate() {
-        list = new ArrayList<iNewOrderItem>();
-        OrderItemProduct orderItemProduct = new OrderItemProduct();
-        OrderItemService orderItemService = new OrderItemService();
-        Product product = new Product();
-        Services services = new Services();
-        Provider provider = new Provider();
-        Manufacture manufacture = new Manufacture();
-
-        product.setName("Produto Teste");
-        services.setName("Serviço Teste");
-        provider.setFantasyName("Fornecedor Teste");
-        manufacture.setFantasyName("Fabricante Teste");
-
-        orderItemProduct.setId(1);
-        orderItemProduct.setProduct(product);
-        orderItemProduct.setProvider(provider);
-        orderItemProduct.setManufacturer(manufacture);
-        orderItemProduct.setObservations("teste");
-
-        orderItemService.setId(1);
-        orderItemService.setService(services);
-        orderItemService.setProvider(provider);
-        orderItemService.setObservations("teste");
-
-        list.add(orderItemProduct);
-        list.add(orderItemService);
-
+        orderRequest = new Gson().fromJson(getIntent().getExtras().getString("orderRequest"),OrderRequest.class);
+        initGetAllProducts();
     }
 
     private void createNewOrderList(ArrayList<? extends iNewOrderItem> list) {

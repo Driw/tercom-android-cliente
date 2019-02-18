@@ -20,11 +20,6 @@ import butterknife.BindView;
 
 public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.ViewHolder> {
 
-    @BindView(R.id.fabRemoveOrder)
-    FloatingActionButton fabRemoveOrder;
-    @BindView(R.id.fabProceedOrder)
-    FloatingActionButton fabProceedOrder;
-
     private LayoutInflater layoutInflater;
     private ArrayList<OrderRequest> orders;
     private Context context;
@@ -50,12 +45,12 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if (orders.get(position).getStatus() < 5){
-            fabRemoveOrder.hide(false);
+            holder.fabRemoveOrder.setVisibility(View.GONE);
         } else {
-            fabProceedOrder.hide(false);
+            holder.fabProceedOrder.setVisibility(View.GONE);
         }
-        holder.txtOrderNumber.setText(String.valueOf(orders.get(position).getId()));
-        holder.txtOrderStatus.setText(String.valueOf(orders.get(position).getStatus()));
+        holder.txtOrderNumber.setText(String.valueOf("Id do pedido: " + orders.get(position).getId()));
+        holder.txtOrderStatus.setText(String.valueOf("Status do pedido:" + orders.get(position).getStatus()));
     }
 
     @Override
@@ -68,12 +63,17 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
             public TextView txtOrderNumber;
             public TextView txtOrderStatus;
             public TextView txtOrderOverview;
+            public FloatingActionButton fabRemoveOrder ;
+            public FloatingActionButton fabProceedOrder;
+
 
             public ViewHolder(View itemView) {
                 super(itemView);
                 txtOrderNumber = itemView.findViewById(R.id.txtOrderNumber);
                 txtOrderStatus = itemView.findViewById(R.id.txtOrderStatus);
                 txtOrderOverview = itemView.findViewById(R.id.txtOrderOverview);
+                fabRemoveOrder = itemView.findViewById(R.id.fabRemoveOrder);
+                fabProceedOrder = itemView.findViewById(R.id.fabProceedOrder);
                 itemView.setOnClickListener(this);
             }
 

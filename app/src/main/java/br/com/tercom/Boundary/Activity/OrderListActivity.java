@@ -43,13 +43,13 @@ public class OrderListActivity extends AbstractAppCompatActivity {
     private NewOrderTask newOrderTask;
     private OrderRequest selectORderRequest;
     private Dialog dialog;
+    private GetOrderInQueueTask getOrderInQueueTask;
 
     @BindView(R.id.rv_OrderList)
     RecyclerView rv_OrderList;
 
     @OnClick(R.id.btnNewOrder) void newOrder(){
-        createIntentAbs(NewOrderListActivity.class);
-        //initDialog();
+        initDialog();
     }
 
     @Override
@@ -58,11 +58,12 @@ public class OrderListActivity extends AbstractAppCompatActivity {
         setContentView(R.layout.activity_order_list);
         ButterKnife.bind(this);
         createToolbar();
+        initGetQueue();
     }
 
 
     private void initDialog() {
-        Dialog dialog = new Dialog(OrderListActivity.this);
+        final Dialog dialog = new Dialog(OrderListActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(R.layout.dialog_new_order);
@@ -76,6 +77,7 @@ public class OrderListActivity extends AbstractAppCompatActivity {
                 CustomPair<String> pair = verifyData(txtMaxBudget.getText().toString(),txtExpirationDate.getText().toString());
                 if (pair.first){
                     initRequest(txtMaxBudget.getText().toString(),txtExpirationDate.getText().toString());
+                    dialog.dismiss();
                 }else{
                     Util.toast(OrderListActivity.this,pair.second);
                 }
@@ -85,10 +87,23 @@ public class OrderListActivity extends AbstractAppCompatActivity {
 
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        initGetQueue();
+    }
+
     private void initRequest(String budget, String date) {
         if(newOrderTask == null || newOrderTask.getStatus() != AsyncTask.Status.RUNNING){
             newOrderTask = new NewOrderTask(Double.parseDouble(budget),date);
             newOrderTask.execute();
+        }
+    }
+
+    private void initGetQueue(){
+        if(getOrderInQueueTask == null || getOrderInQueueTask.getStatus() != AsyncTask.Status.RUNNING){
+            getOrderInQueueTask = new GetOrderInQueueTask(4);
+            getOrderInQueueTask.execute();
         }
     }
 
@@ -153,18 +168,17 @@ public class OrderListActivity extends AbstractAppCompatActivity {
             @Override
             public void onClickListener(View view, int position) {
                 selectORderRequest = result.getList().get(position);
-                dialog.dismiss();
             }
         });
         rv_OrderList.setLayoutManager(layoutManager);
         rv_OrderList.setAdapter(categoryAdapter);
     }
 
-    private class getOrderInQueueTask extends AsyncTask<Void, Void, Void> {
+    private class GetOrderInQueueTask extends AsyncTask<Void, Void, Void> {
         private ApiResponse<OrderRequestList> apiResponse;
-        private int mode = 4;
+        private int mode;
 
-        public getOrderInQueueTask (int mode) {
+        public GetOrderInQueueTask (int mode) {
             this.mode = mode;
         }
 
