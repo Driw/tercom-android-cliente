@@ -50,7 +50,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
             holder.fabProceedOrder.setVisibility(View.GONE);
         }
         holder.txtOrderNumber.setText(String.valueOf("Id do pedido: " + orders.get(position).getId()));
-        holder.txtOrderStatus.setText(String.valueOf("Status do pedido:" + orders.get(position).getStatus()));
+        holder.txtOrderStatus.setText(String.valueOf("Status do pedido:" + orders.get(position).getStatusMessage()));
     }
 
     @Override
@@ -62,7 +62,6 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
 
             public TextView txtOrderNumber;
             public TextView txtOrderStatus;
-            public TextView txtOrderOverview;
             public FloatingActionButton fabRemoveOrder ;
             public FloatingActionButton fabProceedOrder;
 
@@ -71,7 +70,6 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
                 super(itemView);
                 txtOrderNumber = itemView.findViewById(R.id.txtOrderNumber);
                 txtOrderStatus = itemView.findViewById(R.id.txtOrderStatus);
-                txtOrderOverview = itemView.findViewById(R.id.txtOrderOverview);
                 fabRemoveOrder = itemView.findViewById(R.id.fabRemoveOrder);
                 fabProceedOrder = itemView.findViewById(R.id.fabProceedOrder);
                 itemView.setOnClickListener(this);

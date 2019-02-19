@@ -188,7 +188,9 @@ public class NewOrderListActivity extends AbstractAppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             toast(NewOrderListActivity.this,apiResponse.getMessage());
-            finish();
+            if(apiResponse.getStatusBoolean()){
+                finish();
+            }
         }
     }
 

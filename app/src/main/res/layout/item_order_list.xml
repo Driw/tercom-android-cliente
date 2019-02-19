@@ -42,25 +42,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
                 android:text="Status: Aguardando Cotação"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtOrderNumber" />
-
-            <TextView
-                android:id="@+id/txtOrderOverview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:ellipsize="end"
-                android:maxEms="20"
-                android:singleLine="true"
-                android:text="Item 1, Item 2, Item 3, Item 4, Item 5"
-                android:textColor="@color/colorBlackOpacityHigher"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtOrderStatus" />
+                app:layout_constraintTop_toBottomOf="@+id/txtOrderNumber" />
 
             <com.github.clans.fab.FloatingActionButton
                 android:id="@+id/fabRemoveOrder"
@@ -68,7 +54,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="4dp"
+                android:layout_marginBottom="5dp"
                 android:src="@drawable/fab_add"
+                app:layout_constraintBottom_toTopOf="@+id/fabProceedOrder"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 fab:fab_size="mini" />
@@ -77,12 +65,14 @@
                 android:id="@+id/fabProceedOrder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
                 android:layout_marginEnd="4dp"
                 android:layout_marginBottom="4dp"
                 android:src="@drawable/fab_add"
                 app:fab_colorNormal="@color/colorGreen"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fabRemoveOrder"
                 fab:fab_size="mini" />
 
         </android.support.constraint.ConstraintLayout>

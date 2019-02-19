@@ -74,6 +74,9 @@ public class OrderRequestControl extends GenericControl {
             Pair<String, String> completePost = new Pair<>(link, getPostValues(map));
             CustomPair<String> jsonResult = callJson(EnumMethod.POST, activity, completePost);
             ApiResponse<OrderRequest> orderRequestApiResponse = new ApiResponse<>(OrderRequest.class);
+            if(jsonResult.first){
+                orderRequestApiResponse = populateApiResponse(orderRequestApiResponse,jsonResult.second);
+            }
             return orderRequestApiResponse;
         } catch (Exception e) {
             e.printStackTrace();

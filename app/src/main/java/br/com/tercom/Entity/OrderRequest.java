@@ -55,7 +55,24 @@ public class OrderRequest extends GenericEntity {
     }
 
     public String getStatusMessage() {
-        return statusMessage;
+        switch(status){
+            default:
+            case ORS_NONE:
+                return "nada acontecendo";
+            case ORS_CANCEL_BY_CUSTOMER:
+                return "cancelado pelo cliente";
+            case ORS_CANCEL_BY_TERCOM:
+                return "cancelado pela Tercom";
+            case ORS_QUEUED:
+                return "Na fila";
+            case ORS_QUOTING:
+                return "Em cotação";
+             case ORS_QUOTED:
+                return "Pedido Cotado";
+             case ORS_DONE:
+                return "Pedido Finalizado";
+
+        }
     }
 
     public OrderRequest setStatusMessage(String statusMessage) {
