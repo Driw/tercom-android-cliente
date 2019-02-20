@@ -145,6 +145,7 @@ public class NewOrderItemActivity extends AbstractAppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_order_item);
+        createToolbar();
         selectedType = getIntent().getExtras().getInt("typeAdd");
         orderRequestId = getIntent().getExtras().getInt("orderRequestId");
         orderItemControl = new OrderItemControl(this);
