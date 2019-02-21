@@ -37,8 +37,8 @@ import static br.com.tercom.Util.Util.toast;
 
 public class LoginActivity extends AbstractAppCompatActivity {
 
-    private static final String STRING_REFERENCE = "login_costumer";
-    private static final String STRING_LOGIN = "login";
+    public static final String STRING_REFERENCE = "login_costumer";
+    public static final String STRING_LOGIN = "login";
 
     private LoginTask loginTask;
     private SharedPreferences sharedPreferences;

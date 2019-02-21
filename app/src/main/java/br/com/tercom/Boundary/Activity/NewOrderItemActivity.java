@@ -145,6 +145,7 @@ public class NewOrderItemActivity extends AbstractAppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_order_item);
+        createToolbar();
         selectedType = getIntent().getExtras().getInt("typeAdd");
         orderRequestId = getIntent().getExtras().getInt("orderRequestId");
         orderItemControl = new OrderItemControl(this);
@@ -453,6 +454,10 @@ public class NewOrderItemActivity extends AbstractAppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             if(apiResponse.getStatusBoolean()){
+                toast(NewOrderItemActivity.this,apiResponse.getMessage());
+                setResult(RESULT_OK);
+                finish();
+            }else{
                 toast(NewOrderItemActivity.this,apiResponse.getMessage());
             }
         }
