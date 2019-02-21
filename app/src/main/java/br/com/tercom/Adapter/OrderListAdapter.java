@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 
 import java.util.ArrayList;
 
@@ -19,11 +20,6 @@ import br.com.tercom.R;
 import butterknife.BindView;
 
 public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.ViewHolder> {
-
-    @BindView(R.id.fabRemoveOrder)
-    FloatingActionButton fabRemoveOrder;
-    @BindView(R.id.fabProceedOrder)
-    FloatingActionButton fabProceedOrder;
 
     private LayoutInflater layoutInflater;
     private ArrayList<OrderRequest> orders;
@@ -50,9 +46,9 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if (orders.get(position).getStatus() < 5){
-            fabRemoveOrder.hide(false);
+            holder.fabRemoveOrder.setVisibility(View.INVISIBLE);
         } else {
-            fabProceedOrder.hide(false);
+            holder.fabProceedOrder.setVisibility(View.INVISIBLE);
         }
         holder.txtOrderNumber.setText(String.valueOf(orders.get(position).getId()));
         holder.txtOrderStatus.setText(String.valueOf(orders.get(position).getStatus()));
@@ -68,6 +64,8 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
             public TextView txtOrderNumber;
             public TextView txtOrderStatus;
             public TextView txtOrderOverview;
+            public FloatingActionButton fabRemoveOrder;
+            public FloatingActionButton fabProceedOrder;
 
             public ViewHolder(View itemView) {
                 super(itemView);
