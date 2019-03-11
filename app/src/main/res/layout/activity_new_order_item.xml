@@ -51,6 +51,7 @@
         android:text="Fabricante:"
         app:layout_constraintBottom_toTopOf="@+id/txtOrderproviderLabel"
         app:layout_constraintEnd_toStartOf="@+id/txtOrderManufacturerName"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtOrderProductLabel" />
 
@@ -70,12 +71,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
         android:layout_marginBottom="4dp"
         android:text="Informações Adicionais:"
         app:layout_constraintBottom_toTopOf="@+id/cardView13"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtOrderproviderLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/checkBox" />
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardView13"
@@ -147,6 +147,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/txtOrderproviderLabel"
         app:layout_constraintTop_toBottomOf="@+id/txtOrderManufacturerName" />
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="32dp"
+        android:text="Melhor Preço?"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtOrderproviderLabel" />
 
 
 </android.support.constraint.ConstraintLayout>
