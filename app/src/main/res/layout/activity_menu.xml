@@ -46,7 +46,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_product" />
+                app:srcCompat="@drawable/fab_add" />
 
             <TextView
                 android:id="@+id/textView162"
@@ -113,7 +113,7 @@
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_quote" />
+                app:srcCompat="@drawable/fab_add" />
 
             <TextView
                 android:id="@+id/textView13"
@@ -164,7 +164,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_message" />
+                app:srcCompat="@drawable/fab_add" />
 
             <TextView
                 android:id="@+id/textView15"
@@ -215,7 +215,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_check_blue" />
+                app:srcCompat="@drawable/fab_add" />
 
             <TextView
                 android:id="@+id/textView16"

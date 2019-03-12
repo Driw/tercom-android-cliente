@@ -20,7 +20,15 @@ public class ProductValue extends GenericEntity {
     private String name;
     private int amount;
     private double price;
+    private boolean isSelected;
 
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
 
     public int getId() {
         return id;
