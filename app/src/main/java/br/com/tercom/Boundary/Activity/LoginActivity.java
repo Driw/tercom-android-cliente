@@ -69,10 +69,6 @@ public class LoginActivity extends AbstractAppCompatActivity {
         }
     }
 
-    /*@OnClick(R.id.btn_login) void login() {
-        createIntentAbs(MenuActivity.class);
-    }*/
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

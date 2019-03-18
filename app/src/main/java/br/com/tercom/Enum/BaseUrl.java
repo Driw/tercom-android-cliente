@@ -1,7 +1,7 @@
 package br.com.tercom.Enum;
 
 public enum BaseUrl {
-    URL_DEV("http://tercom.diverproject.org/api"),
+    URL_DEV("http://dev.tercom.com.br/api"),
     URL_REAL("");
 
 

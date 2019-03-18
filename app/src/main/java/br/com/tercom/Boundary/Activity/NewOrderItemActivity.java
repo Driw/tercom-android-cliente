@@ -14,6 +14,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.EditorInfo;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -92,6 +93,9 @@ public class NewOrderItemActivity extends AbstractAppCompatActivity {
     TextView txtOrderproviderLabel;
     @BindView(R.id.txtOrderInformation)
     EditText txtOrderInformation;
+    @BindView(R.id.chkIsBetterPrice)
+    CheckBox chkIsBetterPrice;
+
 
     @OnClick(R.id.btnOrderItemAdd) void addOrderItem() {
         switch (selectedType){
@@ -102,7 +106,7 @@ public class NewOrderItemActivity extends AbstractAppCompatActivity {
                         selectedProvider != null? selectedProvider.getId(): 0,
                         selectedManufacture != null? selectedManufacture.getId(): 0,
                         !TextUtils.isEmpty(txtOrderInformation.getText().toString())? txtOrderInformation.getText().toString() : "",
-                        true
+                        chkIsBetterPrice.isChecked()
                         );
                 break;
             case ADD_SERVICE:
@@ -110,7 +114,7 @@ public class NewOrderItemActivity extends AbstractAppCompatActivity {
                         selectedServices.getId(),
                         selectedProvider != null? selectedProvider.getId(): 0,
                         !TextUtils.isEmpty(txtOrderInformation.getText().toString())? txtOrderInformation.getText().toString() : "",
-                        true
+                        chkIsBetterPrice.isChecked()
                 );
                 break;
 
@@ -145,7 +149,7 @@ public class NewOrderItemActivity extends AbstractAppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_order_item);
-        createToolbar();
+//        createToolbar();
         selectedType = getIntent().getExtras().getInt("typeAdd");
         orderRequestId = getIntent().getExtras().getInt("orderRequestId");
         orderItemControl = new OrderItemControl(this);
