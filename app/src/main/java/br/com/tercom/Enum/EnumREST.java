@@ -22,6 +22,7 @@ public enum EnumREST {
     PERMISSION("permission"),
     LOGINCUSTOMER("loginCustomer"),
     MANAGEPERMISSIONS("managePermissions"),
+    ORDERACCEPTANCE("orderAcceptance"),
 
 
 
