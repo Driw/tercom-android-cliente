@@ -96,9 +96,9 @@ public class ServiceControl extends GenericControl {
         }
     }
 
-    public ApiResponse getAll(int idService) {
+    public ApiResponse getAll() {
         try {
-            String link = getLink(getBase(EnumREST.SITE, EnumREST.SERVICE, EnumREST.GETALL), String.valueOf(idService));
+            String link = getBase(EnumREST.SITE, EnumREST.SERVICE, EnumREST.GETALL);
             CustomPair<String> jsonResult =  callJson(EnumMethod.GET,activity,link);
             ApiResponse<ServicesList> providerApiResponse = new ApiResponse<>(ServicesList.class);
             if(jsonResult.first){
