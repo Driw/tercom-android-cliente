@@ -1,5 +1,6 @@
 package br.com.tercom.Boundary.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -9,25 +10,37 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.github.clans.fab.FloatingActionMenu;
+
 import java.util.ArrayList;
 
 import br.com.tercom.Adapter.OrderAcceptanceMainAdapter;
 import br.com.tercom.Adapter.ProductValueAdapter;
 import br.com.tercom.Adapter.ServicePriceAdapter;
 import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
+import br.com.tercom.Entity.LastUpdate;
+import br.com.tercom.Entity.Manufacture;
+import br.com.tercom.Entity.OrderRequest;
+import br.com.tercom.Entity.Product;
+import br.com.tercom.Entity.ProductPackage;
+import br.com.tercom.Entity.ProductType;
 import br.com.tercom.Entity.ProductValue;
+import br.com.tercom.Entity.Provider;
 import br.com.tercom.Entity.ServicePrice;
 import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
 import br.com.tercom.Interface.iNewOrderItem;
 import br.com.tercom.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class OrderAcceptanceMainActivity extends AbstractAppCompatActivity {
 
-//    ArrayList<ProductValue> produtos;
-//    ArrayList<ServicePrice> servicos;
-    ArrayList<iNewOrderItem> orderItems;
+    OrderRequest orderRequest;
+    ArrayList<ProductValue> produtos;
+    ArrayList<ServicePrice> servicos;
+    ArrayList<iNewOrderItem> orderItems = new ArrayList<>();
+    ArrayList<OrderRequest> orderRequests = new ArrayList<>();
 
     @BindView(R.id.btnOrderAcceptanceMainEdit)
     Button btnOrderAcceptanceMainEdit;
@@ -43,6 +56,30 @@ public class OrderAcceptanceMainActivity extends AbstractAppCompatActivity {
     TextView txtOrderAcceptanceMainExpDate;
     @BindView(R.id.rvOrderAcceptanceMainList)
     RecyclerView rvOrderAcceptanceMainList;
+    @BindView(R.id.fabEditOrderMenu)
+    FloatingActionMenu fabEditOrderMenu;
+
+    @OnClick(R.id.fabEditOrderNewService) void addNewService(){
+        /*
+        Intent addService = new Intent(NewOrderListActivity.this, NewOrderItemActivity.class);
+        addService.putExtra("typeAdd", NewOrderItemActivity.ADD_SERVICE);
+        addService.putExtra("orderRequestId", orderRequest.getId());
+        startActivityForResult(addService, NewOrderItemActivity.ADD_SERVICE );
+        fabEditOrderMenu.close(false);
+        */
+    }
+    @OnClick(R.id.fabEditOrderNewProduct) void addNewProduct(){
+        /*
+        Intent addProduct = new Intent(NewOrderListActivity.this, NewOrderItemActivity.class);
+        addProduct.putExtra("typeAdd", NewOrderItemActivity.ADD_PRODUCT);
+        addProduct.putExtra("orderRequestId", orderRequest.getId());
+        startActivityForResult(addProduct,NewOrderItemActivity.ADD_PRODUCT);
+        fabEditOrderMenu.close(false);
+         */
+    }
+    @OnClick(R.id.btnOrderAcceptanceMainEdit) void editOrder(){
+        fabEditOrderMenu.setVisibility(View.VISIBLE);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,7 +87,9 @@ public class OrderAcceptanceMainActivity extends AbstractAppCompatActivity {
         setContentView(R.layout.activity_order_acceptance_main_list);
 //        createToolbar();
         ButterKnife.bind(this);
-        OrderAcceptanceMainAdapter orderAcceptanceMainAdapter = new OrderAcceptanceMainAdapter(this, orderItems);
+        fabEditOrderMenu.setVisibility(View.GONE);
+        populate();
+        OrderAcceptanceMainAdapter orderAcceptanceMainAdapter = new OrderAcceptanceMainAdapter(this, orderItems, orderRequests);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rvOrderAcceptanceMainList.setLayoutManager(layoutManager);
         rvOrderAcceptanceMainList.setAdapter(orderAcceptanceMainAdapter);
@@ -62,8 +101,26 @@ public class OrderAcceptanceMainActivity extends AbstractAppCompatActivity {
         });
     }
 
-
-
-
+    private void populate(){
+        servicos = new ArrayList<ServicePrice>();
+        produtos = new ArrayList<ProductValue>();
+        for(int i = 0; i < 5; i++){
+            ProductValue p = new ProductValue();
+            Product pr = new Product();
+            Manufacture m = new Manufacture();
+            Provider pro = new Provider();
+            ProductPackage p2 = new ProductPackage();
+            ProductType p3 = new ProductType();
+            LastUpdate l = new LastUpdate();
+            p.setLastUpdate(l);
+            p.setType(p3);
+            p.setPackage(p2);
+            p.setProduct(pr);
+            p.setManufacture(m);
+            p.setProvider(pro);
+            p.setName("Teste");
+            produtos.add(p);
+        }
+    }
 
 }

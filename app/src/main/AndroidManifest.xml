@@ -80,6 +80,8 @@
         <activity android:name=".Boundary.Activity.NewOrderListActivity" />
         <activity android:name=".Boundary.Activity.NewOrderItemActivity" />
         <activity android:name=".Boundary.Activity.OrderDetailActivity" />
+        <activity android:name=".Boundary.Activity.OrderAcceptanceMainActivity" />
+        <activity android:name=".Boundary.Activity.OrderAcceptancePriceActivity" />
     </application>
 
 </manifest>

@@ -68,6 +68,11 @@ public class OrderItemService extends GenericEntity implements iNewOrderItem {
     }
 
     @Override
+    public boolean isProduct() {
+        return false;
+    }
+
+    @Override
     public String getName() {
         if (service != null) {
             return service.getName();

@@ -172,6 +172,12 @@ public class OrderListActivity extends AbstractAppCompatActivity {
         });
         rv_OrderList.setLayoutManager(layoutManager);
         rv_OrderList.setAdapter(categoryAdapter);
+        categoryAdapter.setmRecyclerViewOnClickListenerHack(new RecyclerViewOnClickListenerHack() {
+            @Override
+            public void onClickListener(View view, int position) {
+                createIntentAbs(OrderAcceptanceMainActivity.class);
+            }
+        });
     }
 
     private class GetOrderInQueueTask extends AsyncTask<Void, Void, Void> {

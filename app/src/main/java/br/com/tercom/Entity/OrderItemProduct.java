@@ -79,6 +79,11 @@ public class OrderItemProduct extends GenericEntity implements iNewOrderItem {
         return manufacturer;
     }
 
+    @Override
+    public boolean isProduct() {
+        return true;
+    }
+
     public OrderItemProduct setManufacturer(Manufacture manufacturer) {
         this.manufacturer = manufacturer;
         return this;

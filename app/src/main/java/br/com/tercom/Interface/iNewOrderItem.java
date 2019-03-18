@@ -10,5 +10,6 @@ public interface iNewOrderItem {
     public boolean isBetterPrice();
     public String getObservations();
     public Manufacture getManufacturer();
+    public boolean isProduct();
 
 }
