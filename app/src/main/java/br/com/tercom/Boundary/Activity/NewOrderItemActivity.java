@@ -335,6 +335,7 @@ public class NewOrderItemActivity extends AbstractAppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             if(apiResponse.getStatusBoolean()){
                 createListProducts(apiResponse.getResult());
+                toast(NewOrderItemActivity.this,apiResponse.getMessage());
             }else{
                 toast(NewOrderItemActivity.this,apiResponse.getMessage());
             }
@@ -359,6 +360,7 @@ public class NewOrderItemActivity extends AbstractAppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             if (apiResponse.getStatusBoolean()) {
                 createListServices(apiResponse.getResult());
+                toast(NewOrderItemActivity.this,apiResponse.getMessage());
             }else{
                 DialogConfirm dialogConfirm = new DialogConfirm(NewOrderItemActivity.this);
                 dialogConfirm.init(EnumDialogOptions.FAIL,apiResponse.getMessage());
@@ -470,6 +472,7 @@ public class NewOrderItemActivity extends AbstractAppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             if (apiResponse.getStatusBoolean()) {
                 createListProvider(apiResponse.getResult());
+                toast(NewOrderItemActivity.this,apiResponse.getMessage());
             }else{
                 DialogConfirm dialogConfirm = new DialogConfirm(NewOrderItemActivity.this);
                 dialogConfirm.init(EnumDialogOptions.FAIL,apiResponse.getMessage());
@@ -501,6 +504,7 @@ public class NewOrderItemActivity extends AbstractAppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             if (apiResponse.getStatusBoolean()) {
                 createListManufacturer(apiResponse.getResult());
+                toast(NewOrderItemActivity.this,apiResponse.getMessage());
             }else{
                 DialogConfirm dialogConfirm = new DialogConfirm(NewOrderItemActivity.this);
                 dialogConfirm.init(EnumDialogOptions.FAIL,apiResponse.getMessage());
