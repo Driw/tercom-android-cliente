@@ -9,6 +9,7 @@ import br.com.tercom.Entity.ApiResponse;
 import br.com.tercom.Entity.Product;
 import br.com.tercom.Entity.ProductList;
 import br.com.tercom.Entity.ProductSend;
+import br.com.tercom.Entity.ServicesList;
 import br.com.tercom.Enum.EnumMethod;
 import br.com.tercom.Enum.EnumREST;
 import br.com.tercom.Util.CustomPair;
@@ -87,6 +88,22 @@ public class ProductControl extends GenericControl {
     public ApiResponse search(String value, EnumREST filter) {
         try {
             String link = getLink(getBase(EnumREST.SITE, EnumREST.PRODUCT, EnumREST.SEARCH,filter), value);
+            CustomPair<String> jsonResult =  callJson(EnumMethod.GET,activity,link);
+            ApiResponse<ProductList> providerApiResponse = new ApiResponse<>(ProductList.class);
+            if(jsonResult.first){
+                providerApiResponse = populateApiResponse(providerApiResponse,jsonResult.second);
+            }
+            return providerApiResponse;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return getErrorResponse();
+        }
+    }
+
+
+    public ApiResponse getAll() {
+        try {
+            String link = getBase(EnumREST.SITE, EnumREST.PRODUCT, EnumREST.GETALL);
             CustomPair<String> jsonResult =  callJson(EnumMethod.GET,activity,link);
             ApiResponse<ProductList> providerApiResponse = new ApiResponse<>(ProductList.class);
             if(jsonResult.first){

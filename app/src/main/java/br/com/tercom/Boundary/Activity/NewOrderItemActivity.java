@@ -173,18 +173,8 @@ public class NewOrderItemActivity extends AbstractAppCompatActivity {
         rvSearch = dialog.findViewById(R.id.rv_search);
         editSearch = dialog.findViewById(R.id.editSearch);
         editSearch.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
-        editSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                if(i == 0){//EditorInfo.IME_ACTION_SEARCH){
-                    if(!TextUtils.isEmpty(editSearch.getText().toString()))
-                        search(typeReference, editSearch.getText().toString());
-
-                    return true;
-                }
-                return false;
-            }
-        });
+        editSearch.setVisibility(View.GONE);
+        search(typeReference);
         dialog.show();
 
     }
@@ -212,29 +202,29 @@ public class NewOrderItemActivity extends AbstractAppCompatActivity {
 
     }
 
-    private void search(int reference,String value){
+    private void search(int reference){
 
         switch (reference){
             case ADD_PRODUCT:
-                searchProduct(value);
+                searchProduct();
                 break;
             case ADD_SERVICE:
-                searchService(value);
+                searchService();
         }
 
     }
 
-    private void searchService(String name) {
+    private void searchService() {
         if(searchServiceTask == null || searchServiceTask.getStatus() != AsyncTask.Status.RUNNING){
-            searchServiceTask = new SearchServiceTask(name);
+            searchServiceTask = new SearchServiceTask();
             searchServiceTask.execute();
         }
 
     }
 
-    private void searchProduct(String name) {
+    private void searchProduct() {
         if(productTask == null || productTask.getStatus() != AsyncTask.Status.RUNNING){
-            productTask = new ProductTask(name);
+            productTask = new ProductTask();
             productTask.execute();
         }
     }
@@ -331,19 +321,13 @@ public class NewOrderItemActivity extends AbstractAppCompatActivity {
     private class ProductTask extends AsyncTask<Void,Void,Void>{
 
         private ApiResponse<ProductList> apiResponse;
-        private String value;
-
-
-        public ProductTask(String value) {
-            this.value = value;
-        }
 
         @Override
         protected Void doInBackground(Void... voids) {
             if(Looper.myLooper() == null)
                 Looper.prepare();
             ProductControl productControl = new ProductControl(NewOrderItemActivity.this);
-            apiResponse = productControl.search(value, EnumREST.NAME);
+            apiResponse = productControl.getAll();
             return null;
         }
 
@@ -351,6 +335,7 @@ public class NewOrderItemActivity extends AbstractAppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             if(apiResponse.getStatusBoolean()){
                 createListProducts(apiResponse.getResult());
+                toast(NewOrderItemActivity.this,apiResponse.getMessage());
             }else{
                 toast(NewOrderItemActivity.this,apiResponse.getMessage());
             }
@@ -361,19 +346,13 @@ public class NewOrderItemActivity extends AbstractAppCompatActivity {
     private class SearchServiceTask extends AsyncTask<Void,Void,Void>{
 
         private ApiResponse<ServicesList> apiResponse;
-        private String name;
-
-
-        public SearchServiceTask(String name) {
-            this.name = name;
-        }
 
         @Override
         protected Void doInBackground(Void... voids) {
             if(Looper.myLooper() == null)
                 Looper.prepare();
             ServiceControl serviceControl = new ServiceControl(NewOrderItemActivity.this);
-            apiResponse = serviceControl.search(name, EnumREST.NAME);
+            apiResponse = serviceControl.getAll();
             return null;
         }
 
@@ -381,6 +360,7 @@ public class NewOrderItemActivity extends AbstractAppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             if (apiResponse.getStatusBoolean()) {
                 createListServices(apiResponse.getResult());
+                toast(NewOrderItemActivity.this,apiResponse.getMessage());
             }else{
                 DialogConfirm dialogConfirm = new DialogConfirm(NewOrderItemActivity.this);
                 dialogConfirm.init(EnumDialogOptions.FAIL,apiResponse.getMessage());
@@ -492,6 +472,7 @@ public class NewOrderItemActivity extends AbstractAppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             if (apiResponse.getStatusBoolean()) {
                 createListProvider(apiResponse.getResult());
+                toast(NewOrderItemActivity.this,apiResponse.getMessage());
             }else{
                 DialogConfirm dialogConfirm = new DialogConfirm(NewOrderItemActivity.this);
                 dialogConfirm.init(EnumDialogOptions.FAIL,apiResponse.getMessage());
@@ -523,6 +504,7 @@ public class NewOrderItemActivity extends AbstractAppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             if (apiResponse.getStatusBoolean()) {
                 createListManufacturer(apiResponse.getResult());
+                toast(NewOrderItemActivity.this,apiResponse.getMessage());
             }else{
                 DialogConfirm dialogConfirm = new DialogConfirm(NewOrderItemActivity.this);
                 dialogConfirm.init(EnumDialogOptions.FAIL,apiResponse.getMessage());
