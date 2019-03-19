@@ -19,9 +19,9 @@
     <color name="colorMidGray">#afafaf</color>
     <color name="colorOrange">#ff9500</color>
     <color name="colorGold">#ffc800</color>
-    <color name="colorRed">#ff0004</color>
+    <color name="colorRed">#FF0004</color>
     <color name="colorRedHighOpacity">#4ee40b0f</color>
-    <color name="colorGreen">#33e10c</color>
+    <color name="colorGreen">#33E10C</color>
     <color name="colorTransparent">@android:color/transparent</color>
     <color name="colorMenu1">#4b77a7</color>
     <color name="colorMenu2">#d16558</color>
@@ -30,7 +30,7 @@
     <color name="colorMenu5">#e4b275</color>
     <color name="colorMenu6">#ce7b59</color>
     <color name="colorBackground">#eae7e6</color>
-    <color name="colorGreenButton">#7eae50</color>
+    <color name="colorGreenButton">#7EAE50</color>
     <color name="colorGreenDivider">#6ca880</color>
     <color name="colorGreenLogin">#35b34b</color>
     <color name="colorBlueCalendarItem">#27a5dc</color>

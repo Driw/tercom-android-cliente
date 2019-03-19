@@ -36,6 +36,10 @@ import butterknife.OnClick;
 
 public class OrderAcceptanceMainActivity extends AbstractAppCompatActivity {
 
+    private static final int actionEdit = 1;
+    private static final int actionFinalize = 2;
+    private int actionType;
+
     OrderRequest orderRequest;
     ArrayList<ProductValue> produtos;
     ArrayList<ServicePrice> servicos;
@@ -58,6 +62,8 @@ public class OrderAcceptanceMainActivity extends AbstractAppCompatActivity {
     RecyclerView rvOrderAcceptanceMainList;
     @BindView(R.id.fabEditOrderMenu)
     FloatingActionMenu fabEditOrderMenu;
+    @BindView(R.id.btnOrderAcceptaneMainFinalize)
+    Button btnOrderAcceptaneMainFinalize;
 
     @OnClick(R.id.fabEditOrderNewService) void addNewService(){
         /*
@@ -78,8 +84,21 @@ public class OrderAcceptanceMainActivity extends AbstractAppCompatActivity {
          */
     }
     @OnClick(R.id.btnOrderAcceptanceMainEdit) void editOrder(){
+        actionType = actionEdit;
         fabEditOrderMenu.setVisibility(View.VISIBLE);
     }
+    @OnClick(R.id.btnOrderAcceptaneMainFinalize) void actionManager(){
+        switch (actionType){
+            case actionEdit:
+                btnOrderAcceptaneMainFinalize.setText("Finalizar Edição");
+                actionType = actionFinalize;
+                break;
+            case actionFinalize:
+                btnOrderAcceptaneMainFinalize.setText("FInalizar");
+                break;
+        }
+    }
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,8 +106,8 @@ public class OrderAcceptanceMainActivity extends AbstractAppCompatActivity {
         setContentView(R.layout.activity_order_acceptance_main_list);
 //        createToolbar();
         ButterKnife.bind(this);
-        fabEditOrderMenu.setVisibility(View.GONE);
-        populate();
+        defaultScreen();
+//        populate();
         OrderAcceptanceMainAdapter orderAcceptanceMainAdapter = new OrderAcceptanceMainAdapter(this, orderItems, orderRequests);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rvOrderAcceptanceMainList.setLayoutManager(layoutManager);
@@ -101,6 +120,12 @@ public class OrderAcceptanceMainActivity extends AbstractAppCompatActivity {
         });
     }
 
+    private void defaultScreen(){
+        fabEditOrderMenu.setVisibility(View.GONE);
+        btnOrderAcceptaneMainFinalize.setVisibility(View.GONE);
+    }
+
+    /*
     private void populate(){
         servicos = new ArrayList<ServicePrice>();
         produtos = new ArrayList<ProductValue>();
@@ -122,5 +147,6 @@ public class OrderAcceptanceMainActivity extends AbstractAppCompatActivity {
             produtos.add(p);
         }
     }
+    */
 
 }
