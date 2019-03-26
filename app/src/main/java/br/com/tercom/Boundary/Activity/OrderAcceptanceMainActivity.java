@@ -46,8 +46,6 @@ public class OrderAcceptanceMainActivity extends AbstractAppCompatActivity {
     ArrayList<iNewOrderItem> orderItems = new ArrayList<>();
     ArrayList<OrderRequest> orderRequests = new ArrayList<>();
 
-    @BindView(R.id.btnOrderAcceptanceMainEdit)
-    Button btnOrderAcceptanceMainEdit;
     @BindView(R.id.btnOrderAcceptanceMainRemove)
     Button btnOrderAcceptanceMainRemove;
     @BindView(R.id.txtOrderAcceptanceMainOrderID)
@@ -60,43 +58,12 @@ public class OrderAcceptanceMainActivity extends AbstractAppCompatActivity {
     TextView txtOrderAcceptanceMainExpDate;
     @BindView(R.id.rvOrderAcceptanceMainList)
     RecyclerView rvOrderAcceptanceMainList;
-    @BindView(R.id.fabEditOrderMenu)
-    FloatingActionMenu fabEditOrderMenu;
     @BindView(R.id.btnOrderAcceptaneMainFinalize)
     Button btnOrderAcceptaneMainFinalize;
 
-    @OnClick(R.id.fabEditOrderNewService) void addNewService(){
-        /*
-        Intent addService = new Intent(NewOrderListActivity.this, NewOrderItemActivity.class);
-        addService.putExtra("typeAdd", NewOrderItemActivity.ADD_SERVICE);
-        addService.putExtra("orderRequestId", orderRequest.getId());
-        startActivityForResult(addService, NewOrderItemActivity.ADD_SERVICE );
-        fabEditOrderMenu.close(false);
-        */
-    }
-    @OnClick(R.id.fabEditOrderNewProduct) void addNewProduct(){
-        /*
-        Intent addProduct = new Intent(NewOrderListActivity.this, NewOrderItemActivity.class);
-        addProduct.putExtra("typeAdd", NewOrderItemActivity.ADD_PRODUCT);
-        addProduct.putExtra("orderRequestId", orderRequest.getId());
-        startActivityForResult(addProduct,NewOrderItemActivity.ADD_PRODUCT);
-        fabEditOrderMenu.close(false);
-         */
-    }
-    @OnClick(R.id.btnOrderAcceptanceMainEdit) void editOrder(){
-        actionType = actionEdit;
-        fabEditOrderMenu.setVisibility(View.VISIBLE);
-    }
+
     @OnClick(R.id.btnOrderAcceptaneMainFinalize) void actionManager(){
-        switch (actionType){
-            case actionEdit:
-                btnOrderAcceptaneMainFinalize.setText("Finalizar Edição");
-                actionType = actionFinalize;
-                break;
-            case actionFinalize:
-                btnOrderAcceptaneMainFinalize.setText("FInalizar");
-                break;
-        }
+        
     }
 
 
@@ -106,7 +73,6 @@ public class OrderAcceptanceMainActivity extends AbstractAppCompatActivity {
         setContentView(R.layout.activity_order_acceptance_main_list);
 //        createToolbar();
         ButterKnife.bind(this);
-        defaultScreen();
 //        populate();
         OrderAcceptanceMainAdapter orderAcceptanceMainAdapter = new OrderAcceptanceMainAdapter(this, orderItems, orderRequests);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -120,10 +86,6 @@ public class OrderAcceptanceMainActivity extends AbstractAppCompatActivity {
         });
     }
 
-    private void defaultScreen(){
-        fabEditOrderMenu.setVisibility(View.GONE);
-        btnOrderAcceptaneMainFinalize.setVisibility(View.GONE);
-    }
 
     /*
     private void populate(){
