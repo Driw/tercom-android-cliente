@@ -39,9 +39,9 @@ public class ServicePriceAdapter extends RecyclerView.Adapter<ServicePriceAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.serviceName.setText(servicePrice.get(position).getName());
+        holder.serviceName.setText("Nome:"+servicePrice.get(position).getName());
         holder.serviceValue.setText(String.format(Locale.getDefault(),"R$ %.2f", servicePrice.get(position).getPrice()).replace(".", ","));
-        holder.serviceProvider.setText(servicePrice.get(position).getProvider().getFantasyName());
+        holder.serviceProvider.setText("Provedor:"+servicePrice.get(position).getProvider().getFantasyName());
     }
 
     @Override

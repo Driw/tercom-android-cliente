@@ -63,7 +63,7 @@ public class OrderAcceptanceMainActivity extends AbstractAppCompatActivity {
 
 
     @OnClick(R.id.btnOrderAcceptaneMainFinalize) void actionManager(){
-        
+
     }
 
 
