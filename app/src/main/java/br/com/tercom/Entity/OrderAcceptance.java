@@ -34,5 +34,77 @@ public class OrderAcceptance extends GenericEntity {
         observations = "";
         //TODO: Definir valor inicial para register igual à data atual em String.
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public OrderQuote getOrderQuote() {
+        return orderQuote;
+    }
+
+    public void setOrderQuote(OrderQuote orderQuote) {
+        this.orderQuote = orderQuote;
+    }
+
+    public CustomerEmployee getCustomerEmployee() {
+        return customerEmployee;
+    }
+
+    public void setCustomerEmployee(CustomerEmployee customerEmployee) {
+        this.customerEmployee = customerEmployee;
+    }
+
+    public TercomEmployee getTercomEmployee() {
+        return tercomEmployee;
+    }
+
+    public void setTercomEmployee(TercomEmployee tercomEmployee) {
+        this.tercomEmployee = tercomEmployee;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getStatusDescription() {
+        return statusDescription;
+    }
+
+    public void setStatusDescription(String statusDescription) {
+        this.statusDescription = statusDescription;
+    }
+
+    public String getObservations() {
+        return observations;
+    }
+
+    public void setObservations(String observations) {
+        this.observations = observations;
+    }
+
+    public String getRegister() {
+        return register;
+    }
+
+    public void setRegister(String register) {
+        this.register = register;
+    }
 }
 
