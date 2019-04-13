@@ -22,6 +22,7 @@ import br.com.tercom.Adapter.ServicePriceAdapter;
 import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
 import br.com.tercom.Boundary.BoundaryUtil.Mask;
 import br.com.tercom.Control.OrderAcceptanceControl;
+import br.com.tercom.Entity.Address;
 import br.com.tercom.Entity.ApiResponse;
 import br.com.tercom.Entity.OrderAcceptance;
 import br.com.tercom.Entity.OrderItemProductList;
@@ -62,7 +63,10 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
         setContentView(R.layout.activity_order_acceptance_price_check);
 //        createToolbar();
         ButterKnife.bind(this);
-        setAdapter(setType());
+        switch (setType()) {
+            case typeProduct: initOrderAcceptanceProductTask();
+            case typeService: initOrderAcceptanceServiceTask();
+        }
     }
 
     private int setType(){
@@ -73,47 +77,48 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
         }
     }
 
-    private void setAdapter(int type){
+    private void createOrderAcceptanceProductList(ArrayList<? extends iNewOrderItem> list) {
         if(rvOrderAcceptancePriceList.getAdapter() != null){
             rvOrderAcceptancePriceList.setAdapter(null);
         }
-        switch (type){
-            case typeProduct:
-                final ProductValueAdapter productValueAdapter = new ProductValueAdapter(this, produtos);
-                GridLayoutManager layoutManagerProducts = new GridLayoutManager(this, 2);
-                rvOrderAcceptancePriceList.setLayoutManager(layoutManagerProducts);
-                rvOrderAcceptancePriceList.setAdapter(productValueAdapter);
-                productValueAdapter.setmRecyclerViewOnClickListenerHack(new RecyclerViewOnClickListenerHack() {
-                    @Override
-                    public void onClickListener(View view, int position) {
-                        if (produtos.get(position).isSelected()){
-                            produtos.get(position).setSelected(false);
-                        } else {
-                            produtos.get(position).setSelected(true);
-                            initDialog(position);
-                        }
-                        productValueAdapter.notifyItemChanged(position);
-                    }
-                });
-                break;
-            case typeService:
-                final ServicePriceAdapter servicePriceAdapter = new ServicePriceAdapter(this, servicos);
-                GridLayoutManager layoutManagerServices = new GridLayoutManager(this, 2);
-                rvOrderAcceptancePriceList.setLayoutManager(layoutManagerServices);
-                rvOrderAcceptancePriceList.setAdapter(servicePriceAdapter);
-                servicePriceAdapter.setmRecyclerViewOnClickListenerHack(new RecyclerViewOnClickListenerHack() {
-                    @Override
-                    public void onClickListener(View view, int position) {
-                        if (servicos.get(position).isSelected()){
-                            servicos.get(position).setSelected(false);
-                        } else {
-                            servicos.get(position).setSelected(true);
-                            initDialog(position);
-                        }
-                        servicePriceAdapter.notifyItemChanged(position);
-                    }
-                });
+        final ProductValueAdapter productValueAdapter = new ProductValueAdapter(this, produtos);
+        GridLayoutManager layoutManagerProducts = new GridLayoutManager(this, 2);
+        rvOrderAcceptancePriceList.setLayoutManager(layoutManagerProducts);
+        rvOrderAcceptancePriceList.setAdapter(productValueAdapter);
+        productValueAdapter.setmRecyclerViewOnClickListenerHack(new RecyclerViewOnClickListenerHack() {
+            @Override
+            public void onClickListener(View view, int position) {
+                if (produtos.get(position).isSelected()){
+                    produtos.get(position).setSelected(false);
+                } else {
+                    produtos.get(position).setSelected(true);
+                    initDialog(position);
+                }
+                productValueAdapter.notifyItemChanged(position);
+            }
+        });
+    }
+
+    private void createOrderAcceptanceServiceList(ArrayList<? extends iNewOrderItem> list) {
+        if(rvOrderAcceptancePriceList.getAdapter() != null){
+            rvOrderAcceptancePriceList.setAdapter(null);
         }
+        final ServicePriceAdapter servicePriceAdapter = new ServicePriceAdapter(this, servicos);
+        GridLayoutManager layoutManagerServices = new GridLayoutManager(this, 2);
+        rvOrderAcceptancePriceList.setLayoutManager(layoutManagerServices);
+        rvOrderAcceptancePriceList.setAdapter(servicePriceAdapter);
+        servicePriceAdapter.setmRecyclerViewOnClickListenerHack(new RecyclerViewOnClickListenerHack() {
+            @Override
+            public void onClickListener(View view, int position) {
+                if (servicos.get(position).isSelected()){
+                    servicos.get(position).setSelected(false);
+                } else {
+                    servicos.get(position).setSelected(true);
+                    initDialog(position);
+                }
+                servicePriceAdapter.notifyItemChanged(position);
+            }
+        });
     }
 
     private void initDialog(final int position) {
@@ -135,65 +140,29 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
 
     private void initOrderAcceptanceProductTask(){
         if(addProductValue == null || addProductValue.getStatus() != AsyncTask.Status.RUNNING){
-            addProductValue = new addProductValue(0);
+            addProductValue = new addProductValue(orderAcceptance.getId(), orderRequest.getId(), produtos.get(0).getAmount(), "teste");
             addProductValue.execute();
         }
     }
 
-    private void initOrderAcceptanceServideTask(){
+    private void initOrderAcceptanceServiceTask(){
         if(addServicePrice == null || addServicePrice.getStatus() != AsyncTask.Status.RUNNING){
-            addServicePrice = new addServicePrice(0);
+            addServicePrice = new addServicePrice(orderAcceptance.getId(), orderRequest.getId(), produtos.get(0).getAmount(), "teste");
             addServicePrice.execute();
         }
     }
 
-    private void createOrderAcceptanceProductList(ArrayList<? extends iNewOrderItem> list) {
-        if(rvOrderAcceptancePriceList.getAdapter() != null){
-            rvOrderAcceptancePriceList.setAdapter(null);
-        }
-        final ProductValueAdapter productValueAdapter = new ProductValueAdapter(this, produtos);
-        GridLayoutManager layoutManagerProducts = new GridLayoutManager(this, 2);
-        rvOrderAcceptancePriceList.setLayoutManager(layoutManagerProducts);
-        rvOrderAcceptancePriceList.setAdapter(productValueAdapter);
-        productValueAdapter.setmRecyclerViewOnClickListenerHack(new RecyclerViewOnClickListenerHack() {
-                    @Override
-                    public void onClickListener(View view, int position) {
-            if (produtos.get(position).isSelected()){
-                produtos.get(position).setSelected(false);
-            } else {
-                produtos.get(position).setSelected(true);
-                initDialog(position);
-            }
-            productValueAdapter.notifyItemChanged(position);
-            }
-        });
-    }
-
-    private void createOrderAcceptanceServiceList(ArrayList<? extends iNewOrderItem> list) {
-        if(rvOrderAcceptancePriceList.getAdapter() != null){
-            rvOrderAcceptancePriceList.setAdapter(null);
-        }
-        final ServicePriceAdapter servicePriceAdapter = new ServicePriceAdapter(this, servicos);
-        GridLayoutManager layoutManagerServices = new GridLayoutManager(this, 2);
-        rvOrderAcceptancePriceList.setLayoutManager(layoutManagerServices);
-        rvOrderAcceptancePriceList.setAdapter(servicePriceAdapter);
-        servicePriceAdapter.setmRecyclerViewOnClickListenerHack(new RecyclerViewOnClickListenerHack() {
-            @Override
-            public void onClickListener(View view, int position) {
-            if (servicos.get(position).isSelected()){
-                servicos.get(position).setSelected(false);
-            } else {
-                servicos.get(position).setSelected(true);
-                initDialog(position);
-            }
-            servicePriceAdapter.notifyItemChanged(position);
-            }
-        });
-    }
-
     private  class addPrice extends AsyncTask<Void, Void, Void> {
         private ApiResponse<OrderAcceptance> apiResponseAcceptance;
-        private int id;
+        private int idAcceptance;
+        private int idAddress;
+        private String observations;
+
+        public addPrice(int idAcceptance, int idAddress, String observations){
+            this.idAcceptance = idAcceptance;
+            this.idAddress = idAddress;
+            this.observations = observations;
+        }
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -201,13 +170,16 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
                 Looper.prepare();
             }
             OrderAcceptanceControl orderAcceptanceControl = new OrderAcceptanceControl(OrderAcceptancePriceActivity.this);
-            apiResponseAcceptance = orderAcceptanceControl.add(0,0,"teste");
+            apiResponseAcceptance = orderAcceptanceControl.add(idAcceptance, idAddress, observations);
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             if(apiResponseAcceptance.getStatusBoolean()){
+                orderAcceptance = apiResponseAcceptance.getResult();
+            }
+            if(orderAcceptance != null) {
 
             }
         }
@@ -215,11 +187,17 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
 
     private class addProductValue extends AsyncTask<Void,Void,Void> {
         private ApiResponse<OrderItemProductList> apiResponseProduct;
-        private int id;
+        private int idAcceptance;
+        private int idOrder;
+        private int qtd;
+        private String observations;
 
-        public addProductValue (int id) {
-            produtos = new ArrayList<>();
-            this.id = id;
+        public addProductValue (int idAcceptance, int idOrder, int qtd, String observations) {
+            list = new ArrayList<>();
+            this.idAcceptance = idAcceptance;
+            this.idOrder = idOrder;
+            this.qtd = qtd;
+            this.observations = observations;
         }
 
         @Override
@@ -228,7 +206,7 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
                 Looper.prepare();
             }
             OrderAcceptanceControl orderAcceptanceControl = new OrderAcceptanceControl(OrderAcceptancePriceActivity.this);
-            apiResponseProduct = orderAcceptanceControl.productAdd(0,0,0,0, "teste");
+            apiResponseProduct = orderAcceptanceControl.productAdd(idAcceptance,idOrder,qtd,0, observations);
             return null;
         }
 
@@ -245,11 +223,17 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
 
     private class addServicePrice extends AsyncTask<Void,Void,Void> {
         private ApiResponse<OrderItemServiceList> apiResponseService;
-        private int id;
+        private int idAcceptance;
+        private int idOrder;
+        private int qtd;
+        private String observations;
 
-        public addServicePrice(int id){
+        public addServicePrice (int idAcceptance, int idOrder, int qtd, String observations) {
             list = new ArrayList<>();
-            this.id = id;
+            this.idAcceptance = idAcceptance;
+            this.idOrder = idOrder;
+            this.qtd = qtd;
+            this.observations = observations;
         }
 
         @Override
