@@ -28,7 +28,7 @@ public class OrderAcceptanceMainAdapter extends RecyclerView.Adapter<OrderAccept
 
     private LayoutInflater layoutInflater;
     private ArrayList<iNewOrderItem> orderItems;
-    private ArrayList<OrderRequest> orderRequests;
+    private OrderRequest orderRequest;
     private Context context;
 
     private RecyclerViewOnClickListenerHack mRecyclerViewOnClickListenerHack;
@@ -37,11 +37,11 @@ public class OrderAcceptanceMainAdapter extends RecyclerView.Adapter<OrderAccept
         this.mRecyclerViewOnClickListenerHack = mRecyclerViewOnClickListenerHack;
     }
 
-    public OrderAcceptanceMainAdapter(Context c, ArrayList<iNewOrderItem> orderItems, ArrayList<OrderRequest> orderRequests){
+    public OrderAcceptanceMainAdapter(Context c, ArrayList<iNewOrderItem> orderItems, OrderRequest orderRequest){
         layoutInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.context = c;
         this.orderItems = orderItems;
-        this.orderRequests = orderRequests;
+        this.orderRequest = orderRequest;
     }
 
     @Override
@@ -63,7 +63,7 @@ public class OrderAcceptanceMainAdapter extends RecyclerView.Adapter<OrderAccept
     }
 
     private void manageItemButtons (int position, ViewHolder holder){
-        switch (orderRequests.get(position).getStatus()){
+        switch (orderRequest.getStatus()){
             case ORS_QUEUED:
                 holder.btnOrderAcceptanceMainAdvanceOrder.setVisibility(View.GONE);
                 holder.btnOrderAcceptanceMainDetails.setVisibility(View.GONE);
