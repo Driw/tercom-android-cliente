@@ -38,11 +38,10 @@ public class OrderAcceptanceControl extends GenericControl {
     }
 
 
-    public ApiResponse serviceAdd(int idAcceptance, int idOrderQuote, int qtd,int subprice, String observations){
+    public ApiResponse serviceAdd(int idAcceptance, int idOrderQuote,int subprice, String observations){
         TreeMap<String, String> map = new TreeMap<>();
         map.put("idAcceptance", String.valueOf(idAcceptance));
         map.put("idOrderQuote", String.valueOf(idOrderQuote));
-        map.put("qtd", String.valueOf(qtd));
         map.put("subprice", String.valueOf(subprice));
         map.put("observations", observations);
         try{

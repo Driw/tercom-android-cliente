@@ -49,8 +49,6 @@ public class OrderAcceptanceMainActivity extends AbstractAppCompatActivity {
     private ArrayList<ServicePrice> servicos;
     private ArrayList<iNewOrderItem> orderItems;
 
-    @BindView(R.id.btnOrderAcceptanceMainRemove)
-    Button btnOrderAcceptanceMainRemove;
     @BindView(R.id.txtOrderAcceptanceMainOrderID)
     TextView txtOrderAcceptanceMainOrderID;
     @BindView(R.id.txtOrderAcceptanceMainStatus)
@@ -80,7 +78,7 @@ public class OrderAcceptanceMainActivity extends AbstractAppCompatActivity {
         }
     }
 
-    private void createOrderAcceptanceList(ArrayList<? extends iNewOrderItem> list){
+    private void createOrderAcceptanceList(final ArrayList<? extends iNewOrderItem> list){
         OrderAcceptanceMainAdapter orderAcceptanceMainAdapter = new OrderAcceptanceMainAdapter(this, orderItems, orderRequest);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rvOrderAcceptanceMainList.setLayoutManager(layoutManager);
@@ -88,7 +86,10 @@ public class OrderAcceptanceMainActivity extends AbstractAppCompatActivity {
         orderAcceptanceMainAdapter.setmRecyclerViewOnClickListenerHack(new RecyclerViewOnClickListenerHack() {
             @Override
             public void onClickListener(View view, int position) {
-                createIntentAbs(OrderAcceptancePriceActivity.class);
+                Intent intent = new Intent();
+                intent.setClass(OrderAcceptanceMainActivity.this, OrderAcceptancePriceActivity.class);
+                intent.putExtra("type", list.get(position).isProduct());
+                startActivity(intent);
             }
         });
     }

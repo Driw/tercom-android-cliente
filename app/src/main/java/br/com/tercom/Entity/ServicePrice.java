@@ -14,6 +14,8 @@ public class ServicePrice extends GenericEntity implements IProductValueItem {
     private Float price;
     private boolean isSelected;
 
+    public int getAmount() { return 0; }
+
     public boolean isSelected() {
         return isSelected;
     }

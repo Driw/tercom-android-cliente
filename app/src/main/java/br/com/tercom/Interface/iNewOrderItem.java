@@ -11,5 +11,6 @@ public interface iNewOrderItem {
     public String getObservations();
     public Manufacture getManufacturer();
     public boolean isProduct();
+    public int getAmount();
 
 }

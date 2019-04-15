@@ -46,11 +46,15 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
     private addPrice addPrice;
     private addProductValue addProductValue;
     private addServicePrice addServicePrice;
+    private getProductValue getProductValue;
+    private getServicePrice getServicePrice;
     private OrderAcceptance orderAcceptance;
     private OrderRequest orderRequest;
     private ArrayList<iNewOrderItem> list;
     private ArrayList<ProductValue> produtos;
     private ArrayList<ServicePrice> servicos;
+    private ProductValueAdapter productValueAdapter;
+    private ServicePriceAdapter servicePriceAdapter;
 
     @BindView(R.id.txtOrderAcceptancePriceAddInfo)
     TextView txtOrderAcceptancePriceAddInfo;
@@ -63,14 +67,14 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
         setContentView(R.layout.activity_order_acceptance_price_check);
 //        createToolbar();
         ButterKnife.bind(this);
-        switch (setType()) {
-            case typeProduct: initOrderAcceptanceProductTask();
-            case typeService: initOrderAcceptanceServiceTask();
+        switch (setType(getIntent().getExtras().getBoolean("type"))) {
+            case typeProduct: initOrderAcceptanceGetProductTask();
+            case typeService: initOrderAcceptanceGetServiceTask();
         }
     }
 
-    private int setType(){
-        if(produtos.size() == 0){
+    private int setType(boolean type){
+        if(!type){
             return typeService;
         } else {
             return typeProduct;
@@ -81,7 +85,7 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
         if(rvOrderAcceptancePriceList.getAdapter() != null){
             rvOrderAcceptancePriceList.setAdapter(null);
         }
-        final ProductValueAdapter productValueAdapter = new ProductValueAdapter(this, produtos);
+        productValueAdapter = new ProductValueAdapter(this, produtos);
         GridLayoutManager layoutManagerProducts = new GridLayoutManager(this, 2);
         rvOrderAcceptancePriceList.setLayoutManager(layoutManagerProducts);
         rvOrderAcceptancePriceList.setAdapter(productValueAdapter);
@@ -103,7 +107,7 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
         if(rvOrderAcceptancePriceList.getAdapter() != null){
             rvOrderAcceptancePriceList.setAdapter(null);
         }
-        final ServicePriceAdapter servicePriceAdapter = new ServicePriceAdapter(this, servicos);
+        servicePriceAdapter = new ServicePriceAdapter(this, servicos);
         GridLayoutManager layoutManagerServices = new GridLayoutManager(this, 2);
         rvOrderAcceptancePriceList.setLayoutManager(layoutManagerServices);
         rvOrderAcceptancePriceList.setAdapter(servicePriceAdapter);
@@ -114,7 +118,7 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
                     servicos.get(position).setSelected(false);
                 } else {
                     servicos.get(position).setSelected(true);
-                    initDialog(position);
+                    initOrderAcceptanceServiceTask();
                 }
                 servicePriceAdapter.notifyItemChanged(position);
             }
@@ -133,22 +137,38 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
             public void onClick(View view) {
                 produtos.get(position).setAmount(Integer.parseInt(txtOrderAcceptancePriceQnt.getText().toString()));
                 dialog.dismiss();
+                initOrderAcceptanceProductTask(position);
+                productValueAdapter.notifyDataSetChanged();
             }
         });
         dialog.show();
     }
 
-    private void initOrderAcceptanceProductTask(){
+    private void initOrderAcceptanceProductTask(int position){
         if(addProductValue == null || addProductValue.getStatus() != AsyncTask.Status.RUNNING){
-            addProductValue = new addProductValue(orderAcceptance.getId(), orderRequest.getId(), produtos.get(0).getAmount(), "teste");
+            addProductValue = new addProductValue(orderAcceptance.getId(), orderRequest.getId(), list.get(position).getAmount(), orderAcceptance.getObservations());
             addProductValue.execute();
         }
     }
 
     private void initOrderAcceptanceServiceTask(){
         if(addServicePrice == null || addServicePrice.getStatus() != AsyncTask.Status.RUNNING){
-            addServicePrice = new addServicePrice(orderAcceptance.getId(), orderRequest.getId(), produtos.get(0).getAmount(), "teste");
+            addServicePrice = new addServicePrice(orderAcceptance.getId(), orderRequest.getId(), orderAcceptance.getObservations());
             addServicePrice.execute();
+        }
+    }
+
+    private void initOrderAcceptanceGetProductTask(){
+        if(getProductValue == null || getProductValue.getStatus() != AsyncTask.Status.RUNNING){
+            getProductValue = new getProductValue(orderAcceptance.getId());
+            getProductValue.execute();
+        }
+    }
+
+    private void initOrderAcceptanceGetServiceTask(){
+        if(getServicePrice == null || getServicePrice.getStatus() != AsyncTask.Status.RUNNING){
+            getServicePrice = new getServicePrice(orderAcceptance.getId());
+            getServicePrice.execute();
         }
     }
 
@@ -225,14 +245,12 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
         private ApiResponse<OrderItemServiceList> apiResponseService;
         private int idAcceptance;
         private int idOrder;
-        private int qtd;
         private String observations;
 
-        public addServicePrice (int idAcceptance, int idOrder, int qtd, String observations) {
+        public addServicePrice (int idAcceptance, int idOrder, String observations) {
             list = new ArrayList<>();
             this.idAcceptance = idAcceptance;
             this.idOrder = idOrder;
-            this.qtd = qtd;
             this.observations = observations;
         }
 
@@ -242,7 +260,67 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
                 Looper.prepare();
             }
             OrderAcceptanceControl orderAcceptanceControl = new OrderAcceptanceControl(OrderAcceptancePriceActivity.this);
-            apiResponseService = orderAcceptanceControl.serviceAdd(0,0,0,0, "teste");
+            apiResponseService = orderAcceptanceControl.serviceAdd(idAcceptance,idOrder,0, observations);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if(apiResponseService.getStatusBoolean()){
+                list.addAll(apiResponseService.getResult().getList());
+            }
+            if(list.size() > 0) {
+                createOrderAcceptanceServiceList(list);
+            }
+        }
+    }
+
+    private class getProductValue extends AsyncTask<Void,Void,Void> {
+        private ApiResponse<OrderItemServiceList> apiResponseProduct;
+        private int idAcceptance;
+
+        public getProductValue (int idAcceptance) {
+            list = new ArrayList<>();
+            this.idAcceptance = idAcceptance;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            if(Looper.myLooper() == null) {
+                Looper.prepare();
+            }
+            OrderAcceptanceControl orderAcceptanceControl = new OrderAcceptanceControl(OrderAcceptancePriceActivity.this);
+            apiResponseProduct = orderAcceptanceControl.getAllProducts(idAcceptance);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if(apiResponseProduct.getStatusBoolean()){
+                list.addAll(apiResponseProduct.getResult().getList());
+            }
+            if(list.size() > 0) {
+                createOrderAcceptanceServiceList(list);
+            }
+        }
+    }
+
+    private class getServicePrice extends AsyncTask<Void,Void,Void> {
+        private ApiResponse<OrderItemServiceList> apiResponseService;
+        private int idAcceptance;
+
+        public getServicePrice (int idAcceptance) {
+            list = new ArrayList<>();
+            this.idAcceptance = idAcceptance;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            if(Looper.myLooper() == null) {
+                Looper.prepare();
+            }
+            OrderAcceptanceControl orderAcceptanceControl = new OrderAcceptanceControl(OrderAcceptancePriceActivity.this);
+            apiResponseService = orderAcceptanceControl.getAllServices(idAcceptance);
             return null;
         }
 
