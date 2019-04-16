@@ -25,6 +25,7 @@ import br.com.tercom.Control.OrderItemControl;
 import br.com.tercom.Entity.ApiResponse;
 import br.com.tercom.Entity.LastUpdate;
 import br.com.tercom.Entity.Manufacture;
+import br.com.tercom.Entity.OrderItemProduct;
 import br.com.tercom.Entity.OrderItemProductList;
 import br.com.tercom.Entity.OrderItemServiceList;
 import br.com.tercom.Entity.OrderRequest;

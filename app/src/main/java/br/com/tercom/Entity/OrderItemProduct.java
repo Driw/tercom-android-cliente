@@ -17,6 +17,7 @@ public class OrderItemProduct extends GenericEntity implements iNewOrderItem {
     private Manufacture manufacturer;
     private boolean betterPrice;
     private String observations;
+    private int amount;
 
     public OrderItemProduct(){
         id = 0;
@@ -108,5 +109,14 @@ public class OrderItemProduct extends GenericEntity implements iNewOrderItem {
         if(observations != null && observations.length() > MAX_OBSERVATION_LENS)
             throw new StringIndexOutOfBoundsException(String.format("Observações deve possuir até %s", String.valueOf(MAX_OBSERVATION_LENS)));
         this.observations = observations;
+    }
+
+    @Override
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 }

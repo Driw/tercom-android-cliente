@@ -11,6 +11,7 @@ import android.widget.ToggleButton;
 
 import java.util.ArrayList;
 
+import br.com.tercom.Adapter.OrderDetailAdapter;
 import br.com.tercom.Adapter.ProductValueAdapter;
 import br.com.tercom.Adapter.ServicePriceAdapter;
 import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
@@ -32,14 +33,13 @@ public class OrderDetailActivity extends AbstractAppCompatActivity {
     private static int selectedItemType;
     private static final int typeProduct = 1;
     private static final int typeService = 2;
-
     private OrderRequest orderRequest;
     private ArrayList<iNewOrderItem> list;
     private getAllProductsTask getAllProductsTask;
     private getAllServicesTask getAllServicesTask;
 
     private ArrayList<ProductValue> produtos;
-    private ArrayList<ServicePrice> services;
+    private ArrayList<ServicePrice> servicos;
 
     @BindView(R.id.rv_OrderDetailListExpanded)
     RecyclerView rv_OrderDetailListExpanded;
@@ -74,11 +74,7 @@ public class OrderDetailActivity extends AbstractAppCompatActivity {
         setContentView(R.layout.activity_order_detail);
         ButterKnife.bind(this);
         createToolbar();
-        if (produtos.size() == 0){
-            selectedItemType = typeService;
-        } else {
-            selectedItemType = typeProduct;
-        }
+        selectedItemType = typeProduct;
         initGetAllProductsTask();
     }
 
@@ -102,13 +98,13 @@ public class OrderDetailActivity extends AbstractAppCompatActivity {
         }
         switch (selectedItemType){
             case typeProduct:
-                ProductValueAdapter productValueAdapter = new ProductValueAdapter(this, produtos);
+                OrderDetailAdapter orderDetailAdapter = new OrderDetailAdapter(this, list);
                 GridLayoutManager layoutManagerProducts = new GridLayoutManager(this, 2);
                 rv_OrderDetailListExpanded.setLayoutManager(layoutManagerProducts);
-                rv_OrderDetailListExpanded.setAdapter(productValueAdapter);
+                rv_OrderDetailListExpanded.setAdapter(orderDetailAdapter);
                 break;
             case typeService:
-                ServicePriceAdapter servicePriceAdapter = new ServicePriceAdapter(this, services);
+                ServicePriceAdapter servicePriceAdapter = new ServicePriceAdapter(this, list);
                 GridLayoutManager layoutManagerServices = new GridLayoutManager(this, 2);
                 rv_OrderDetailListExpanded.setLayoutManager(layoutManagerServices);
                 rv_OrderDetailListExpanded.setAdapter(servicePriceAdapter);
