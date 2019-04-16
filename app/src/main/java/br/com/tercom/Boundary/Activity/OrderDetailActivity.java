@@ -1,11 +1,13 @@
 package br.com.tercom.Boundary.Activity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -22,6 +24,7 @@ import br.com.tercom.Entity.OrderItemServiceList;
 import br.com.tercom.Entity.OrderRequest;
 import br.com.tercom.Entity.ProductValue;
 import br.com.tercom.Entity.ServicePrice;
+import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
 import br.com.tercom.Interface.iNewOrderItem;
 import br.com.tercom.R;
 import butterknife.BindView;
@@ -37,9 +40,6 @@ public class OrderDetailActivity extends AbstractAppCompatActivity {
     private ArrayList<iNewOrderItem> list;
     private getAllProductsTask getAllProductsTask;
     private getAllServicesTask getAllServicesTask;
-
-    private ArrayList<ProductValue> produtos;
-    private ArrayList<ServicePrice> servicos;
 
     @BindView(R.id.rv_OrderDetailListExpanded)
     RecyclerView rv_OrderDetailListExpanded;
@@ -96,19 +96,20 @@ public class OrderDetailActivity extends AbstractAppCompatActivity {
         if (rv_OrderDetailListExpanded.getAdapter() != null){
             rv_OrderDetailListExpanded.setAdapter(null);
         }
-        switch (selectedItemType){
-            case typeProduct:
-                OrderDetailAdapter orderDetailAdapter = new OrderDetailAdapter(this, list);
-                GridLayoutManager layoutManagerProducts = new GridLayoutManager(this, 2);
-                rv_OrderDetailListExpanded.setLayoutManager(layoutManagerProducts);
-                rv_OrderDetailListExpanded.setAdapter(orderDetailAdapter);
-                break;
-            case typeService:
-                ServicePriceAdapter servicePriceAdapter = new ServicePriceAdapter(this, list);
-                GridLayoutManager layoutManagerServices = new GridLayoutManager(this, 2);
-                rv_OrderDetailListExpanded.setLayoutManager(layoutManagerServices);
-                rv_OrderDetailListExpanded.setAdapter(servicePriceAdapter);
-        }
+            OrderDetailAdapter orderDetailAdapter = new OrderDetailAdapter(this, list);
+            GridLayoutManager layoutManagerProducts = new GridLayoutManager(this, 2);
+            rv_OrderDetailListExpanded.setLayoutManager(layoutManagerProducts);
+            rv_OrderDetailListExpanded.setAdapter(orderDetailAdapter);
+            orderDetailAdapter.setmRecyclerViewOnClickListenerHack(new RecyclerViewOnClickListenerHack() {
+                @Override
+                public void onClickListener(View view, int position) {
+                    Intent intent = new Intent();
+                    intent.setClass(OrderDetailActivity.this, OrderAcceptanceMainActivity.class);
+                    intent.putExtra("idOrderRequest", orderRequest.getId());
+                    startActivity(intent);
+                }
+            });
+
     }
 
     private class getAllProductsTask extends AsyncTask<Void,Void,Void>{

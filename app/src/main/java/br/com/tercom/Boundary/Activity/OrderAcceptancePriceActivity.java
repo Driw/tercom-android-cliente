@@ -22,6 +22,8 @@ import br.com.tercom.Adapter.ServicePriceAdapter;
 import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
 import br.com.tercom.Boundary.BoundaryUtil.Mask;
 import br.com.tercom.Control.OrderAcceptanceControl;
+import br.com.tercom.Control.QuotedProductPriceControl;
+import br.com.tercom.Control.QuotedServicePriceControl;
 import br.com.tercom.Entity.Address;
 import br.com.tercom.Entity.ApiResponse;
 import br.com.tercom.Entity.OrderAcceptance;
@@ -29,6 +31,10 @@ import br.com.tercom.Entity.OrderItemProductList;
 import br.com.tercom.Entity.OrderItemServiceList;
 import br.com.tercom.Entity.OrderRequest;
 import br.com.tercom.Entity.ProductValue;
+import br.com.tercom.Entity.QuotedProductPrice;
+import br.com.tercom.Entity.QuotedProductPriceList;
+import br.com.tercom.Entity.QuotedServicePrice;
+import br.com.tercom.Entity.QuotedServicePriceList;
 import br.com.tercom.Entity.ServicePrice;
 import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
 import br.com.tercom.Interface.iNewOrderItem;
@@ -43,18 +49,25 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
     private static final int typeProduct = 1;
     private static final int typeService = 2;
 
+    private ArrayList<QuotedProductPrice> quotedProductPrices;
+
     private addPrice addPrice;
     private addProductValue addProductValue;
     private addServicePrice addServicePrice;
     private getProductValue getProductValue;
     private getServicePrice getServicePrice;
     private OrderAcceptance orderAcceptance;
-    private OrderRequest orderRequest;
     private ArrayList<iNewOrderItem> list;
-    private ArrayList<ProductValue> produtos;
-    private ArrayList<ServicePrice> servicos;
     private ProductValueAdapter productValueAdapter;
     private ServicePriceAdapter servicePriceAdapter;
+
+    private getQuotedServicePrice getQuotedServicePrice;
+    private getQuotedProductPrice getQuotedProductPrice;
+    private OrderRequest orderRequest;
+    private ArrayList<QuotedProductPrice> quotedProductPriceList;
+    private ArrayList<QuotedServicePrice> quotedServicePriceList;
+    private ArrayList<ProductValue> produtos;
+    private ArrayList<ServicePrice> servicos;
 
     @BindView(R.id.txtOrderAcceptancePriceAddInfo)
     TextView txtOrderAcceptancePriceAddInfo;
@@ -169,6 +182,20 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
         if(getServicePrice == null || getServicePrice.getStatus() != AsyncTask.Status.RUNNING){
             getServicePrice = new getServicePrice(orderAcceptance.getId());
             getServicePrice.execute();
+        }
+    }
+
+    private void initQuotedProductPriceTask(int position){
+        if(getQuotedProductPrice == null || getQuotedProductPrice.getStatus() != AsyncTask.Status.RUNNING){
+            getQuotedProductPrice = new getQuotedProductPrice(list.get(position).getId());
+            getQuotedProductPrice.execute();
+        }
+    }
+
+    private void initQuotedServicePriceTask(int position){
+        if(getQuotedServicePrice == null || getQuotedServicePrice.getStatus() != AsyncTask.Status.RUNNING){
+            getQuotedServicePrice = new getQuotedServicePrice(list.get(position).getId());
+            getQuotedServicePrice.execute();
         }
     }
 
@@ -331,6 +358,66 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
             }
             if(list.size() > 0) {
                 createOrderAcceptanceServiceList(list);
+            }
+        }
+    }
+
+    private  class getQuotedProductPrice extends AsyncTask<Void, Void, Void> {
+        private ApiResponse<QuotedProductPriceList> apiResponseQuotedProduct;
+        private int idProduct;
+
+        public getQuotedProductPrice(int idProduct){
+            quotedProductPriceList = new ArrayList<>();
+            this.idProduct = idProduct;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            if(Looper.myLooper() == null) {
+                Looper.prepare();
+            }
+            QuotedProductPriceControl quotedProductPriceControl = new QuotedProductPriceControl(OrderAcceptancePriceActivity.this);
+            apiResponseQuotedProduct = quotedProductPriceControl.getAll(idProduct);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if(apiResponseQuotedProduct.getStatusBoolean()){
+                quotedProductPriceList = apiResponseQuotedProduct.getResult().getList();
+            }
+            if(quotedProductPriceList.size() > 0) {
+                initOrderAcceptanceGetProductTask();
+            }
+        }
+    }
+
+    private  class getQuotedServicePrice extends AsyncTask<Void, Void, Void> {
+        private ApiResponse<QuotedServicePriceList> apiResponseQuotedService;
+        private int idService;
+
+        public getQuotedServicePrice(int idService){
+            quotedServicePriceList = new ArrayList<>();
+            this.idService = idService;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            if(Looper.myLooper() == null) {
+                Looper.prepare();
+            }
+            QuotedServicePriceControl quotedServicePriceControl = new QuotedServicePriceControl(OrderAcceptancePriceActivity.this);
+            apiResponseQuotedService = quotedServicePriceControl.getAll(idService);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if(apiResponseQuotedService.getStatusBoolean()){
+                quotedServicePriceList = apiResponseQuotedService.getResult().getList();
+            }
+            if(quotedServicePriceList.size() > 0) {
+                initOrderAcceptanceServiceTask();
             }
         }
     }

@@ -11,13 +11,15 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import br.com.tercom.Entity.OrderItemProduct;
+import br.com.tercom.Entity.ProductValue;
 import br.com.tercom.Entity.ProdutoGenerico;
 import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
+import br.com.tercom.Interface.iNewOrderItem;
 import br.com.tercom.R;
 
 public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.ViewHolder> {
 
-    private ArrayList<OrderItemProduct> produtos;
+    private ArrayList<? extends iNewOrderItem> list;
     private LayoutInflater layoutInflater;
     private Context context;
 
@@ -27,9 +29,9 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
         this.mRecyclerViewOnClickListenerHack = mRecyclerViewOnClickListenerHack;
     }
 
-    public OrderDetailAdapter (Context c, ArrayList<OrderItemProduct> produtos){
+    public OrderDetailAdapter (Context c, ArrayList<? extends iNewOrderItem> list){
         layoutInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.produtos = produtos;
+        this.list = list;
         this.context = c;
     }
 
@@ -41,12 +43,12 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.txtOrderDetailItemName.setText(produtos.get(position).getProduct().getName());
+        holder.txtOrderDetailItemName.setText(list.get(position).getName());
     }
 
     @Override
     public int getItemCount() {
-        return produtos.size();
+        return list.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

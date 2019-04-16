@@ -46,8 +46,6 @@ public class OrderAcceptanceMainActivity extends AbstractAppCompatActivity {
 
     private OrderRequest orderRequest;
     private GetAllItemsListTask getAllItemsListTask;
-    private ArrayList<ProductValue> produtos;
-    private ArrayList<ServicePrice> servicos;
     private ArrayList<iNewOrderItem> orderItems;
 
     @BindView(R.id.txtOrderAcceptanceMainOrderID)
@@ -74,13 +72,13 @@ public class OrderAcceptanceMainActivity extends AbstractAppCompatActivity {
 
     private void initGetAllItemListTask(){
         if(getAllItemsListTask == null || getAllItemsListTask.getStatus() != AsyncTask.Status.RUNNING){
-            getAllItemsListTask = new GetAllItemsListTask(orderRequest.getId());
+            getAllItemsListTask = new GetAllItemsListTask(getIntent().getExtras().getInt("idOrderRequest"));
             getAllItemsListTask.execute();
         }
     }
 
     private void createOrderAcceptanceList(final ArrayList<? extends iNewOrderItem> list){
-        OrderAcceptanceMainAdapter orderAcceptanceMainAdapter = new OrderAcceptanceMainAdapter(this, orderItems, orderRequest);
+        OrderAcceptanceMainAdapter orderAcceptanceMainAdapter = new OrderAcceptanceMainAdapter(this, orderItems);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rvOrderAcceptanceMainList.setLayoutManager(layoutManager);
         rvOrderAcceptanceMainList.setAdapter(orderAcceptanceMainAdapter);

@@ -37,11 +37,10 @@ public class OrderAcceptanceMainAdapter extends RecyclerView.Adapter<OrderAccept
         this.mRecyclerViewOnClickListenerHack = mRecyclerViewOnClickListenerHack;
     }
 
-    public OrderAcceptanceMainAdapter(Context c, ArrayList<iNewOrderItem> orderItems, OrderRequest orderRequest){
+    public OrderAcceptanceMainAdapter(Context c, ArrayList<iNewOrderItem> orderItems){
         layoutInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.context = c;
         this.orderItems = orderItems;
-        this.orderRequest = orderRequest;
     }
 
     @Override
@@ -52,33 +51,30 @@ public class OrderAcceptanceMainAdapter extends RecyclerView.Adapter<OrderAccept
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        manageItemButtons(position, holder);
+        manageItemButtons(holder);
         holder.txtOrderAcceptanceMainItemName.setText(orderItems.get(position).getName());
         holder.txtOrderAcceptanceMainProvider.setText(orderItems.get(position).getProvider().getFantasyName());
-        if(isProduct(position)){
+        if(orderItems.get(position).isProduct()){
             holder.txtOrderAcceptanceMainManufacturer.setText(orderItems.get(position).getManufacturer().getName());
         } else {
             holder.txtOrderAcceptanceMainManufacturer.setVisibility(View.GONE);
         }
     }
 
-    private void manageItemButtons (int position, ViewHolder holder){
+    private void manageItemButtons (ViewHolder holder){
         switch (orderRequest.getStatus()){
             case ORS_QUEUED:
                 holder.btnOrderAcceptanceMainAdvanceOrder.setVisibility(View.GONE);
                 holder.btnOrderAcceptanceMainDetails.setVisibility(View.GONE);
                 break;
             case ORS_QUOTING:
-                holder.btnOrderAcceptanceMainRemoveItem.setVisibility(View.GONE);
                 holder.btnOrderAcceptanceMainAdvanceOrder.setVisibility(View.GONE);
                 break;
             case ORS_QUOTED:
-                holder.btnOrderAcceptanceMainRemoveItem.setVisibility(View.GONE);
                 break;
             case ORS_DONE:
                 holder.btnOrderAcceptanceMainAdvanceOrder.setVisibility(View.GONE);
                 holder.btnOrderAcceptanceMainDetails.setVisibility(View.GONE);
-                holder.btnOrderAcceptanceMainRemoveItem.setVisibility(View.GONE);
                 break;
         }
     }
@@ -88,14 +84,6 @@ public class OrderAcceptanceMainAdapter extends RecyclerView.Adapter<OrderAccept
         return orderItems.size();
     }
 
-    private boolean isProduct(int position){
-        if(orderItems.get(position).isProduct()){
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView txtOrderAcceptanceMainItemName;
@@ -103,7 +91,6 @@ public class OrderAcceptanceMainAdapter extends RecyclerView.Adapter<OrderAccept
         private TextView txtOrderAcceptanceMainManufacturer;
         private Button btnOrderAcceptanceMainDetails;
         private Button btnOrderAcceptanceMainAdvanceOrder;
-        private Button btnOrderAcceptanceMainRemoveItem;
 
         public ViewHolder (View itemView){
             super(itemView);
@@ -112,7 +99,6 @@ public class OrderAcceptanceMainAdapter extends RecyclerView.Adapter<OrderAccept
             txtOrderAcceptanceMainManufacturer = itemView.findViewById(R.id.txtOrderAcceptanceMainManufacturer);
             btnOrderAcceptanceMainDetails = itemView.findViewById(R.id.btnOrderAcceptanceMainDetails);
             btnOrderAcceptanceMainAdvanceOrder = itemView.findViewById(R.id.btnOrderAcceptanceMainAdvanceOrder);
-            btnOrderAcceptanceMainRemoveItem = itemView.findViewById(R.id.btnOrderAcceptanceMainRemoveItem);
             itemView.setOnClickListener(this);
         }
 
