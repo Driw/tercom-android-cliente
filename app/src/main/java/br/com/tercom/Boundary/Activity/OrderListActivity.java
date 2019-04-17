@@ -102,7 +102,7 @@ public class OrderListActivity extends AbstractAppCompatActivity {
 
     private void initGetQueue(){
         if(getOrderInQueueTask == null || getOrderInQueueTask.getStatus() != AsyncTask.Status.RUNNING){
-            getOrderInQueueTask = new GetOrderInQueueTask(4);
+            getOrderInQueueTask = new GetOrderInQueueTask(0);
             getOrderInQueueTask.execute();
         }
     }
@@ -194,7 +194,7 @@ public class OrderListActivity extends AbstractAppCompatActivity {
                 Looper.prepare();
             }
             OrderRequestControl orderRequestControl = new OrderRequestControl(OrderListActivity.this);
-            apiResponse = orderRequestControl.getAll(mode);
+            apiResponse = orderRequestControl.getAllByCustomer(mode);
             return null;
         }
 

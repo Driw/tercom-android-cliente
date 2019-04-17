@@ -14,8 +14,8 @@ public class Customer extends GenericEntity {
     private String email;
     @BindObject(type = BindObject.TYPE.LIST)
     private ArrayList<Phone> phones;
-    //@BindObject(type = BindObject.TYPE.LIST)
-    //TODO Addresses
+    @BindObject(type = BindObject.TYPE.LIST)
+    private ArrayList<Phone> addresses;
     private boolean inactive;
     @BindObject
     private Register register;

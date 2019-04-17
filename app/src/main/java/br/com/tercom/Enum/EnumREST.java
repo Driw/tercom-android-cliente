@@ -68,7 +68,9 @@ public enum EnumREST {
     NAME("name"),
     SUBGROUP("subgroup"),
     SECTOR("sector"),
+    GETBYCUSTOMER("getByCustomer") ,
     CUSTOMER("customer");
+
 
 
     public String path;

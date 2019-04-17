@@ -28,6 +28,8 @@ import br.com.tercom.Control.QuotedServicePriceControl;
 import br.com.tercom.Entity.Address;
 import br.com.tercom.Entity.ApiResponse;
 import br.com.tercom.Entity.OrderAcceptance;
+import br.com.tercom.Entity.OrderAcceptanceProduct;
+import br.com.tercom.Entity.OrderAcceptanceService;
 import br.com.tercom.Entity.OrderItemProductList;
 import br.com.tercom.Entity.OrderItemServiceList;
 import br.com.tercom.Entity.OrderRequest;
@@ -45,6 +47,8 @@ import br.com.tercom.Util.Util;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static br.com.tercom.Util.Util.toast;
 
 public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
 
@@ -76,10 +80,7 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
     RecyclerView rvOrderAcceptancePriceList;
 
     @OnClick(R.id.btnOrderAcceptancePriceSend) void addItemPrice() {
-        switch (setType(getIntent().getExtras().getBoolean("type"))) {
-            case typeProduct: initOrderAcceptanceAddProductTask(0);
-            case typeService: initOrderAcceptanceGetServiceTask();
-        }
+        finish();
     }
 
     @Override
@@ -201,7 +202,7 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
 
 
     private class addProductValue extends AsyncTask<Void,Void,Void> {
-        private ApiResponse<OrderItemProductList> apiResponseProduct;
+        private ApiResponse<OrderAcceptanceProduct> apiResponseProduct;
         private int idAcceptance;
         private int idOrder;
         private int qtd;
@@ -228,16 +229,14 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             if(apiResponseProduct.getStatusBoolean()){
-                list.addAll(apiResponseProduct.getResult().getList());
+                toast(OrderAcceptancePriceActivity.this,apiResponseProduct.getMessage());
             }
-            if(list.size() > 0) {
-                //TO DO
-            }
+
         }
     }
 
     private class addServicePrice extends AsyncTask<Void,Void,Void> {
-        private ApiResponse<OrderItemServiceList> apiResponseService;
+        private ApiResponse<OrderAcceptanceService> apiResponseService;
         private int idAcceptance;
         private int idOrder;
         private String observations;
@@ -262,10 +261,7 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             if(apiResponseService.getStatusBoolean()){
-                list.addAll(apiResponseService.getResult().getList());
-            }
-            if(list.size() > 0) {
-                //TO DO
+                toast(OrderAcceptancePriceActivity.this,apiResponseService.getMessage());
             }
         }
     }

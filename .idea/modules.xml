@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/src/main/assets/libs/FloatingActionButton-master/sample/fabmenu.iml" filepath="$PROJECT_DIR$/app/src/main/assets/libs/FloatingActionButton-master/sample/fabmenu.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/src/main/assets/libs/FloatingActionButton-master/library/library.iml" filepath="$PROJECT_DIR$/app/src/main/assets/libs/FloatingActionButton-master/library/library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/tercom-android-cliente.iml" filepath="$PROJECT_DIR$/.idea/tercom-android-cliente.iml" />
       <module fileurl="file://$PROJECT_DIR$/tercom-android-cliente.iml" filepath="$PROJECT_DIR$/tercom-android-cliente.iml" />
     </modules>
   </component>

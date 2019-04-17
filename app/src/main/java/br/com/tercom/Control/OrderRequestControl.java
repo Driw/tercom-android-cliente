@@ -66,6 +66,25 @@ public class OrderRequestControl extends GenericControl {
 
     }
 
+    public ApiResponse getAllByCustomer(int mode){
+        try{
+            TreeMap<String, String> map = new TreeMap<>();
+            map.put("mode", String.valueOf(mode));
+            String link = getBase(EnumREST.SITE, EnumREST.ORDERREQUEST,EnumREST.GETBYCUSTOMER, EnumREST.GETALL);
+            Pair<String, String> completePost = new Pair<>(link, getPostValues(map));
+            CustomPair<String> jsonResult =  callJson(EnumMethod.POST, activity, completePost);
+            ApiResponse<OrderRequestList> orderApiResponse = new ApiResponse<>(OrderRequestList.class);
+            if(jsonResult.first){
+                orderApiResponse = populateApiResponse(orderApiResponse,jsonResult.second);
+            }
+            return orderApiResponse;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return getErrorResponse();
+        }
+
+    }
+
     public ApiResponse setQueued(int idOrderRequest) {
         try {
             TreeMap<String, String> map = new TreeMap<>();

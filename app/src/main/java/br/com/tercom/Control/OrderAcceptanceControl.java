@@ -7,6 +7,8 @@ import java.util.TreeMap;
 
 import br.com.tercom.Entity.ApiResponse;
 import br.com.tercom.Entity.OrderAcceptance;
+import br.com.tercom.Entity.OrderAcceptanceProduct;
+import br.com.tercom.Entity.OrderAcceptanceService;
 import br.com.tercom.Entity.OrderItemProductList;
 import br.com.tercom.Enum.EnumMethod;
 import br.com.tercom.Enum.EnumREST;
@@ -48,7 +50,7 @@ public class OrderAcceptanceControl extends GenericControl {
             String link = getLink(getBase(EnumREST.SITE, EnumREST.ORDERACCEPTANCE, EnumREST.ADD), String.valueOf(idOrderQuote));
             Pair<String, String> completePost = new Pair<>(link, getPostValues(map));
             CustomPair<String> jsonResult =  callJson(EnumMethod.POST,activity,completePost);
-            ApiResponse<OrderAcceptance> providerApiResponse = new ApiResponse<>(OrderAcceptance.class);
+            ApiResponse<OrderAcceptanceService> providerApiResponse = new ApiResponse<>(OrderAcceptanceService.class);
             if(jsonResult.first){
                 providerApiResponse = populateApiResponse(providerApiResponse,jsonResult.second);
             }
@@ -73,7 +75,7 @@ public class OrderAcceptanceControl extends GenericControl {
             String link = getLink(getBase(EnumREST.SITE, EnumREST.ORDERACCEPTANCEPRODUCT, EnumREST.ADD), String.valueOf(idOrderQuote));
             Pair<String, String> completePost = new Pair<>(link, getPostValues(map));
             CustomPair<String> jsonResult =  callJson(EnumMethod.POST,activity,completePost);
-            ApiResponse<OrderAcceptance> providerApiResponse = new ApiResponse<>(OrderAcceptance.class);
+            ApiResponse<OrderAcceptanceProduct> providerApiResponse = new ApiResponse<>(OrderAcceptanceProduct.class);
             if(jsonResult.first){
                 providerApiResponse = populateApiResponse(providerApiResponse,jsonResult.second);
             }
