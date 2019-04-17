@@ -6,6 +6,8 @@ import br.com.tercom.Entity.ApiResponse;
 import br.com.tercom.Entity.QuotedProductPriceList;
 import br.com.tercom.Entity.QuotedServicePrice;
 import br.com.tercom.Entity.QuotedServicePriceList;
+import br.com.tercom.Entity.ServicePrice;
+import br.com.tercom.Entity.ServicePriceList;
 import br.com.tercom.Enum.EnumMethod;
 import br.com.tercom.Enum.EnumREST;
 import br.com.tercom.Util.CustomPair;
@@ -23,7 +25,7 @@ public class QuotedServicePriceControl extends GenericControl {
         try {
             String link = getLink(getBase(EnumREST.SITE, EnumREST.QUOTEDSERVICEPRICE, EnumREST.GETALL), String.valueOf(idProduct));
             CustomPair<String> jsonResult = callJson(EnumMethod.GET, activity, link);
-            ApiResponse<QuotedServicePriceList> providerApiResponse = new ApiResponse<>(QuotedServicePriceList.class);
+            ApiResponse<ServicePriceList> providerApiResponse = new ApiResponse<>(ServicePriceList.class);
             if (jsonResult.first) {
                 providerApiResponse = populateApiResponse(providerApiResponse, jsonResult.second);
             }

@@ -14,6 +14,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -43,29 +44,29 @@ import br.com.tercom.Util.CustomPair;
 import br.com.tercom.Util.Util;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
 
     private static final int typeProduct = 1;
     private static final int typeService = 2;
 
-    private ArrayList<QuotedProductPrice> quotedProductPrices;
-
-    private addPrice addPrice;
     private addProductValue addProductValue;
     private addServicePrice addServicePrice;
     private getProductValue getProductValue;
     private getServicePrice getServicePrice;
-    private OrderAcceptance orderAcceptance;
     private ArrayList<iNewOrderItem> list;
     private ProductValueAdapter productValueAdapter;
     private ServicePriceAdapter servicePriceAdapter;
 
-    private getQuotedServicePrice getQuotedServicePrice;
-    private getQuotedProductPrice getQuotedProductPrice;
-    private OrderRequest orderRequest;
+    /*
     private ArrayList<QuotedProductPrice> quotedProductPriceList;
     private ArrayList<QuotedServicePrice> quotedServicePriceList;
+    private getQuotedServicePrice getQuotedServicePrice;
+    private getQuotedProductPrice getQuotedProductPrice;
+    */
+
+    private OrderRequest orderRequest;
     private ArrayList<ProductValue> produtos;
     private ArrayList<ServicePrice> servicos;
 
@@ -73,6 +74,13 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
     TextView txtOrderAcceptancePriceAddInfo;
     @BindView(R.id.rvOrderAcceptancePriceList)
     RecyclerView rvOrderAcceptancePriceList;
+
+    @OnClick(R.id.btnOrderAcceptancePriceSend) void addItemPrice() {
+        switch (setType(getIntent().getExtras().getBoolean("type"))) {
+            case typeProduct: initOrderAcceptanceAddProductTask(0);
+            case typeService: initOrderAcceptanceGetServiceTask();
+        }
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -131,7 +139,7 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
                     servicos.get(position).setSelected(false);
                 } else {
                     servicos.get(position).setSelected(true);
-                    initOrderAcceptanceServiceTask();
+                    initOrderAcceptanceAddServiceTask();
                 }
                 servicePriceAdapter.notifyItemChanged(position);
             }
@@ -148,89 +156,49 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
         btnOrderAcceptanceDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                produtos.get(position).setAmount(Integer.parseInt(txtOrderAcceptancePriceQnt.getText().toString()));
-                dialog.dismiss();
-                initOrderAcceptanceProductTask(position);
-                productValueAdapter.notifyDataSetChanged();
+                if(!txtOrderAcceptancePriceQnt.getText().toString().equals("")){
+                    produtos.get(position).setAmount(Integer.parseInt(txtOrderAcceptancePriceQnt.getText().toString()));
+                    productValueAdapter.notifyDataSetChanged();
+                    initOrderAcceptanceAddProductTask(position);
+                    dialog.dismiss();
+                } else {
+                    Toast toast = Toast.makeText(getApplicationContext(), "A quantidade deve ser preenchida", Toast.LENGTH_SHORT);
+                    dialog.dismiss();
+                }
             }
         });
         dialog.show();
     }
 
-    private void initOrderAcceptanceProductTask(int position){
+    private void initOrderAcceptanceAddProductTask(int position){
         if(addProductValue == null || addProductValue.getStatus() != AsyncTask.Status.RUNNING){
-            addProductValue = new addProductValue(orderAcceptance.getId(), orderRequest.getId(), list.get(position).getAmount(), orderAcceptance.getObservations());
+            addProductValue = new addProductValue(getIntent().getExtras().getInt("idAcceptance"), orderRequest.getId(), list.get(position).getAmount(), getIntent().getExtras().getString("acceptanceObservations"));
             addProductValue.execute();
         }
     }
 
-    private void initOrderAcceptanceServiceTask(){
+    private void initOrderAcceptanceAddServiceTask(){
         if(addServicePrice == null || addServicePrice.getStatus() != AsyncTask.Status.RUNNING){
-            addServicePrice = new addServicePrice(orderAcceptance.getId(), orderRequest.getId(), orderAcceptance.getObservations());
+            addServicePrice = new addServicePrice(getIntent().getExtras().getInt("idAcceptance"), orderRequest.getId(), getIntent().getExtras().getString("acceptanceObservations"));
             addServicePrice.execute();
         }
     }
 
     private void initOrderAcceptanceGetProductTask(){
         if(getProductValue == null || getProductValue.getStatus() != AsyncTask.Status.RUNNING){
-            getProductValue = new getProductValue(orderAcceptance.getId());
+            getProductValue = new getProductValue(getIntent().getExtras().getInt("idAcceptance"));
             getProductValue.execute();
         }
     }
 
     private void initOrderAcceptanceGetServiceTask(){
         if(getServicePrice == null || getServicePrice.getStatus() != AsyncTask.Status.RUNNING){
-            getServicePrice = new getServicePrice(orderAcceptance.getId());
+            getServicePrice = new getServicePrice(getIntent().getExtras().getInt("idAcceptance"));
             getServicePrice.execute();
         }
     }
 
-    private void initQuotedProductPriceTask(int position){
-        if(getQuotedProductPrice == null || getQuotedProductPrice.getStatus() != AsyncTask.Status.RUNNING){
-            getQuotedProductPrice = new getQuotedProductPrice(list.get(position).getId());
-            getQuotedProductPrice.execute();
-        }
-    }
 
-    private void initQuotedServicePriceTask(int position){
-        if(getQuotedServicePrice == null || getQuotedServicePrice.getStatus() != AsyncTask.Status.RUNNING){
-            getQuotedServicePrice = new getQuotedServicePrice(list.get(position).getId());
-            getQuotedServicePrice.execute();
-        }
-    }
-
-    private  class addPrice extends AsyncTask<Void, Void, Void> {
-        private ApiResponse<OrderAcceptance> apiResponseAcceptance;
-        private int idAcceptance;
-        private int idAddress;
-        private String observations;
-
-        public addPrice(int idAcceptance, int idAddress, String observations){
-            this.idAcceptance = idAcceptance;
-            this.idAddress = idAddress;
-            this.observations = observations;
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            if(Looper.myLooper() == null) {
-                Looper.prepare();
-            }
-            OrderAcceptanceControl orderAcceptanceControl = new OrderAcceptanceControl(OrderAcceptancePriceActivity.this);
-            apiResponseAcceptance = orderAcceptanceControl.add(idAcceptance, idAddress, observations);
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            if(apiResponseAcceptance.getStatusBoolean()){
-                orderAcceptance = apiResponseAcceptance.getResult();
-            }
-            if(orderAcceptance != null) {
-
-            }
-        }
-    }
 
     private class addProductValue extends AsyncTask<Void,Void,Void> {
         private ApiResponse<OrderItemProductList> apiResponseProduct;
@@ -263,7 +231,7 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
                 list.addAll(apiResponseProduct.getResult().getList());
             }
             if(list.size() > 0) {
-                createOrderAcceptanceProductList(list);
+                //TO DO
             }
         }
     }
@@ -297,7 +265,7 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
                 list.addAll(apiResponseService.getResult().getList());
             }
             if(list.size() > 0) {
-                createOrderAcceptanceServiceList(list);
+                //TO DO
             }
         }
     }
@@ -362,6 +330,8 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
         }
     }
 
+    //NO LONGER USED IN THIS VERSION
+    /*
     private  class getQuotedProductPrice extends AsyncTask<Void, Void, Void> {
         private ApiResponse<QuotedProductPriceList> apiResponseQuotedProduct;
         private int idProduct;
@@ -421,5 +391,6 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
             }
         }
     }
+    */
 
 }
