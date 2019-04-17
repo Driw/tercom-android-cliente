@@ -131,4 +131,48 @@ public class OrderAcceptanceControl extends GenericControl {
         }
     }
 
+    public ApiResponse set(int idOrderAcceptance, String observations) {
+        TreeMap<String, String> map = new TreeMap<>();
+        map.put("idOrderAcceptance", String.valueOf(idOrderAcceptance));
+        map.put("observations", observations);
+        try {
+            String link = getLink(getBase(EnumREST.SITE, EnumREST.ORDERACCEPTANCE, EnumREST.SET), String.valueOf(idOrderAcceptance));
+            Pair<String, String> completePost = new Pair<>(link, getPostValues(map));
+            CustomPair<String> jsonResult = callJson(EnumMethod.POST, activity, completePost);
+            ApiResponse<OrderAcceptance> apiResponse = new ApiResponse<>(OrderAcceptance.class);
+            if(jsonResult.first) {
+                apiResponse = populateApiResponse(apiResponse, jsonResult.second);
+            }
+            return apiResponse;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return getErrorResponse();
+        }
+    }
+
+    public ApiResponse setAddress(int idOrderAcceptance, int idAddress, String state, String city, String cep, String neighborhood, String street, int number, String complement) {
+        TreeMap<String, String> map = new TreeMap<>();
+        map.put("idOrderAcceptance", String.valueOf(idOrderAcceptance));
+        map.put("idAddress", String.valueOf(idAddress));
+        map.put("state", state);
+        map.put("city", city);
+        map.put("cep", cep);
+        map.put("neighborhood", neighborhood);
+        map.put("street", street);
+        map.put("number", String.valueOf(number));
+        map.put("complement", complement);
+        try {
+            String link = getLink(getBase(EnumREST.SITE, EnumREST.ORDERACCEPTANCE, EnumREST.SETADDRESS), String.valueOf(idOrderAcceptance));
+            Pair<String, String> completePost = new Pair<>(link, getPostValues(map));
+            CustomPair<String> jsonResult = callJson(EnumMethod.POST, activity, completePost);
+            ApiResponse<OrderAcceptance> apiResponse = new ApiResponse<>(OrderAcceptance.class);
+            if(jsonResult.first) {
+                apiResponse = populateApiResponse(apiResponse, jsonResult.second);
+            }
+            return apiResponse;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return getErrorResponse();
+        }
+    }
 }
