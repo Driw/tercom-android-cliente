@@ -25,6 +25,7 @@ import br.com.tercom.Control.OrderItemControl;
 import br.com.tercom.Entity.ApiResponse;
 import br.com.tercom.Entity.LastUpdate;
 import br.com.tercom.Entity.Manufacture;
+import br.com.tercom.Entity.OrderAcceptance;
 import br.com.tercom.Entity.OrderItemProduct;
 import br.com.tercom.Entity.OrderItemProductList;
 import br.com.tercom.Entity.OrderItemServiceList;
@@ -44,6 +45,8 @@ import butterknife.OnClick;
 
 public class OrderAcceptanceMainActivity extends AbstractAppCompatActivity {
 
+    private acceptanceAdd acceptanceAdd;
+    private OrderAcceptance orderAcceptance;
     private OrderRequest orderRequest;
     private GetAllItemsListTask getAllItemsListTask;
     private ArrayList<iNewOrderItem> orderItems;
@@ -67,6 +70,7 @@ public class OrderAcceptanceMainActivity extends AbstractAppCompatActivity {
         setContentView(R.layout.activity_order_acceptance_main_list);
         createToolbar();
         ButterKnife.bind(this);
+        initAcceptanceAdd();
         initGetAllItemListTask();
     }
 
@@ -74,6 +78,13 @@ public class OrderAcceptanceMainActivity extends AbstractAppCompatActivity {
         if(getAllItemsListTask == null || getAllItemsListTask.getStatus() != AsyncTask.Status.RUNNING){
             getAllItemsListTask = new GetAllItemsListTask(getIntent().getExtras().getInt("idOrderRequest"));
             getAllItemsListTask.execute();
+        }
+    }
+
+    private void initAcceptanceAdd(){
+        if(acceptanceAdd == null && acceptanceAdd.getStatus() != AsyncTask.Status.RUNNING){
+            acceptanceAdd = new acceptanceAdd(orderAcceptance.getId(), 0, orderAcceptance.getObservations());
+            acceptanceAdd.execute();
         }
     }
 
@@ -88,6 +99,8 @@ public class OrderAcceptanceMainActivity extends AbstractAppCompatActivity {
                 Intent intent = new Intent();
                 intent.setClass(OrderAcceptanceMainActivity.this, OrderAcceptancePriceActivity.class);
                 intent.putExtra("type", list.get(position).isProduct());
+                intent.putExtra("idAcceptance", orderAcceptance.getId());
+                intent.putExtra("acceptanceObservations", orderAcceptance.getObservations());
                 startActivity(intent);
             }
         });
@@ -125,6 +138,39 @@ public class OrderAcceptanceMainActivity extends AbstractAppCompatActivity {
             if(orderItems.size() > 0)
                 createOrderAcceptanceList(orderItems);
 
+        }
+    }
+
+    private  class acceptanceAdd extends AsyncTask<Void, Void, Void> {
+        private ApiResponse<OrderAcceptance> apiResponseAcceptance;
+        private int idAcceptance;
+        private int idAddress;
+        private String observations;
+
+        public acceptanceAdd(int idAcceptance, int idAddress, String observations){
+            this.idAcceptance = idAcceptance;
+            this.idAddress = idAddress;
+            this.observations = observations;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            if(Looper.myLooper() == null) {
+                Looper.prepare();
+            }
+            OrderAcceptanceControl orderAcceptanceControl = new OrderAcceptanceControl(OrderAcceptanceMainActivity.this);
+            apiResponseAcceptance = orderAcceptanceControl.add(idAcceptance, idAddress, observations);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if(apiResponseAcceptance.getStatusBoolean()){
+                orderAcceptance = apiResponseAcceptance.getResult();
+            }
+            if(orderAcceptance != null) {
+
+            }
         }
     }
 

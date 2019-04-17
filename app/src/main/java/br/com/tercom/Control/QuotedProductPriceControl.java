@@ -8,6 +8,8 @@ import android.util.Pair;
 import java.util.TreeMap;
 
 import br.com.tercom.Entity.ApiResponse;
+import br.com.tercom.Entity.ProductValue;
+import br.com.tercom.Entity.ProductValueList;
 import br.com.tercom.Entity.QuotedProductPrice;
 import br.com.tercom.Entity.QuotedProductPriceList;
 import br.com.tercom.Enum.EnumMethod;
@@ -27,7 +29,7 @@ public class QuotedProductPriceControl extends GenericControl {
         try {
             String link = getLink(getBase(EnumREST.SITE, EnumREST.QUOTEDPRODUCTPRICE, EnumREST.GETALL), String.valueOf(idProduct));
             CustomPair<String> jsonResult = callJson(EnumMethod.GET, activity, link);
-            ApiResponse<QuotedProductPriceList> providerApiResponse = new ApiResponse<>(QuotedProductPriceList.class);
+            ApiResponse<ProductValueList> providerApiResponse = new ApiResponse<>(ProductValueList.class);
             if (jsonResult.first) {
                 providerApiResponse = populateApiResponse(providerApiResponse, jsonResult.second);
             }
