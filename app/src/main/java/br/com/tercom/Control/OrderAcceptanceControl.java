@@ -116,6 +116,19 @@ public class OrderAcceptanceControl extends GenericControl {
         }
     }
 
-
+    public ApiResponse approve(int idOrderAcceptance) {
+        try {
+            String link = getLink(getBase(EnumREST.SITE, EnumREST.ORDERACCEPTANCE, EnumREST.APPROVE), String.valueOf(idOrderAcceptance));
+            CustomPair<String> jsonResult = callJson(EnumMethod.GET, activity, link);
+            ApiResponse<OrderAcceptance> apiResponse = new ApiResponse<>(OrderAcceptance.class);
+            if(jsonResult.first) {
+                apiResponse = populateApiResponse(apiResponse, jsonResult.second);
+            }
+            return apiResponse;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return getErrorResponse();
+        }
+    }
 
 }
