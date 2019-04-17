@@ -15,7 +15,7 @@ public class Customer extends GenericEntity {
     @BindObject(type = BindObject.TYPE.LIST)
     private ArrayList<Phone> phones;
     @BindObject(type = BindObject.TYPE.LIST)
-    private ArrayList<Phone> addresses;
+    private ArrayList<Address> addresses;
     private boolean inactive;
     @BindObject
     private Register register;
@@ -95,5 +95,13 @@ public class Customer extends GenericEntity {
 
     public void setRegister(Register register) {
         this.register = register;
+    }
+
+    public ArrayList<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(ArrayList<Address> addresses) {
+        this.addresses = addresses;
     }
 }
