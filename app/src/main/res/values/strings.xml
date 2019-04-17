@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">Tercom</string>
-    <string name="tercom">TERCOM</string>
-    <string name="email">E-mail</string>
-    <string name="senha">Senha</string>
-    <string name="cadastrar">Cadastrar</string>
-    <string name="nome">Nome</string>
-    <string name="facilita_busca">Aqui você deverá adicionar até 3 tags que ajudarão na busca.</string>
-    <string name="novo_fornecedor">Novo Fornecedor</string>
-    <string name="title_activity_product_value_list">ProductValueListActivity</string>
-</resources>
+<string name="app_name">Tercom</string>
+<string name="tercom">TERCOM</string>
+<string name="email">E-mail</string>
+<string name="senha">Senha</string>
+<string name="cadastrar">Cadastrar</string>
+<string name="nome">Nome</string>
+<string name="facilita_busca">Aqui você deverá adicionar até 3 tags que ajudarão na busca.</string>
+<string name="novo_fornecedor">Novo Fornecedor</string>
+<string name="title_activity_product_value_list">ProductValueListActivity</string>
+    </resources>

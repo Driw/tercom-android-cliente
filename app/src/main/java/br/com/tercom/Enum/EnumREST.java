@@ -57,7 +57,7 @@ public enum EnumREST {
     ORDERITEMPRODUCT("orderItemProduct"),
     ORDERITEMSERVICE("orderItemService"),
     SETQUEUED("setQueued"),
-    APPROVE("approve")
+    APPROVE("approve"),
 
 
     //FILTERS
