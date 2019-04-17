@@ -83,7 +83,7 @@ public class OrderAcceptanceMainActivity extends AbstractAppCompatActivity {
 
     private void initAcceptanceAdd(){
         if(acceptanceAdd == null && acceptanceAdd.getStatus() != AsyncTask.Status.RUNNING){
-            acceptanceAdd = new acceptanceAdd(orderAcceptance.getId(), 0, orderAcceptance.getObservations());
+            acceptanceAdd = new acceptanceAdd(orderAcceptance.getId(), getIntent().getExtras().getInt("idAddress"), orderAcceptance.getObservations());
             acceptanceAdd.execute();
         }
     }

@@ -104,7 +104,7 @@ public class OrderDetailActivity extends AbstractAppCompatActivity {
                 @Override
                 public void onClickListener(View view, int position) {
                     Intent intent = new Intent();
-                    intent.setClass(OrderDetailActivity.this, OrderAcceptanceMainActivity.class);
+                    intent.setClass(OrderDetailActivity.this, OrderAddressListActivity.class);
                     intent.putExtra("idOrderRequest", orderRequest.getId());
                     startActivity(intent);
                 }

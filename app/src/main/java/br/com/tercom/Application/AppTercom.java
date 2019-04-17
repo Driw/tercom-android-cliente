@@ -8,6 +8,7 @@ import android.util.Log;
 import java.lang.ref.WeakReference;
 
 import br.com.tercom.DataBase.AppDataBase;
+import br.com.tercom.Entity.Customer;
 import br.com.tercom.Entity.LoginCustomer;
 import br.com.tercom.Entity.User;
 
@@ -16,6 +17,7 @@ public class AppTercom extends Application {
     private static AppTercom context;
     private static AppDataBase dataBase;
     public static LoginCustomer USER_STATIC;
+    public static Customer CUSTOMER_STATIC;
     public static String appVersion = "android-customer-ver";
 
 

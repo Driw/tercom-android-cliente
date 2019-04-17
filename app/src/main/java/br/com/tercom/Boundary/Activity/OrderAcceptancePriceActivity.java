@@ -231,6 +231,7 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
             if(apiResponseProduct.getStatusBoolean()){
                 toast(OrderAcceptancePriceActivity.this,apiResponseProduct.getMessage());
             }
+
         }
     }
 
