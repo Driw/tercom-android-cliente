@@ -26,6 +26,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import static br.com.tercom.Application.AppTercom.CUSTOMER_STATIC;
+import static br.com.tercom.Util.Util.toast;
 
 public class OrderAddressListActivity extends AbstractAppCompatActivity {
 
@@ -44,7 +45,8 @@ public class OrderAddressListActivity extends AbstractAppCompatActivity {
         ButterKnife.bind(this);
         setAdapter();
         if (isAddressEmpty()){
-            initDialog();
+//            initDialog();
+            toast(OrderAddressListActivity.this,"É necessário adicionar algum endereço antes de prosseguir");
         }
     }
 
@@ -114,7 +116,7 @@ public class OrderAddressListActivity extends AbstractAppCompatActivity {
                 Intent intent = new Intent();
                 intent.setClass(OrderAddressListActivity.this, OrderAcceptanceMainActivity.class);
                 intent.putExtra("idAddress", CUSTOMER_STATIC.getAddresses().get(position).getId());
-                intent.putExtra("idOrderRequest", getIntent().getExtras().getInt("idOrderRequest"));
+                intent.putExtra("ordequote", getIntent().getExtras().getString("orderquote"));
                 startActivity(intent);
             }
         });
