@@ -7,6 +7,7 @@ import java.util.TreeMap;
 
 import br.com.tercom.Entity.ApiResponse;
 import br.com.tercom.Entity.Manufacture;
+import br.com.tercom.Entity.OrderQuoteList;
 import br.com.tercom.Entity.OrderRequest;
 import br.com.tercom.Entity.OrderRequestList;
 import br.com.tercom.Enum.EnumMethod;
@@ -51,7 +52,7 @@ public class OrderRequestControl extends GenericControl {
         try{
             TreeMap<String, String> map = new TreeMap<>();
             map.put("mode", String.valueOf(mode));
-            String link = getLink(getBase(EnumREST.SITE, EnumREST.ORDERREQUEST, EnumREST.GETALL), String.valueOf(mode));
+            String link = getLink(getBase(EnumREST.SITE, EnumREST.ORDERQUOTE, EnumREST.GETALL), String.valueOf(mode));
             Pair<String, String> completePost = new Pair<>(link, getPostValues(map));
             CustomPair<String> jsonResult =  callJson(EnumMethod.POST, activity, completePost);
             ApiResponse<OrderRequestList> orderApiResponse = new ApiResponse<>(OrderRequestList.class);
@@ -70,10 +71,10 @@ public class OrderRequestControl extends GenericControl {
         try{
             TreeMap<String, String> map = new TreeMap<>();
             map.put("mode", String.valueOf(mode));
-            String link = getBase(EnumREST.SITE, EnumREST.ORDERREQUEST,EnumREST.GETBYCUSTOMER, EnumREST.GETALL);
+            String link = getBase(EnumREST.SITE, EnumREST.ORDERQUOTE,EnumREST.GETBYCUSTOMEREMPLOYEE);
             Pair<String, String> completePost = new Pair<>(link, getPostValues(map));
             CustomPair<String> jsonResult =  callJson(EnumMethod.POST, activity, completePost);
-            ApiResponse<OrderRequestList> orderApiResponse = new ApiResponse<>(OrderRequestList.class);
+            ApiResponse<OrderQuoteList> orderApiResponse = new ApiResponse<>(OrderQuoteList.class);
             if(jsonResult.first){
                 orderApiResponse = populateApiResponse(orderApiResponse,jsonResult.second);
             }

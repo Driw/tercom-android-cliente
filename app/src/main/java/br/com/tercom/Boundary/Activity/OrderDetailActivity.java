@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 
 import br.com.tercom.Adapter.OrderDetailAdapter;
@@ -21,6 +23,7 @@ import br.com.tercom.Control.OrderAcceptanceControl;
 import br.com.tercom.Entity.ApiResponse;
 import br.com.tercom.Entity.OrderItemProductList;
 import br.com.tercom.Entity.OrderItemServiceList;
+import br.com.tercom.Entity.OrderQuote;
 import br.com.tercom.Entity.OrderRequest;
 import br.com.tercom.Entity.ProductValue;
 import br.com.tercom.Entity.ServicePrice;
@@ -36,7 +39,7 @@ public class OrderDetailActivity extends AbstractAppCompatActivity {
     private static int selectedItemType;
     private static final int typeProduct = 1;
     private static final int typeService = 2;
-    private OrderRequest orderRequest;
+    private OrderQuote quote;
     private ArrayList<iNewOrderItem> list;
     private getAllProductsTask getAllProductsTask;
     private getAllServicesTask getAllServicesTask;
@@ -60,6 +63,13 @@ public class OrderDetailActivity extends AbstractAppCompatActivity {
         }
     }
 
+    @OnClick(R.id.btnEditOrder) void sendToNext(){
+        Intent intent = new Intent();
+        intent.setClass(OrderDetailActivity.this, OrderAddressListActivity.class);
+        intent.putExtra("orderquote",new Gson().toJson(quote));
+        startActivity(intent);
+    }
+
     private int changeType(){
         if (selectedItemType == typeProduct){
             return typeService;
@@ -73,21 +83,22 @@ public class OrderDetailActivity extends AbstractAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_detail);
         ButterKnife.bind(this);
-        createToolbar();
+        quote =  new Gson().fromJson(getIntent().getExtras().getString("orderquote"),OrderQuote.class);
+//        createToolbar();
         selectedItemType = typeProduct;
         initGetAllProductsTask();
     }
 
     private void initGetAllProductsTask(){
         if(getAllProductsTask == null || getAllProductsTask.getStatus() != AsyncTask.Status.RUNNING){
-            getAllProductsTask = new getAllProductsTask(orderRequest.getId());
+            getAllProductsTask = new getAllProductsTask(quote.getOrderRequest().getId());
             getAllProductsTask.execute();
         }
     }
 
     private void initGetAllServicesTask(){
         if(getAllServicesTask == null || getAllServicesTask.getStatus() != AsyncTask.Status.RUNNING){
-            getAllServicesTask = new getAllServicesTask(orderRequest.getId());
+            getAllServicesTask = new getAllServicesTask(quote.getOrderRequest().getId());
             getAllServicesTask.execute();
         }
     }
@@ -100,15 +111,6 @@ public class OrderDetailActivity extends AbstractAppCompatActivity {
             GridLayoutManager layoutManagerProducts = new GridLayoutManager(this, 2);
             rv_OrderDetailListExpanded.setLayoutManager(layoutManagerProducts);
             rv_OrderDetailListExpanded.setAdapter(orderDetailAdapter);
-            orderDetailAdapter.setmRecyclerViewOnClickListenerHack(new RecyclerViewOnClickListenerHack() {
-                @Override
-                public void onClickListener(View view, int position) {
-                    Intent intent = new Intent();
-                    intent.setClass(OrderDetailActivity.this, OrderAddressListActivity.class);
-                    intent.putExtra("idOrderRequest", orderRequest.getId());
-                    startActivity(intent);
-                }
-            });
 
     }
 

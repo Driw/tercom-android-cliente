@@ -56,7 +56,7 @@ public class OrderAddressListAdapter extends RecyclerView.Adapter<OrderAddressLi
 
     @Override
     public int getItemCount() {
-        return addresses.size();
+        return addresses != null?  addresses.size() : 0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

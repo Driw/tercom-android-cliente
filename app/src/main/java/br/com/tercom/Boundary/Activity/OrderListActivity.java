@@ -20,12 +20,15 @@ import com.github.clans.fab.FloatingActionButton;
 import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import br.com.tercom.Adapter.OrderListAdapter;
 import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
 import br.com.tercom.Boundary.BoundaryUtil.Mask;
 import br.com.tercom.Control.OrderRequestControl;
 import br.com.tercom.Entity.ApiResponse;
+import br.com.tercom.Entity.OrderQuote;
+import br.com.tercom.Entity.OrderQuoteList;
 import br.com.tercom.Entity.OrderRequest;
 import br.com.tercom.Entity.OrderRequestList;
 import br.com.tercom.Enum.EnumDialogOptions;
@@ -44,6 +47,7 @@ public class OrderListActivity extends AbstractAppCompatActivity {
     private OrderRequest selectORderRequest;
     private Dialog dialog;
     private GetOrderInQueueTask getOrderInQueueTask;
+    private ArrayList<OrderQuote> quoteList;
 
     @BindView(R.id.rv_OrderList)
     RecyclerView rv_OrderList;
@@ -102,7 +106,7 @@ public class OrderListActivity extends AbstractAppCompatActivity {
 
     private void initGetQueue(){
         if(getOrderInQueueTask == null || getOrderInQueueTask.getStatus() != AsyncTask.Status.RUNNING){
-            getOrderInQueueTask = new GetOrderInQueueTask(0);
+            getOrderInQueueTask = new GetOrderInQueueTask(6);
             getOrderInQueueTask.execute();
         }
     }
@@ -161,27 +165,24 @@ public class OrderListActivity extends AbstractAppCompatActivity {
         }
     }
 
-    private void createOrderRequestList(final OrderRequestList result){
-        OrderListAdapter categoryAdapter = new OrderListAdapter(this, result.getList());
+    private void createOrderRequestList(final ArrayList<OrderRequest> result){
+        OrderListAdapter categoryAdapter = new OrderListAdapter(this, result);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         categoryAdapter.setmRecyclerViewOnClickListenerHack(new RecyclerViewOnClickListenerHack() {
             @Override
             public void onClickListener(View view, int position) {
-                selectORderRequest = result.getList().get(position);
+                Intent intent = new Intent();
+                intent.setClass(OrderListActivity.this,OrderDetailActivity.class);
+                intent.putExtra("orderquote", new Gson().toJson(quoteList.get(position)));
+                startActivity(intent);
             }
         });
         rv_OrderList.setLayoutManager(layoutManager);
-        rv_OrderList.setAdapter(categoryAdapter);
-        categoryAdapter.setmRecyclerViewOnClickListenerHack(new RecyclerViewOnClickListenerHack() {
-            @Override
-            public void onClickListener(View view, int position) {
-                createIntentAbs(OrderAcceptanceMainActivity.class);
-            }
-        });
+        rv_OrderList.setAdapter(categoryAdapter);;
     }
 
     private class GetOrderInQueueTask extends AsyncTask<Void, Void, Void> {
-        private ApiResponse<OrderRequestList> apiResponse;
+        private ApiResponse<OrderQuoteList> apiResponse;
         private int mode;
 
         public GetOrderInQueueTask (int mode) {
@@ -201,7 +202,12 @@ public class OrderListActivity extends AbstractAppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             if(apiResponse.getStatusBoolean()){
-                createOrderRequestList(apiResponse.getResult());
+                quoteList = apiResponse.getResult().getList();
+                ArrayList<OrderRequest> requests = new ArrayList<>();
+                for(OrderQuote quote : quoteList){
+                    requests.add(quote.getOrderRequest());
+                }
+                createOrderRequestList(requests);
             } else {
                 DialogConfirm dialogConfirm = new DialogConfirm(OrderListActivity.this);
                 dialogConfirm.init(EnumDialogOptions.FAIL,apiResponse.getMessage());

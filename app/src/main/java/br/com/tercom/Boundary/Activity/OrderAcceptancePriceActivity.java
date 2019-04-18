@@ -164,7 +164,7 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
                     initOrderAcceptanceAddProductTask(position);
                     dialog.dismiss();
                 } else {
-                    Toast toast = Toast.makeText(getApplicationContext(), "A quantidade deve ser preenchida", Toast.LENGTH_SHORT);
+                    toast(OrderAcceptancePriceActivity.this, "A quantidade deve ser preenchida");
                     dialog.dismiss();
                 }
             }

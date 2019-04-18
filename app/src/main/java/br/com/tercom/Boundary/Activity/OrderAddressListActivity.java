@@ -62,6 +62,7 @@ public class OrderAddressListActivity extends AbstractAppCompatActivity {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(R.layout.dialog_new_order_address);
+        address = new Address();
         final EditText txtNewAddressStreet = dialog.findViewById(R.id.txtNewAddressStreet);
         final EditText txtNewAddressNumber = dialog.findViewById(R.id.txtNewAddressNumber);
         final EditText txtNewAddressComplement = dialog.findViewById(R.id.txtNewAddressComplement);

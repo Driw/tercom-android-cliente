@@ -23,6 +23,9 @@
             android:name=".Boundary.Activity.ProviderListActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".Boundary.Activity.OrderAddressListActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".Boundary.Activity.ProviderAddActivity"
             android:screenOrientation="portrait" />
         <activity

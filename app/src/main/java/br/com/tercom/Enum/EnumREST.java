@@ -58,7 +58,8 @@ public enum EnumREST {
     ORDERITEMSERVICE("orderItemService"),
     SETQUEUED("setQueued"),
     APPROVE("approve"),
-
+    SETADDRESS("setAddress"),
+    ORDERQUOTE("orderQuote"),
 
     //FILTERS
     FAMILY("family"),
@@ -68,9 +69,8 @@ public enum EnumREST {
     SUBGROUP("subgroup"),
     SECTOR("sector"),
     GETBYCUSTOMER("getByCustomer") ,
+    GETBYCUSTOMEREMPLOYEE("getByCustomerEmployee") ,
     CUSTOMER("customer");
-
-
 
     public String path;
 
