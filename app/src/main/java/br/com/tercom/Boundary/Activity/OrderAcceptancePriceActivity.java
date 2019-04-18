@@ -16,6 +16,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -33,13 +35,16 @@ import br.com.tercom.Entity.OrderAcceptanceProduct;
 import br.com.tercom.Entity.OrderAcceptanceService;
 import br.com.tercom.Entity.OrderItemProductList;
 import br.com.tercom.Entity.OrderItemServiceList;
+import br.com.tercom.Entity.OrderQuote;
 import br.com.tercom.Entity.OrderRequest;
 import br.com.tercom.Entity.ProductValue;
+import br.com.tercom.Entity.ProductValueList;
 import br.com.tercom.Entity.QuotedProductPrice;
 import br.com.tercom.Entity.QuotedProductPriceList;
 import br.com.tercom.Entity.QuotedServicePrice;
 import br.com.tercom.Entity.QuotedServicePriceList;
 import br.com.tercom.Entity.ServicePrice;
+import br.com.tercom.Entity.ServicePriceList;
 import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
 import br.com.tercom.Interface.iNewOrderItem;
 import br.com.tercom.R;
@@ -71,9 +76,10 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
     private getQuotedProductPrice getQuotedProductPrice;
     */
 
-    private OrderRequest orderRequest;
     private ArrayList<ProductValue> produtos;
     private ArrayList<ServicePrice> servicos;
+    private OrderAcceptance orderAcceptance;
+    private OrderQuote orderQuote;
 
     @BindView(R.id.txtOrderAcceptancePriceAddInfo)
     TextView txtOrderAcceptancePriceAddInfo;
@@ -90,6 +96,8 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
         setContentView(R.layout.activity_order_acceptance_price_check);
 //        createToolbar();
         ButterKnife.bind(this);
+        orderAcceptance = new Gson().fromJson(getIntent().getExtras().getString("orderAcceptance"),OrderAcceptance.class);
+        orderQuote = new Gson().fromJson(getIntent().getExtras().getString("orderquote"),OrderQuote.class);
         switch (setType(getIntent().getExtras().getBoolean("type"))) {
             case typeProduct: initOrderAcceptanceGetProductTask();
             case typeService: initOrderAcceptanceGetServiceTask();
@@ -174,28 +182,28 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
 
     private void initOrderAcceptanceAddProductTask(int position){
         if(addProductValue == null || addProductValue.getStatus() != AsyncTask.Status.RUNNING){
-            addProductValue = new addProductValue(getIntent().getExtras().getInt("idAcceptance"), orderRequest.getId(), list.get(position).getAmount(), getIntent().getExtras().getString("acceptanceObservations"));
+            addProductValue = new addProductValue(getIntent().getExtras().getInt("idAcceptance"), orderQuote.getOrderRequest().getId(), list.get(position).getAmount(), getIntent().getExtras().getString("acceptanceObservations"));
             addProductValue.execute();
         }
     }
 
     private void initOrderAcceptanceAddServiceTask(){
         if(addServicePrice == null || addServicePrice.getStatus() != AsyncTask.Status.RUNNING){
-            addServicePrice = new addServicePrice(getIntent().getExtras().getInt("idAcceptance"), orderRequest.getId(), getIntent().getExtras().getString("acceptanceObservations"));
+            addServicePrice = new addServicePrice(getIntent().getExtras().getInt("idAcceptance"), orderQuote.getOrderRequest().getId(), getIntent().getExtras().getString("acceptanceObservations"));
             addServicePrice.execute();
         }
     }
 
     private void initOrderAcceptanceGetProductTask(){
         if(getProductValue == null || getProductValue.getStatus() != AsyncTask.Status.RUNNING){
-            getProductValue = new getProductValue(getIntent().getExtras().getInt("idAcceptance"));
+            getProductValue = new getProductValue(orderAcceptance.getId());
             getProductValue.execute();
         }
     }
 
     private void initOrderAcceptanceGetServiceTask(){
         if(getServicePrice == null || getServicePrice.getStatus() != AsyncTask.Status.RUNNING){
-            getServicePrice = new getServicePrice(getIntent().getExtras().getInt("idAcceptance"));
+            getServicePrice = new getServicePrice(orderAcceptance.getId());
             getServicePrice.execute();
         }
     }
@@ -266,11 +274,11 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
     }
 
     private class getProductValue extends AsyncTask<Void,Void,Void> {
-        private ApiResponse<OrderItemServiceList> apiResponseProduct;
+        private ApiResponse<ProductValueList> apiResponseProduct;
         private int idAcceptance;
 
         public getProductValue (int idAcceptance) {
-            list = new ArrayList<>();
+            produtos = new ArrayList<>();
             this.idAcceptance = idAcceptance;
         }
 
@@ -287,7 +295,9 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             if(apiResponseProduct.getStatusBoolean()){
-                list.addAll(apiResponseProduct.getResult().getList());
+                if(apiResponseProduct.getResult().getList() != null) {
+                produtos.addAll(apiResponseProduct.getResult().getList());
+                }
             }
             if(list.size() > 0) {
                 createOrderAcceptanceServiceList(list);
@@ -296,11 +306,11 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
     }
 
     private class getServicePrice extends AsyncTask<Void,Void,Void> {
-        private ApiResponse<OrderItemServiceList> apiResponseService;
+        private ApiResponse<ServicePriceList> apiResponseService;
         private int idAcceptance;
 
         public getServicePrice (int idAcceptance) {
-            list = new ArrayList<>();
+            servicos = new ArrayList<>();
             this.idAcceptance = idAcceptance;
         }
 
@@ -317,7 +327,9 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             if(apiResponseService.getStatusBoolean()){
-                list.addAll(apiResponseService.getResult().getList());
+                if (apiResponseService.getResult().getList() != null){
+                    servicos.addAll(apiResponseService.getResult().getList());
+                }
             }
             if(list.size() > 0) {
                 createOrderAcceptanceServiceList(list);

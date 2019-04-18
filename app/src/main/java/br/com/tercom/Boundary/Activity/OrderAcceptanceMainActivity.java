@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionMenu;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -29,6 +30,7 @@ import br.com.tercom.Entity.OrderAcceptance;
 import br.com.tercom.Entity.OrderItemProduct;
 import br.com.tercom.Entity.OrderItemProductList;
 import br.com.tercom.Entity.OrderItemServiceList;
+import br.com.tercom.Entity.OrderQuote;
 import br.com.tercom.Entity.OrderRequest;
 import br.com.tercom.Entity.Product;
 import br.com.tercom.Entity.ProductPackage;
@@ -45,10 +47,10 @@ import butterknife.OnClick;
 
 public class OrderAcceptanceMainActivity extends AbstractAppCompatActivity {
 
-    private acceptanceAdd acceptanceAdd;
     private OrderAcceptance orderAcceptance;
-    private OrderRequest orderRequest;
+    private OrderQuote orderQuote;
     private GetAllItemsListTask getAllItemsListTask;
+    private acceptanceAdd acceptanceAdd;
     private ArrayList<iNewOrderItem> orderItems;
 
     @BindView(R.id.txtOrderAcceptanceMainOrderID)
@@ -70,27 +72,35 @@ public class OrderAcceptanceMainActivity extends AbstractAppCompatActivity {
         setContentView(R.layout.activity_order_acceptance_main_list);
         createToolbar();
         ButterKnife.bind(this);
+        populateLabels();
         initAcceptanceAdd();
         initGetAllItemListTask();
     }
 
+    private void populateLabels() {
+        orderQuote =  new Gson().fromJson(getIntent().getExtras().getString("orderquote"),OrderQuote.class);
+        txtOrderAcceptanceMainOrderID.setText(String.valueOf(orderQuote.getId()));
+        txtOrderAcceptanceMainStatus.setText(String.valueOf(orderQuote.getStatus()));
+        txtOrderAcceptanceMainReceivedBy.setText(orderQuote.getOrderRequest().getCustomerEmployee().getName());
+        txtOrderAcceptanceMainExpDate.setText(String.valueOf(orderQuote.getOrderRequest().getExpiration().getDate()));
+    }
+
     private void initGetAllItemListTask(){
         if(getAllItemsListTask == null || getAllItemsListTask.getStatus() != AsyncTask.Status.RUNNING){
-            getAllItemsListTask = new GetAllItemsListTask(getIntent().getExtras().getInt("idOrderRequest"));
+            getAllItemsListTask = new GetAllItemsListTask(orderQuote.getOrderRequest().getId());
             getAllItemsListTask.execute();
         }
     }
 
     private void initAcceptanceAdd(){
-        //ORDER QUOTE ID NO LUGAR DO ACCEPTANCE
         if(acceptanceAdd == null || acceptanceAdd.getStatus() != AsyncTask.Status.RUNNING){
-            acceptanceAdd = new acceptanceAdd(orderAcceptance.getId(), getIntent().getExtras().getInt("idAddress"), orderAcceptance.getObservations());
+            acceptanceAdd = new acceptanceAdd(orderQuote.getId(), getIntent().getExtras().getInt("idAddress"), "OBSERVATIONS");
             acceptanceAdd.execute();
         }
     }
 
     private void createOrderAcceptanceList(final ArrayList<? extends iNewOrderItem> list){
-        OrderAcceptanceMainAdapter orderAcceptanceMainAdapter = new OrderAcceptanceMainAdapter(this, orderItems);
+        OrderAcceptanceMainAdapter orderAcceptanceMainAdapter = new OrderAcceptanceMainAdapter(this, orderItems, orderQuote);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rvOrderAcceptanceMainList.setLayoutManager(layoutManager);
         rvOrderAcceptanceMainList.setAdapter(orderAcceptanceMainAdapter);
@@ -100,8 +110,8 @@ public class OrderAcceptanceMainActivity extends AbstractAppCompatActivity {
                 Intent intent = new Intent();
                 intent.setClass(OrderAcceptanceMainActivity.this, OrderAcceptancePriceActivity.class);
                 intent.putExtra("type", list.get(position).isProduct());
-                intent.putExtra("idAcceptance", orderAcceptance.getId());
-                intent.putExtra("acceptanceObservations", orderAcceptance.getObservations());
+                intent.putExtra("orderquote",new Gson().toJson(orderQuote));
+                intent.putExtra("orderAcceptance",new Gson().toJson(orderAcceptance));
                 startActivity(intent);
             }
         });
@@ -122,9 +132,9 @@ public class OrderAcceptanceMainActivity extends AbstractAppCompatActivity {
             if(Looper.myLooper() == null) {
                 Looper.prepare();
             }
-            OrderAcceptanceControl orderAcceptanceControl = new OrderAcceptanceControl(OrderAcceptanceMainActivity.this);
-            apiResponseProduct = orderAcceptanceControl.getAllProducts(id);
-            apiResponseService = orderAcceptanceControl.getAllServices(id);
+            OrderItemControl orderItemControl = new OrderItemControl(OrderAcceptanceMainActivity.this);
+            apiResponseProduct = orderItemControl.getAllProducts(id);
+            apiResponseService = orderItemControl.getAllServices(id);
             return null;
         }
 
@@ -144,12 +154,12 @@ public class OrderAcceptanceMainActivity extends AbstractAppCompatActivity {
 
     private  class acceptanceAdd extends AsyncTask<Void, Void, Void> {
         private ApiResponse<OrderAcceptance> apiResponseAcceptance;
-        private int idAcceptance;
+        private int idOrderQuote;
         private int idAddress;
         private String observations;
 
-        public acceptanceAdd(int idAcceptance, int idAddress, String observations){
-            this.idAcceptance = idAcceptance;
+        public acceptanceAdd(int idOrderQuote, int idAddress, String observations){
+            this.idOrderQuote = idOrderQuote;
             this.idAddress = idAddress;
             this.observations = observations;
         }
@@ -160,7 +170,7 @@ public class OrderAcceptanceMainActivity extends AbstractAppCompatActivity {
                 Looper.prepare();
             }
             OrderAcceptanceControl orderAcceptanceControl = new OrderAcceptanceControl(OrderAcceptanceMainActivity.this);
-            apiResponseAcceptance = orderAcceptanceControl.add(idAcceptance, idAddress, observations);
+            apiResponseAcceptance = orderAcceptanceControl.add(idOrderQuote, idAddress, observations);
             return null;
         }
 

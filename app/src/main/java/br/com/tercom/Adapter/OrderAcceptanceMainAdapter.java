@@ -2,6 +2,7 @@ package br.com.tercom.Adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import br.com.tercom.Entity.OrderQuote;
 import br.com.tercom.Entity.OrderRequest;
 import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
 import br.com.tercom.Interface.iNewOrderItem;
@@ -28,7 +30,7 @@ public class OrderAcceptanceMainAdapter extends RecyclerView.Adapter<OrderAccept
 
     private LayoutInflater layoutInflater;
     private ArrayList<iNewOrderItem> orderItems;
-    private OrderRequest orderRequest;
+    private OrderQuote orderQuote;
     private Context context;
 
     private RecyclerViewOnClickListenerHack mRecyclerViewOnClickListenerHack;
@@ -37,10 +39,11 @@ public class OrderAcceptanceMainAdapter extends RecyclerView.Adapter<OrderAccept
         this.mRecyclerViewOnClickListenerHack = mRecyclerViewOnClickListenerHack;
     }
 
-    public OrderAcceptanceMainAdapter(Context c, ArrayList<iNewOrderItem> orderItems){
+    public OrderAcceptanceMainAdapter(Context c, ArrayList<iNewOrderItem> orderItems, OrderQuote orderQuote){
         layoutInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.context = c;
         this.orderItems = orderItems;
+        this.orderQuote = orderQuote;
     }
 
     @Override
@@ -51,26 +54,28 @@ public class OrderAcceptanceMainAdapter extends RecyclerView.Adapter<OrderAccept
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        manageItemButtons(holder);
+        manageItemButtons(holder, orderQuote);
         holder.txtOrderAcceptanceMainItemName.setText(orderItems.get(position).getName());
         holder.txtOrderAcceptanceMainProvider.setText(orderItems.get(position).getProvider().getFantasyName());
-        if(orderItems.get(position).isProduct()){
+        if(orderItems.get(position).isProduct() && orderItems.get(position).getManufacturer() != null){
             holder.txtOrderAcceptanceMainManufacturer.setText(orderItems.get(position).getManufacturer().getName());
         } else {
             holder.txtOrderAcceptanceMainManufacturer.setVisibility(View.GONE);
         }
     }
 
-    private void manageItemButtons (ViewHolder holder){
-        switch (orderRequest.getStatus()){
+    private void manageItemButtons (ViewHolder holder, OrderQuote orderQuote){
+        switch (orderQuote.getOrderRequest().getStatus()){
             case ORS_QUEUED:
                 holder.btnOrderAcceptanceMainAdvanceOrder.setVisibility(View.GONE);
                 holder.btnOrderAcceptanceMainDetails.setVisibility(View.GONE);
                 break;
             case ORS_QUOTING:
                 holder.btnOrderAcceptanceMainAdvanceOrder.setVisibility(View.GONE);
+                holder.btnOrderAcceptanceMainAdvanceOrder.setVisibility(View.GONE);
                 break;
             case ORS_QUOTED:
+                holder.btnOrderAcceptanceMainAdvanceOrder.setVisibility(View.GONE);
                 break;
             case ORS_DONE:
                 holder.btnOrderAcceptanceMainAdvanceOrder.setVisibility(View.GONE);
@@ -89,8 +94,8 @@ public class OrderAcceptanceMainAdapter extends RecyclerView.Adapter<OrderAccept
         private TextView txtOrderAcceptanceMainItemName;
         private TextView txtOrderAcceptanceMainProvider;
         private TextView txtOrderAcceptanceMainManufacturer;
-        private Button btnOrderAcceptanceMainDetails;
-        private Button btnOrderAcceptanceMainAdvanceOrder;
+        private CardView btnOrderAcceptanceMainDetails;
+        private CardView btnOrderAcceptanceMainAdvanceOrder;
 
         public ViewHolder (View itemView){
             super(itemView);

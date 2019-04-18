@@ -36,6 +36,7 @@ import static br.com.tercom.Util.Util.toast;
 public class OrderAddressListActivity extends AbstractAppCompatActivity {
 
     private Address address;
+    private String gsonQuote;
     private AddressTask addressTask;
 
     @BindView(R.id.rv_OrderAddressList)
@@ -48,6 +49,7 @@ public class OrderAddressListActivity extends AbstractAppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_address_list);
+        gsonQuote = getIntent().getExtras().getString("orderquote");
         ButterKnife.bind(this);
             initAddressTask();
         }
@@ -102,7 +104,6 @@ public class OrderAddressListActivity extends AbstractAppCompatActivity {
                     dialog.dismiss();
                     Intent intent = new Intent();
                     intent.setClass(OrderAddressListActivity.this, OrderAcceptanceMainActivity.class);
-                    //TO DO GET SERVICE ID
                     intent.putExtra("idOrderRequest", getIntent().getExtras().getInt("idOrderRequest"));
                     startActivity(intent);
                 } else {
@@ -125,7 +126,7 @@ public class OrderAddressListActivity extends AbstractAppCompatActivity {
                 Intent intent = new Intent();
                 intent.setClass(OrderAddressListActivity.this, OrderAcceptanceMainActivity.class);
                 intent.putExtra("idAddress", CUSTOMER_STATIC.getAddresses().get(position).getId());
-                intent.putExtra("ordequote", getIntent().getExtras().getString("orderquote"));
+                intent.putExtra("orderquote", gsonQuote);
                 startActivity(intent);
             }
         });
