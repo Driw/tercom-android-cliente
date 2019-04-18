@@ -44,6 +44,13 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.txtOrderDetailItemName.setText(list.get(position).getName());
+        holder.txtOrderDetailItemProvider.setText(list.get(position).getProvider().getName());
+        holder.txtOrderDetailAddInformation.setText(list.get(position).getObservations());
+        if (list.get(position).isProduct()){
+            holder.txtOrderDetailItemManufacturer.setText(list.get(position).getManufacturer().getName());
+        } else {
+            holder.txtOrderDetailItemManufacturer.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -52,11 +59,19 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+
         public TextView txtOrderDetailItemName;
+        public TextView txtOrderDetailItemManufacturer;
+        public TextView txtOrderDetailItemProvider;
+        public TextView txtOrderDetailAddInformation;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
             txtOrderDetailItemName = itemView.findViewById(R.id.txtOrderDetailItemName);
+            txtOrderDetailItemManufacturer = itemView.findViewById(R.id.txtOrderDetailItemManufacturer);
+            txtOrderDetailItemProvider = itemView.findViewById(R.id.txtOrderDetailItemProvider);
+            txtOrderDetailAddInformation = itemView.findViewById(R.id.txtOrderDetailAddInformation);
             itemView.setOnClickListener(this);
 
         }

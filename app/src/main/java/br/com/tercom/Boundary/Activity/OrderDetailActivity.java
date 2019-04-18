@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ import br.com.tercom.Adapter.ProductValueAdapter;
 import br.com.tercom.Adapter.ServicePriceAdapter;
 import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
 import br.com.tercom.Control.OrderAcceptanceControl;
+import br.com.tercom.Control.OrderItemControl;
 import br.com.tercom.Entity.ApiResponse;
 import br.com.tercom.Entity.OrderItemProductList;
 import br.com.tercom.Entity.OrderItemServiceList;
@@ -108,7 +110,7 @@ public class OrderDetailActivity extends AbstractAppCompatActivity {
             rv_OrderDetailListExpanded.setAdapter(null);
         }
             OrderDetailAdapter orderDetailAdapter = new OrderDetailAdapter(this, list);
-            GridLayoutManager layoutManagerProducts = new GridLayoutManager(this, 2);
+            LinearLayoutManager layoutManagerProducts = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
             rv_OrderDetailListExpanded.setLayoutManager(layoutManagerProducts);
             rv_OrderDetailListExpanded.setAdapter(orderDetailAdapter);
 
@@ -128,8 +130,8 @@ public class OrderDetailActivity extends AbstractAppCompatActivity {
             if(Looper.myLooper() == null) {
                 Looper.prepare();
             }
-            OrderAcceptanceControl orderAcceptanceControl = new OrderAcceptanceControl(OrderDetailActivity.this);
-            apiResponseProduct = orderAcceptanceControl.getAllProducts(id);
+            OrderItemControl orderItemControl = new OrderItemControl(OrderDetailActivity.this);
+            apiResponseProduct = orderItemControl.getAllProducts(id);
             return null;
         }
 
@@ -158,8 +160,8 @@ public class OrderDetailActivity extends AbstractAppCompatActivity {
             if(Looper.myLooper() == null) {
                 Looper.prepare();
             }
-            OrderAcceptanceControl orderAcceptanceControl = new OrderAcceptanceControl(OrderDetailActivity.this);
-            apiResponseService = orderAcceptanceControl.getAllServices(id);
+            OrderItemControl orderItemControl = new OrderItemControl(OrderDetailActivity.this);
+            apiResponseService = orderItemControl.getAllServices(id);
             return null;
         }
 
