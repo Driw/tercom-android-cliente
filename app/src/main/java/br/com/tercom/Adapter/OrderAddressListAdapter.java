@@ -43,14 +43,14 @@ public class OrderAddressListAdapter extends RecyclerView.Adapter<OrderAddressLi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.txtAddressListStreet.setText(addresses.get(position).getStreet());
-        holder.txtAddressListNumber.setText(addresses.get(position).getNumber());
+        holder.txtAddressListNumber.setText(String.valueOf(addresses.get(position).getNumber()));
         holder.txtAddressListNeighborhood.setText(addresses.get(position).getNeighborhood());
         holder.txtAddressListCity.setText(addresses.get(position).getCity());
         holder.txtAddressListState.setText(addresses.get(position).getState());
         if(addresses.get(position).getComplement().equals("")){
             holder.txtAddressListComplement.setVisibility(View.GONE);
         } else {
-            holder.txtAddressListComplement.setText(addresses.get(position).getComplement());
+            holder.txtAddressListComplement.setText("Complemento: "+addresses.get(position).getComplement());
         }
     }
 
@@ -64,9 +64,9 @@ public class OrderAddressListAdapter extends RecyclerView.Adapter<OrderAddressLi
         private TextView txtAddressListStreet;
         private TextView txtAddressListNumber;
         private TextView txtAddressListComplement;
-        private Button txtAddressListNeighborhood;
-        private Button txtAddressListCity;
-        private Button txtAddressListState;
+        private TextView txtAddressListNeighborhood;
+        private TextView txtAddressListCity;
+        private TextView txtAddressListState;
 
         public ViewHolder (View itemView){
             super(itemView);

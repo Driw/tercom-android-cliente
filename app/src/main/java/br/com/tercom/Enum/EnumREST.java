@@ -3,6 +3,7 @@ package br.com.tercom.Enum;
 public enum EnumREST {
 
     //SERVICE
+    ADDRESS("address"),
     AVALIABLE("avaliable"),
     MANUFACTURE("manufacturer"),
     PRODUCT("product"),
@@ -71,7 +72,6 @@ public enum EnumREST {
     GETBYCUSTOMER("getByCustomer") ,
     GETBYCUSTOMEREMPLOYEE("getByCustomerEmployee") ,
     CUSTOMER("customer");
-
     public String path;
 
     private EnumREST(String path) {

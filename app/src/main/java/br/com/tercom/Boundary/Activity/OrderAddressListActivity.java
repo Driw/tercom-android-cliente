@@ -4,7 +4,9 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,7 +21,10 @@ import java.util.ArrayList;
 import br.com.tercom.Adapter.OrderAddressListAdapter;
 import br.com.tercom.Application.AppTercom;
 import br.com.tercom.Boundary.BoundaryUtil.AbstractAppCompatActivity;
+import br.com.tercom.Control.AddressControl;
 import br.com.tercom.Entity.Address;
+import br.com.tercom.Entity.AddressList;
+import br.com.tercom.Entity.ApiResponse;
 import br.com.tercom.Interface.RecyclerViewOnClickListenerHack;
 import br.com.tercom.R;
 import butterknife.BindView;
@@ -31,6 +36,7 @@ import static br.com.tercom.Util.Util.toast;
 public class OrderAddressListActivity extends AbstractAppCompatActivity {
 
     private Address address;
+    private AddressTask addressTask;
 
     @BindView(R.id.rv_OrderAddressList)
     RecyclerView rv_OrderAddressList;
@@ -43,12 +49,15 @@ public class OrderAddressListActivity extends AbstractAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_address_list);
         ButterKnife.bind(this);
-        setAdapter();
-        if (isAddressEmpty()){
-//            initDialog();
-            toast(OrderAddressListActivity.this,"É necessário adicionar algum endereço antes de prosseguir");
+            initAddressTask();
         }
+
+    private void initAddressTask() {
+        if(addressTask == null || addressTask.getStatus() != AsyncTask.Status.RUNNING){
+            addressTask = new AddressTask(CUSTOMER_STATIC.getId());
+            addressTask.execute();
     }
+}
 
     private boolean isAddressEmpty(){
         if (CUSTOMER_STATIC.getAddresses() != null) {
@@ -120,6 +129,32 @@ public class OrderAddressListActivity extends AbstractAppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private class AddressTask extends AsyncTask<Void,Void,Void>{
+        ApiResponse<AddressList> apiResponse;
+        private int id;
+
+        public AddressTask(int id) {
+            this.id = id;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            if(Looper.myLooper() == null){
+                Looper.prepare();
+            }
+            apiResponse = new AddressControl(OrderAddressListActivity.this).getAll(id);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if(apiResponse.getStatusBoolean()){
+                CUSTOMER_STATIC.setAddresses(apiResponse.getResult().getList());
+                setAdapter();
+            }
+        }
     }
 
 }
