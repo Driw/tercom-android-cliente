@@ -295,11 +295,11 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             if(apiResponseProduct.getStatusBoolean()){
-                if(apiResponseProduct.getResult().getList() != null) {
+                if(apiResponseProduct.getResult() != null) {
                 produtos.addAll(apiResponseProduct.getResult().getList());
                 }
             }
-            if(list.size() > 0) {
+            if(list != null && list.size() > 0) {
                 createOrderAcceptanceServiceList(list);
             }
         }
@@ -331,7 +331,7 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
                     servicos.addAll(apiResponseService.getResult().getList());
                 }
             }
-            if(list.size() > 0) {
+            if(list !=  null && list.size() > 0) {
                 createOrderAcceptanceServiceList(list);
             }
         }

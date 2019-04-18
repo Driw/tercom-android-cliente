@@ -45,6 +45,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static br.com.tercom.Util.Util.toast;
+
 public class OrderAcceptanceMainActivity extends AbstractAppCompatActivity {
 
     private OrderAcceptance orderAcceptance;
@@ -52,6 +54,7 @@ public class OrderAcceptanceMainActivity extends AbstractAppCompatActivity {
     private GetAllItemsListTask getAllItemsListTask;
     private acceptanceAdd acceptanceAdd;
     private ArrayList<iNewOrderItem> orderItems;
+    private FinalizeTask finalizeTask;
 
     @BindView(R.id.txtOrderAcceptanceMainOrderID)
     TextView txtOrderAcceptanceMainOrderID;
@@ -65,6 +68,14 @@ public class OrderAcceptanceMainActivity extends AbstractAppCompatActivity {
     RecyclerView rvOrderAcceptanceMainList;
     @BindView(R.id.btnOrderAcceptaneMainFinalize)
     Button btnOrderAcceptaneMainFinalize;
+
+    @OnClick(R.id.btnOrderAcceptaneMainFinalize) void initFinalizeTask(){
+        if(finalizeTask == null || finalizeTask.getStatus() != AsyncTask.Status.RUNNING){
+            finalizeTask = new FinalizeTask(orderAcceptance.getId());
+            finalizeTask.execute();
+        }
+
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -178,9 +189,41 @@ public class OrderAcceptanceMainActivity extends AbstractAppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             if(apiResponseAcceptance.getStatusBoolean()){
                 orderAcceptance = apiResponseAcceptance.getResult();
+            }else{
+                toast(OrderAcceptanceMainActivity.this, apiResponseAcceptance.getMessage());
+                createIntentAbs(OrderListActivity.class);
+                finish();
             }
             if(orderAcceptance != null) {
 
+            }
+        }
+    }
+
+    private class FinalizeTask extends AsyncTask<Void,Void,Void>{
+        private ApiResponse<OrderAcceptance> apiResponse;
+        private int id;
+
+        public FinalizeTask(int id) {
+            this.id = id;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            if(Looper.myLooper() == null)
+                Looper.prepare();
+
+            apiResponse = new OrderAcceptanceControl(OrderAcceptanceMainActivity.this).approve(id);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if(apiResponse.getStatusBoolean()){
+                toast(OrderAcceptanceMainActivity.this, apiResponse.getMessage());
+                createIntentAbs(MenuActivity.class);
+            }else{
+                toast(OrderAcceptanceMainActivity.this, apiResponse.getMessage());
             }
         }
     }

@@ -57,8 +57,8 @@ public class MenuActivity extends AbstractAppCompatActivity {
         setContentView(R.layout.activity_menu);
         ButterKnife.bind(this);
         initCustomerTask();
-        //createToolbarWithNavigation(1);
-        //txtWelcome.setText("Bem vindo, " + AppTercom.USER_STATIC.getCustomerEmployee().getName() + "!");
+        createToolbarWithNavigation(1);
+        txtWelcome.setText("Bem vindo, " + AppTercom.USER_STATIC.getCustomerEmployee().getName() + "!");
     }
 
     private void initCustomerTask(){
