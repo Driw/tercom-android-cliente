@@ -8,6 +8,8 @@ import java.util.TreeMap;
 import br.com.tercom.Entity.ApiResponse;
 import br.com.tercom.Entity.OrderAcceptance;
 import br.com.tercom.Entity.OrderAcceptanceProduct;
+import br.com.tercom.Entity.OrderAcceptanceProductPrice;
+import br.com.tercom.Entity.OrderAcceptanceProductPriceList;
 import br.com.tercom.Entity.OrderAcceptanceService;
 import br.com.tercom.Entity.OrderItemProductList;
 import br.com.tercom.Enum.EnumMethod;
@@ -90,7 +92,7 @@ public class OrderAcceptanceControl extends GenericControl {
         try{
             String link = getLink(getBase(EnumREST.SITE, EnumREST.QUOTEDPRODUCTPRICE, EnumREST.GETALL), String.valueOf(idOrderRequest)+"/"+String.valueOf(idOrderItemProduct));
             CustomPair<String> jsonResult =  callJson(EnumMethod.GET,activity,link);
-            ApiResponse<OrderAcceptance> orderApiResponse = new ApiResponse<>(OrderAcceptance.class);
+            ApiResponse<OrderAcceptanceProductPriceList> orderApiResponse = new ApiResponse<>(OrderAcceptanceProductPriceList.class);
             if(jsonResult.first){
                 orderApiResponse = populateApiResponse(orderApiResponse,jsonResult.second);
             }

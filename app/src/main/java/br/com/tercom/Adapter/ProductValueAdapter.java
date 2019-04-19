@@ -35,8 +35,8 @@ public class ProductValueAdapter extends RecyclerView.Adapter<ProductValueAdapte
         holder.productName.setText("Nome"+productValues.get(position).getName());
         holder.productPackage.setText(String.format(Locale.getDefault(),"%s %s",productValues.get(position).getAmount(),productValues.get(position).getProduct().getName()));
         holder.productPrice.setText(String.format(Locale.getDefault(),"R$ %.2f",productValues.get(position).getPrice()).replace(".", ","));
-        holder.productManufacturer.setText("Fabricante:"+productValues.get(position).getManufacture().getFantasyName());
-        holder.productProvider.setText("Fornecedor"+productValues.get(position).getProvider().getFantasyName());
+//        holder.productManufacturer.setText("Fabricante:"+productValues.get(position).getProduct().getDescription());
+//        holder.productProvider.setText("Fornecedor"+productValues.get(position).getProvider().getFantasyName());
     }
     @Override
     public int getItemCount() {
