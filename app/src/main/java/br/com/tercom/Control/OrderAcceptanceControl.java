@@ -40,14 +40,14 @@ public class OrderAcceptanceControl extends GenericControl {
     }
 
 
-    public ApiResponse serviceAdd(int idAcceptance, int idOrderQuote,int subprice, String observations){
+    public ApiResponse serviceAdd(int idAcceptance, int idService,int amount,int subprice, String observations){
         TreeMap<String, String> map = new TreeMap<>();
         map.put("idAcceptance", String.valueOf(idAcceptance));
-        map.put("idOrderQuote", String.valueOf(idOrderQuote));
-        map.put("subprice", String.valueOf(subprice));
+        map.put("idQuotedServicePrice", String.valueOf(idService));
+        map.put("amountRequest", String.valueOf(amount));
         map.put("observations", observations);
         try{
-            String link = getLink(getBase(EnumREST.SITE, EnumREST.ORDERACCEPTANCESERVICE, EnumREST.ADD), String.valueOf(idOrderQuote));
+            String link = getLink(getBase(EnumREST.SITE, EnumREST.ORDERACCEPTANCESERVICE, EnumREST.ADD),String.valueOf(idAcceptance)+"/"+String.valueOf(idService));
             Pair<String, String> completePost = new Pair<>(link, getPostValues(map));
             CustomPair<String> jsonResult =  callJson(EnumMethod.POST,activity,completePost);
             ApiResponse<OrderAcceptanceService> providerApiResponse = new ApiResponse<>(OrderAcceptanceService.class);
@@ -63,22 +63,21 @@ public class OrderAcceptanceControl extends GenericControl {
     }
 
 
-
-    public ApiResponse productAdd(int idAcceptance, int idOrderQuote, int qtd,int subprice, String observations){
+    public ApiResponse productAdd(int idAcceptance, int idProduct, int qtd,int subprice, String observations){
         TreeMap<String, String> map = new TreeMap<>();
         map.put("idAcceptance", String.valueOf(idAcceptance));
-        map.put("idOrderQuote", String.valueOf(idOrderQuote));
-        map.put("qtd", String.valueOf(qtd));
-        map.put("subprice", String.valueOf(subprice));
+        map.put("idQuotedProductPrice", String.valueOf(idProduct));
+        map.put("amountRequest", String.valueOf(qtd));
         map.put("observations", observations);
         try{
-            String link = getLink(getBase(EnumREST.SITE, EnumREST.ORDERACCEPTANCEPRODUCT, EnumREST.ADD), String.valueOf(idOrderQuote));
+            String link = getLink(getBase(EnumREST.SITE, EnumREST.ORDERACCEPTANCEPRODUCT, EnumREST.ADD), String.valueOf(idAcceptance)+"/"+String.valueOf(idProduct));
             Pair<String, String> completePost = new Pair<>(link, getPostValues(map));
             CustomPair<String> jsonResult =  callJson(EnumMethod.POST,activity,completePost);
             ApiResponse<OrderAcceptanceProduct> providerApiResponse = new ApiResponse<>(OrderAcceptanceProduct.class);
             if(jsonResult.first){
                 providerApiResponse = populateApiResponse(providerApiResponse,jsonResult.second);
             }
+
             return providerApiResponse;
         } catch (Exception e) {
             e.printStackTrace();
@@ -87,9 +86,9 @@ public class OrderAcceptanceControl extends GenericControl {
 
     }
 
-    public ApiResponse getAllProducts(int idAcceptance){
+    public ApiResponse getAllProducts(int idOrderRequest, int idOrderItemProduct){
         try{
-            String link = getLink(getBase(EnumREST.SITE, EnumREST.ORDERACCEPTANCEPRODUCT, EnumREST.GETALL), String.valueOf(idAcceptance));
+            String link = getLink(getBase(EnumREST.SITE, EnumREST.QUOTEDPRODUCTPRICE, EnumREST.GETALL), String.valueOf(idOrderRequest)+"/"+String.valueOf(idOrderItemProduct));
             CustomPair<String> jsonResult =  callJson(EnumMethod.GET,activity,link);
             ApiResponse<OrderAcceptance> orderApiResponse = new ApiResponse<>(OrderAcceptance.class);
             if(jsonResult.first){
@@ -102,9 +101,9 @@ public class OrderAcceptanceControl extends GenericControl {
         }
     }
 
-    public ApiResponse getAllServices(int idAcceptance){
+    public ApiResponse getAllServices(int idOrderRequest, int idOrderItemProduct){
         try{
-            String link = getLink(getBase(EnumREST.SITE, EnumREST.ORDERACCEPTANCESERVICE, EnumREST.GETALL), String.valueOf(idAcceptance));
+            String link = getLink(getBase(EnumREST.SITE, EnumREST.QUOTEDSERVICEPRICE, EnumREST.GETALL), String.valueOf(idOrderRequest)+"/"+String.valueOf(idOrderItemProduct));
             CustomPair<String> jsonResult =  callJson(EnumMethod.GET,activity,link);
             ApiResponse<OrderAcceptance> orderApiResponse = new ApiResponse<>(OrderAcceptance.class);
             if(jsonResult.first){

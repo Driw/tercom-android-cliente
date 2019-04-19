@@ -123,6 +123,7 @@ public class OrderAcceptanceMainActivity extends AbstractAppCompatActivity {
                 intent.putExtra("type", list.get(position).isProduct());
                 intent.putExtra("orderquote",new Gson().toJson(orderQuote));
                 intent.putExtra("orderAcceptance",new Gson().toJson(orderAcceptance));
+                intent.putExtra("idProduct",list.get(position).getId());
                 startActivity(intent);
             }
         });

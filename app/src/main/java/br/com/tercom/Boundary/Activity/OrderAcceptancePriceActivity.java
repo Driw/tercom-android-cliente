@@ -80,6 +80,7 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
     private ArrayList<ServicePrice> servicos;
     private OrderAcceptance orderAcceptance;
     private OrderQuote orderQuote;
+    private int id;
 
     @BindView(R.id.txtOrderAcceptancePriceAddInfo)
     TextView txtOrderAcceptancePriceAddInfo;
@@ -98,9 +99,14 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
         ButterKnife.bind(this);
         orderAcceptance = new Gson().fromJson(getIntent().getExtras().getString("orderAcceptance"),OrderAcceptance.class);
         orderQuote = new Gson().fromJson(getIntent().getExtras().getString("orderquote"),OrderQuote.class);
+        id = getIntent().getExtras().getInt("idProduct");
         switch (setType(getIntent().getExtras().getBoolean("type"))) {
-            case typeProduct: initOrderAcceptanceGetProductTask();
-            case typeService: initOrderAcceptanceGetServiceTask();
+            case typeProduct:
+                initOrderAcceptanceGetProductTask();
+                break;
+            case typeService:
+                initOrderAcceptanceGetServiceTask();
+                break;
         }
     }
 
@@ -248,6 +254,7 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
         private int idAcceptance;
         private int idOrder;
         private String observations;
+        private int amount;
 
         public addServicePrice (int idAcceptance, int idOrder, String observations) {
             this.idAcceptance = idAcceptance;
@@ -261,7 +268,7 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
                 Looper.prepare();
             }
             OrderAcceptanceControl orderAcceptanceControl = new OrderAcceptanceControl(OrderAcceptancePriceActivity.this);
-            apiResponseService = orderAcceptanceControl.serviceAdd(idAcceptance,idOrder,0, observations);
+            apiResponseService = orderAcceptanceControl.serviceAdd(idAcceptance,idOrder,amount,0, observations);
             return null;
         }
 
@@ -288,7 +295,7 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
                 Looper.prepare();
             }
             OrderAcceptanceControl orderAcceptanceControl = new OrderAcceptanceControl(OrderAcceptancePriceActivity.this);
-            apiResponseProduct = orderAcceptanceControl.getAllProducts(idAcceptance);
+            apiResponseProduct = orderAcceptanceControl.getAllProducts(orderQuote.getOrderRequest().getId(),id);
             return null;
         }
 
@@ -307,11 +314,9 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
 
     private class getServicePrice extends AsyncTask<Void,Void,Void> {
         private ApiResponse<ServicePriceList> apiResponseService;
-        private int idAcceptance;
 
         public getServicePrice (int idAcceptance) {
             servicos = new ArrayList<>();
-            this.idAcceptance = idAcceptance;
         }
 
         @Override
@@ -320,7 +325,7 @@ public class OrderAcceptancePriceActivity extends AbstractAppCompatActivity {
                 Looper.prepare();
             }
             OrderAcceptanceControl orderAcceptanceControl = new OrderAcceptanceControl(OrderAcceptancePriceActivity.this);
-            apiResponseService = orderAcceptanceControl.getAllServices(idAcceptance);
+            apiResponseService = orderAcceptanceControl.getAllServices(orderQuote.getOrderRequest().getId(),id);
             return null;
         }
 
